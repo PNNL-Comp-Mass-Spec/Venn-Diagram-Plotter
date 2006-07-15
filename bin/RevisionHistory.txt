@@ -1,0 +1,13 @@
+Venn Diagram Plotter Change Log
+
+Version 1.0.2104.29100; October 5, 2005
+	- Updated to use PRISM.Files.XmlSettingsFileAccessor (in PRISM.dll)
+	- Updated about box to assert the Apache License, Version 2.0
+	- Removed unused modules
+	- Added Option Strict to all of the code modules
+
+Version 1.0.2056.27902; August 18, 2005
+	- Renamed from VennDiagramRunner.exe to VennDiagramPlotter.exe and updated copyright statement
+
+Version 1.0.1733.24601; September 29, 2004
+	- Stable release

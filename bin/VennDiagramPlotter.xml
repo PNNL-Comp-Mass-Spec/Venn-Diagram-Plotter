@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sections>
+  <section name="CircleParams">
+    <item key="CircleADia" value="45" />
+    <item key="CircleBDia" value="25" />
+    <item key="Overlap" value="18" />
+    <item key="CircleAColor" value="255,255,192,192" />
+    <item key="CircleBColor" value="255,192,255,255" />
+    <item key="OverlapColor" value="255,192,255,192" />
+    <item key="BackgroundColor" value="White" />
+    <item key="WindowWidth" value="472" />
+    <item key="WindowHeight" value="459" />
+  </section>
+</sections>
