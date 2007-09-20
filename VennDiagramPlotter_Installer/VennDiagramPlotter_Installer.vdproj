@@ -27,26 +27,26 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_6AB4E2914BC94C7A9973E8D70FA9C96A"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_6DB46C7494264D26B732C56DC5D8E512"
+        "MsmKey" = "8:_2F8DFC25ABD74E0A9CC877CF926DF333"
         "OwnerKey" = "8:_23DD59EC478C45709A785E9001DF8055"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_6DB46C7494264D26B732C56DC5D8E512"
+        "MsmKey" = "8:_2F8DFC25ABD74E0A9CC877CF926DF333"
         "OwnerKey" = "8:_7199F07669E16E86E65C8D1E66520FD1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_6DB46C7494264D26B732C56DC5D8E512"
+        "MsmKey" = "8:_2F8DFC25ABD74E0A9CC877CF926DF333"
         "OwnerKey" = "8:_9EB06872B09718873FD4701D438D12CF"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6AB4E2914BC94C7A9973E8D70FA9C96A"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -194,7 +194,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:VennDiagrams, Version=1.1.2413.39777, Culture=neutral"
+            "AssemblyAsmDisplayName" = "8:VennDiagrams, Version=1.3.2818.39951, Culture=neutral"
                 "ScatterAssemblies"
                 {
                     "_7199F07669E16E86E65C8D1E66520FD1"
@@ -245,7 +245,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ControlPrinter, Version=1.0.2413.39777, Culture=neutral"
+            "AssemblyAsmDisplayName" = "8:ControlPrinter, Version=1.0.2818.39951, Culture=neutral"
                 "ScatterAssemblies"
                 {
                     "_9EB06872B09718873FD4701D438D12CF"
@@ -389,13 +389,13 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:VennDiagramPlotter"
-        "ProductCode" = "8:{71BA080E-9548-4FD6-AFF4-32081E3717EE}"
-        "PackageCode" = "8:{722ECE3F-5706-4DC1-BC3D-006E83FF3D6A}"
+        "ProductCode" = "8:{1C17A746-3B10-431B-825E-32CFC328804A}"
+        "PackageCode" = "8:{86022F1E-DE1B-494C-8D05-7AAA746C5F03}"
         "UpgradeCode" = "8:{658E9429-43A4-404C-BEF3-45AACB8B3130}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "ProductVersion" = "8:1.3.0"
+        "ProductVersion" = "8:1.3.2"
         "Manufacturer" = "8:Battelle Memorial Institute"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -901,7 +901,7 @@
         }
         "MergeModule"
         {
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_6DB46C7494264D26B732C56DC5D8E512"
+            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_2F8DFC25ABD74E0A9CC877CF926DF333"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"

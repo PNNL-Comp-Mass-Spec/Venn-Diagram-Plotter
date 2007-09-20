@@ -1133,7 +1133,7 @@ Public Class DisplayForm
     Private Const DEFAULT_WINDOW_WIDTH_TWO_CIRCLE As Integer = 637
     Private Const DEFAULT_WINDOW_WIDTH_THREE_CIRCLE As Integer = 820
 
-    Private Const PROGRAM_DATE As String = "September 19, 2007"
+    Private Const PROGRAM_DATE As String = "September 20, 2007"
 #End Region
 
 #Region "Structures and Enums"
@@ -2531,7 +2531,7 @@ Public Class DisplayForm
 
 #Region "Button Handlers"
 
-    Private Sub cmdBackgroundColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub cmdBackgroundColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdBackgroundColor.Click
         dlgColor.Color = Me.BackColor
         If dlgColor.ShowDialog() = DialogResult.OK Then
             vdgTwoCircles.VennDiagram.BackColor = dlgColor.Color
@@ -2544,7 +2544,7 @@ Public Class DisplayForm
         CopyVennToClipboard()
     End Sub
 
-    Private Sub cmdCircleAColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub cmdCircleAColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCircleAColor.Click
         dlgColor.Color = vdgTwoCircles.VennDiagram.CircleAColor
         If dlgColor.ShowDialog() = DialogResult.OK Then
             vdgTwoCircles.VennDiagram.CircleAColor = dlgColor.Color
@@ -2553,7 +2553,7 @@ Public Class DisplayForm
         End If
     End Sub
 
-    Private Sub cmdCircleBColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub cmdCircleBColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCircleBColor.Click
         dlgColor.Color = vdgTwoCircles.VennDiagram.CircleBColor
         If dlgColor.ShowDialog() = DialogResult.OK Then
             vdgTwoCircles.VennDiagram.CircleBColor = dlgColor.Color
@@ -2562,7 +2562,7 @@ Public Class DisplayForm
         End If
     End Sub
 
-    Private Sub cmdCircleCColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub cmdCircleCColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCircleCColor.Click
         dlgColor.Color = vdgThreeCircles.VennDiagram.CircleCColor
         If dlgColor.ShowDialog() = DialogResult.OK Then
             vdgThreeCircles.VennDiagram.CircleCColor = dlgColor.Color
@@ -2574,7 +2574,7 @@ Public Class DisplayForm
         ComputeOptimalRegionCount(True)
     End Sub
 
-    Private Sub cmdOverlapABColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub cmdOverlapABColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOverlapABColor.Click
         dlgColor.Color = vdgTwoCircles.VennDiagram.OverlapColor
         If dlgColor.ShowDialog() = DialogResult.OK Then
             vdgTwoCircles.VennDiagram.OverlapColor = dlgColor.Color
@@ -2583,7 +2583,7 @@ Public Class DisplayForm
         End If
     End Sub
 
-    Private Sub cmdOverlapBCColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub cmdOverlapBCColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOverlapBCColor.Click
         dlgColor.Color = vdgThreeCircles.VennDiagram.OverlapBCColor
         If dlgColor.ShowDialog() = DialogResult.OK Then
             vdgThreeCircles.VennDiagram.OverlapBCColor = dlgColor.Color
@@ -2591,7 +2591,7 @@ Public Class DisplayForm
         End If
     End Sub
 
-    Private Sub cmdOverlapACColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub cmdOverlapACColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOverlapACColor.Click
         dlgColor.Color = vdgThreeCircles.VennDiagram.OverlapACColor
         If dlgColor.ShowDialog() = DialogResult.OK Then
             vdgThreeCircles.VennDiagram.OverlapACColor = dlgColor.Color
@@ -2599,7 +2599,7 @@ Public Class DisplayForm
         End If
     End Sub
 
-    Private Sub cmdOverlapABCColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub cmdOverlapABCColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOverlapABCColor.Click
         dlgColor.Color = vdgThreeCircles.VennDiagram.OverlapABCColor
         If dlgColor.ShowDialog() = DialogResult.OK Then
             vdgThreeCircles.VennDiagram.OverlapABCColor = dlgColor.Color
@@ -2666,7 +2666,7 @@ Public Class DisplayForm
         RefreshVennDiagrams(False)
     End Sub
 
-    Private Sub chkFillCirclesWithColor_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub chkFillCirclesWithColor_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkFillCirclesWithColor.Click
         If Not vdgTwoCircles Is Nothing Then
             vdgTwoCircles.VennDiagram.PaintSolidColorCircles = chkFillCirclesWithColor.Checked
         End If

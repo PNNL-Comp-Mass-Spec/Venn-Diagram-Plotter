@@ -148,8 +148,10 @@ Public Class TwoCircleVennDiagram
         Me.m_circleB.DrawingPath.Reset()
         Me.m_circleB.DrawingPath.AddEllipse(circleBBoundingBox)
 
-        'create overlap region by taking an arc from each circle
-        DrawOverlapRegion(Me.m_overlapAB.DrawingPath, circleABoundingBox, circleBBoundingBox, Me.m_OverlapAB_alpha, Me.m_OverlapAB_beta, 0, 0)
+        If Me.PaintSolidColorCircles Then
+            'create overlap region by taking an arc from each circle
+            DrawOverlapRegion(Me.m_overlapAB.DrawingPath, circleABoundingBox, circleBBoundingBox, Me.m_OverlapAB_alpha, Me.m_OverlapAB_beta, 0, 0)
+        End If
 
         'Console.WriteLine("calculated screen coordinates")
         Me.m_ScreenCoordinatesValid = True

@@ -879,6 +879,22 @@ Public Class ThreeCircleVennDiagram
         Me.m_circleC.DrawingPath.Reset()
         Me.m_circleC.DrawingPath.AddEllipse(circleCBoundingBox)
 
+        If Me.PaintSolidColorCircles Then
+            ComputeScreenOverlapCoordinates(circleABoundingBox, circleBBoundingBox, circleCBoundingBox)
+        End If
+
+        'Console.WriteLine("calculated screen coordinates")
+        Me.m_ScreenCoordinatesValid = True
+    End Sub
+
+    Private Sub ComputeScreenOverlapCoordinates(ByVal circleABoundingBox As RectangleF, ByVal circleBBoundingBox As RectangleF, ByVal circleCBoundingBox As RectangleF)
+        Dim sngAngleStart As Single
+        Dim sngAngleStartB As Single
+        Dim sngSweep As Single
+        Dim sngSweepB As Single
+        Dim blnInvalidSweepComputed As Boolean
+        blnInvalidSweepComputed = False
+
         ' Create overlap region by taking an arc from each circle
         ' Circles A & B
         DrawOverlapRegion(Me.m_overlapAB.DrawingPath, circleABoundingBox, circleBBoundingBox, Me.mCirclesAB.OverlapABAlpha, Me.mCirclesAB.OverlapABBeta, 0, 0)
@@ -890,14 +906,7 @@ Public Class ThreeCircleVennDiagram
         DrawOverlapRegion(Me.m_overlapAC.DrawingPath, circleABoundingBox, circleCBoundingBox, Me.mCirclesAC, mOverlapACArcAdj)
 
 
-        Dim sngAngleStart As Single
-        Dim sngAngleStartB As Single
-        Dim sngSweep As Single
-        Dim sngSweepB As Single
-        Dim blnInvalidSweepComputed As Boolean
-        blnInvalidSweepComputed = False
-
-        ' The ABC overlap region (with 3 arcs)
+        ' The ABC overlap region (composed of 3 arcs)
         m_overlapABC.DrawingPath.Reset()
 
         ' The first arc (goes along circle A)
@@ -942,9 +951,6 @@ Public Class ThreeCircleVennDiagram
                 m_overlapABC.DrawingPath.AddArc(circleCBoundingBox, sngAngleStart, sngSweep)
             End If
         End If
-
-        'Console.WriteLine("calculated screen coordinates")
-        Me.m_ScreenCoordinatesValid = True
     End Sub
 
     'The first step in drawing a venn diagram, compute world coordinates with the

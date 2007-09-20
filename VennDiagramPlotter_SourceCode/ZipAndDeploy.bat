@@ -15,6 +15,8 @@ Set DistributionFolderBase=D:\Public\Software
 
 Set SourceCodeFolder=%ProgramName%_SourceCode
 Set SourceCodeFile=%ProgramName%_Source_v*.zip
+Set SourceCodeFile2=VennDiagrams_Source_v*.zip
+Set SourceCodeFile3=ControlPrinter_Source_v*.zip
 Set SourceAndSupportingDLLsFile=%ProgramName%_SourceAndSupportingDLLs.zip
 
 Set ZippedInstallerFile=%ProgramName%_Installer.zip
@@ -34,13 +36,30 @@ echo 2) Updating Supporting DLL Zip Files
 Call Update_Supporting_Source_Code.bat
 
 echo.
-echo 3) Updating Source Code file for %ProgramName%
+echo 3a) Updating Source Code file for %ProgramName%
 Move %SourceCodeFile% ..\..\
 CD ..\..
 "c:\program files\winrar\winRar.exe" f %SourceCodeFile%
 Move %SourceCodeFile% %SourceCodeFolder%\SourceAndSupportingDLLs\
 
-cd %SourceCodeFolder%
+cd %SourceCodeFolder%\SourceAndSupportingDLLs
+
+echo.
+echo 3b) Updating Source Code file for %SourceCodeFile2%
+Move %SourceCodeFile2% ..\..\VennDiagrams\
+CD ..\..\VennDiagrams
+"c:\program files\winrar\winRar.exe" f %SourceCodeFile2%
+Move %SourceCodeFile2% ..\%SourceCodeFolder%\SourceAndSupportingDLLs\
+cd ..\%SourceCodeFolder%\SourceAndSupportingDLLs
+
+echo.
+echo 3c) Updating Source Code file for %SourceCodeFile3%
+Move %SourceCodeFile3% ..\..\ControlPrinter\
+CD ..\..\ControlPrinter
+"c:\program files\winrar\winRar.exe" f %SourceCodeFile3%
+Move %SourceCodeFile3% ..\%SourceCodeFolder%\SourceAndSupportingDLLs\
+cd ..\%SourceCodeFolder%
+
 
 echo.
 echo 4) Creating %SourceAndSupportingDLLsFile%
