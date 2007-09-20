@@ -70,11 +70,6 @@
                     AssemblyName = "System.Windows.Forms"
                 />
                 <Reference
-                    Name = "VennDiagrams"
-                    Project = "{308B6221-0D87-4843-977D-47F63B3EA38A}"
-                    Package = "{F184B08F-C81C-45F6-A57F-5ABD9991F28F}"
-                />
-                <Reference
                     Name = "stdole"
                     AssemblyName = "stdole"
                     HintPath = "..\..\..\..\..\..\Program Files\Microsoft.NET\Primary Interop Assemblies\stdole.dll"
@@ -86,9 +81,19 @@
                     Package = "{F184B08F-C81C-45F6-A57F-5ABD9991F28F}"
                 />
                 <Reference
-                    Name = "PRISM"
-                    AssemblyName = "PRISM"
-                    HintPath = "bin\PRISM.dll"
+                    Name = "System.Data"
+                    AssemblyName = "System.Data"
+                    HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Data.dll"
+                />
+                <Reference
+                    Name = "System.XML"
+                    AssemblyName = "System.Xml"
+                    HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.XML.dll"
+                />
+                <Reference
+                    Name = "VennDiagrams"
+                    Project = "{308B6221-0D87-4843-977D-47F63B3EA38A}"
+                    Package = "{F184B08F-C81C-45F6-A57F-5ABD9991F28F}"
                 />
             </References>
             <Imports>
@@ -104,6 +109,11 @@
             <Include>
                 <File
                     RelPath = "AssemblyInfo.vb"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "clsXmlSettingsFileAccessor.vb"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

@@ -1,8 +1,7 @@
 Option Strict On
 
 ' -------------------------------------------------------------------------------
-' Written by Kyle Littlefield for the Department of Energy (PNNL, Richland, WA)
-' Software maintained by Matthew Monroe (PNNL, Richland, WA)
+' Written by Matthew Monroe for the Department of Energy (PNNL, Richland, WA)
 ' Program started in August 2004
 '
 ' E-mail: matthew.monroe@pnl.gov or matt@alchemistmatt.com
@@ -14,12 +13,12 @@ Option Strict On
 ' http://www.apache.org/licenses/LICENSE-2.0
 '
 
-Public Class TwoCircleVennDiagramPresenter
+Public Class ThreeCircleVennDiagramPresenter
     Inherits System.Windows.Forms.UserControl
     Implements ControlPrinter.IPrintableControlContainer
 
     Protected m_LegendSeparation As Integer = 8
-    Protected m_LegendTopSeperation As Integer = 24
+    Protected m_LegendTopSeparation As Integer = 24
 
 #Region " Windows Form Designer generated code "
 
@@ -50,22 +49,28 @@ Public Class TwoCircleVennDiagramPresenter
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
     Friend WithEvents lblLegendCircleA As System.Windows.Forms.Label
-    Friend WithEvents lblLegendOverlap As System.Windows.Forms.Label
     Friend WithEvents lblLegendCircleB As System.Windows.Forms.Label
     Friend WithEvents lblTitle As System.Windows.Forms.Label
     Friend WithEvents lblFooter As System.Windows.Forms.Label
     Friend WithEvents gbxLegend As System.Windows.Forms.GroupBox
     Friend WithEvents lblDivider As System.Windows.Forms.Label
-    Friend WithEvents vdgVennDiagram As VennDiagrams.TwoCircleVennDiagram
+    Friend WithEvents vdgVennDiagram As VennDiagrams.ThreeCircleVennDiagram
+    Friend WithEvents lblLegendOverlapAB As System.Windows.Forms.Label
+    Friend WithEvents lblLegendCircleC As System.Windows.Forms.Label
+    Friend WithEvents lblLegendOverlapBC As System.Windows.Forms.Label
+    Friend WithEvents lblLegendOverlapAC As System.Windows.Forms.Label
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.lblTitle = New System.Windows.Forms.Label
         Me.lblLegendCircleA = New System.Windows.Forms.Label
-        Me.lblLegendOverlap = New System.Windows.Forms.Label
+        Me.lblLegendOverlapAB = New System.Windows.Forms.Label
         Me.lblLegendCircleB = New System.Windows.Forms.Label
         Me.gbxLegend = New System.Windows.Forms.GroupBox
+        Me.lblLegendOverlapAC = New System.Windows.Forms.Label
+        Me.lblLegendOverlapBC = New System.Windows.Forms.Label
+        Me.lblLegendCircleC = New System.Windows.Forms.Label
         Me.lblDivider = New System.Windows.Forms.Label
         Me.lblFooter = New System.Windows.Forms.Label
-        Me.vdgVennDiagram = New VennDiagrams.TwoCircleVennDiagram
+        Me.vdgVennDiagram = New VennDiagrams.ThreeCircleVennDiagram
         Me.gbxLegend.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -85,29 +90,29 @@ Public Class TwoCircleVennDiagramPresenter
         'lblLegendCircleA
         '
         Me.lblLegendCircleA.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblLegendCircleA.Location = New System.Drawing.Point(8, -32)
+        Me.lblLegendCircleA.Location = New System.Drawing.Point(8, 24)
         Me.lblLegendCircleA.Name = "lblLegendCircleA"
-        Me.lblLegendCircleA.Size = New System.Drawing.Size(128, 112)
+        Me.lblLegendCircleA.Size = New System.Drawing.Size(128, 40)
         Me.lblLegendCircleA.TabIndex = 2
         Me.lblLegendCircleA.Text = "Circle A"
         Me.lblLegendCircleA.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'lblLegendOverlap
+        'lblLegendOverlapAB
         '
-        Me.lblLegendOverlap.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblLegendOverlap.Location = New System.Drawing.Point(8, 86)
-        Me.lblLegendOverlap.Name = "lblLegendOverlap"
-        Me.lblLegendOverlap.Size = New System.Drawing.Size(128, 160)
-        Me.lblLegendOverlap.TabIndex = 3
-        Me.lblLegendOverlap.Text = "Overlap"
-        Me.lblLegendOverlap.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblLegendOverlapAB.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblLegendOverlapAB.Location = New System.Drawing.Point(8, 72)
+        Me.lblLegendOverlapAB.Name = "lblLegendOverlapAB"
+        Me.lblLegendOverlapAB.Size = New System.Drawing.Size(128, 40)
+        Me.lblLegendOverlapAB.TabIndex = 3
+        Me.lblLegendOverlapAB.Text = "Overlap"
+        Me.lblLegendOverlapAB.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'lblLegendCircleB
         '
         Me.lblLegendCircleB.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblLegendCircleB.Location = New System.Drawing.Point(8, 254)
+        Me.lblLegendCircleB.Location = New System.Drawing.Point(8, 136)
         Me.lblLegendCircleB.Name = "lblLegendCircleB"
-        Me.lblLegendCircleB.Size = New System.Drawing.Size(128, 162)
+        Me.lblLegendCircleB.Size = New System.Drawing.Size(128, 40)
         Me.lblLegendCircleB.TabIndex = 4
         Me.lblLegendCircleB.Text = "Circle B"
         Me.lblLegendCircleB.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -116,8 +121,11 @@ Public Class TwoCircleVennDiagramPresenter
         '
         Me.gbxLegend.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.gbxLegend.Controls.Add(Me.lblLegendOverlapAC)
+        Me.gbxLegend.Controls.Add(Me.lblLegendOverlapBC)
+        Me.gbxLegend.Controls.Add(Me.lblLegendCircleC)
         Me.gbxLegend.Controls.Add(Me.lblLegendCircleB)
-        Me.gbxLegend.Controls.Add(Me.lblLegendOverlap)
+        Me.gbxLegend.Controls.Add(Me.lblLegendOverlapAB)
         Me.gbxLegend.Controls.Add(Me.lblLegendCircleA)
         Me.gbxLegend.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gbxLegend.Location = New System.Drawing.Point(456, 56)
@@ -126,6 +134,36 @@ Public Class TwoCircleVennDiagramPresenter
         Me.gbxLegend.TabIndex = 5
         Me.gbxLegend.TabStop = False
         Me.gbxLegend.Text = "Legend"
+        '
+        'lblLegendOverlapAC
+        '
+        Me.lblLegendOverlapAC.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblLegendOverlapAC.Location = New System.Drawing.Point(8, 304)
+        Me.lblLegendOverlapAC.Name = "lblLegendOverlapAC"
+        Me.lblLegendOverlapAC.Size = New System.Drawing.Size(128, 40)
+        Me.lblLegendOverlapAC.TabIndex = 7
+        Me.lblLegendOverlapAC.Text = "Overlap"
+        Me.lblLegendOverlapAC.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'lblLegendOverlapBC
+        '
+        Me.lblLegendOverlapBC.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblLegendOverlapBC.Location = New System.Drawing.Point(8, 184)
+        Me.lblLegendOverlapBC.Name = "lblLegendOverlapBC"
+        Me.lblLegendOverlapBC.Size = New System.Drawing.Size(128, 40)
+        Me.lblLegendOverlapBC.TabIndex = 6
+        Me.lblLegendOverlapBC.Text = "Overlap"
+        Me.lblLegendOverlapBC.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'lblLegendCircleC
+        '
+        Me.lblLegendCircleC.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblLegendCircleC.Location = New System.Drawing.Point(8, 240)
+        Me.lblLegendCircleC.Name = "lblLegendCircleC"
+        Me.lblLegendCircleC.Size = New System.Drawing.Size(128, 40)
+        Me.lblLegendCircleC.TabIndex = 5
+        Me.lblLegendCircleC.Text = "Circle C"
+        Me.lblLegendCircleC.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'lblDivider
         '
@@ -185,6 +223,9 @@ Public Class TwoCircleVennDiagramPresenter
         Me.vdgVennDiagram.CircleBColor = Me.vdgVennDiagram.DefaultColorCircleB
         Me.vdgVennDiagram.CircleBLabel = New String() {Nothing}
         Me.vdgVennDiagram.CircleBSize = 1
+        Me.vdgVennDiagram.CircleCColor = Me.vdgVennDiagram.DefaultColorCircleC
+        Me.vdgVennDiagram.CircleCLabel = New String() {Nothing}
+        Me.vdgVennDiagram.CircleCSize = 1
         Me.vdgVennDiagram.FillFactor = 0.95
         Me.vdgVennDiagram.Font = New System.Drawing.Font("Arial", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.vdgVennDiagram.Location = New System.Drawing.Point(0, 56)
@@ -192,21 +233,25 @@ Public Class TwoCircleVennDiagramPresenter
         Me.vdgVennDiagram.OverlapABColor = Me.vdgVennDiagram.DefaultColorOverlapAB
         Me.vdgVennDiagram.OverlapABLabel = New String() {Nothing}
         Me.vdgVennDiagram.OverlapABSize = 0.35
-        Me.vdgVennDiagram.OverlapColor = Me.vdgVennDiagram.DefaultColorOverlapAB
-        Me.vdgVennDiagram.OverlapLabel = New String() {Nothing}
-        Me.vdgVennDiagram.OverlapSize = 0.35
+        Me.vdgVennDiagram.OverlapBCColor = Me.vdgVennDiagram.DefaultColorOverlapBC
+        Me.vdgVennDiagram.OverlapBCLabel = New String() {Nothing}
+        Me.vdgVennDiagram.OverlapBCSize = 0.15
+        Me.vdgVennDiagram.OverlapACColor = Me.vdgVennDiagram.DefaultColorOverlapAC
+        Me.vdgVennDiagram.OverlapACLabel = New String(-1) {}
+        Me.vdgVennDiagram.OverlapACSize = 1
+        Me.vdgVennDiagram.OverlapABCColor = Me.vdgVennDiagram.DefaultColorOverlapABC
         Me.vdgVennDiagram.Size = New System.Drawing.Size(448, 368)
         Me.vdgVennDiagram.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default
         Me.vdgVennDiagram.TabIndex = 9
         '
-        'TwoCircleVennDiagramPresenter
+        'ThreeCircleVennDiagramPresenter
         '
         Me.Controls.Add(Me.vdgVennDiagram)
         Me.Controls.Add(Me.lblFooter)
         Me.Controls.Add(Me.lblDivider)
         Me.Controls.Add(Me.gbxLegend)
         Me.Controls.Add(Me.lblTitle)
-        Me.Name = "TwoCircleVennDiagramPresenter"
+        Me.Name = "ThreeCircleVennDiagramPresenter"
         Me.Size = New System.Drawing.Size(600, 480)
         Me.gbxLegend.ResumeLayout(False)
         Me.ResumeLayout(False)
@@ -241,21 +286,48 @@ Public Class TwoCircleVennDiagramPresenter
         End Set
     End Property
 
-    Public Property LegendOverlapText() As String
-        Get
-            Return Me.lblLegendOverlap.Text
-        End Get
-        Set(ByVal Value As String)
-            Me.lblLegendOverlap.Text = Value
-        End Set
-    End Property
-
     Public Property LegendCircleBText() As String
         Get
             Return Me.lblLegendCircleB.Text
         End Get
         Set(ByVal Value As String)
             Me.lblLegendCircleB.Text = Value
+        End Set
+    End Property
+
+    Public Property LegendCirclecText() As String
+        Get
+            Return Me.lblLegendCircleC.Text
+        End Get
+        Set(ByVal Value As String)
+            Me.lblLegendCircleC.Text = Value
+        End Set
+    End Property
+
+    Public Property LegendOverlapABText() As String
+        Get
+            Return Me.lblLegendOverlapAB.Text
+        End Get
+        Set(ByVal Value As String)
+            Me.lblLegendOverlapAB.Text = Value
+        End Set
+    End Property
+
+    Public Property LegendOverlapBCText() As String
+        Get
+            Return Me.lblLegendOverlapBC.Text
+        End Get
+        Set(ByVal Value As String)
+            Me.lblLegendOverlapAB.Text = Value
+        End Set
+    End Property
+
+    Public Property LegendOverlapACText() As String
+        Get
+            Return Me.lblLegendOverlapAC.Text
+        End Get
+        Set(ByVal Value As String)
+            Me.lblLegendOverlapAB.Text = Value
         End Set
     End Property
 
@@ -273,7 +345,7 @@ Public Class TwoCircleVennDiagramPresenter
 
 #End Region
 
-    Public ReadOnly Property VennDiagram() As TwoCircleVennDiagram
+    Public ReadOnly Property VennDiagram() As ThreeCircleVennDiagram
         Get
             Return vdgVennDiagram
         End Get
@@ -293,22 +365,35 @@ Public Class TwoCircleVennDiagramPresenter
     Private Sub VennDiagram_ColorChange(ByVal sender As VennDiagrams.VennDiagramBaseClass) Handles vdgVennDiagram.DrawingChange
         Me.lblLegendCircleA.BackColor = vdgVennDiagram.CircleAColor
         Me.lblLegendCircleB.BackColor = vdgVennDiagram.CircleBColor
-        Me.lblLegendOverlap.BackColor = vdgVennDiagram.OverlapABColor
+        Me.lblLegendCircleC.BackColor = vdgVennDiagram.CircleCColor
+        Me.lblLegendOverlapAB.BackColor = vdgVennDiagram.OverlapABColor
+        Me.lblLegendOverlapBC.BackColor = vdgVennDiagram.OverlapBCColor
+        Me.lblLegendOverlapAC.BackColor = vdgVennDiagram.OverlapACColor
     End Sub
 
     Private Sub gbxLegend_Resize(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles gbxLegend.Resize
-        'redraw labels so they take up 1/3 of space each
+        'redraw labels so they take up 1/6 of space each
         'anchoring already causes them to be aligned correctly horizontally
-        Dim totalHeight As Integer = Me.gbxLegend.Height - 3 * Me.LegendSeparation - Me.m_LegendTopSeperation
-        Dim individualHeight As Integer = CInt(totalHeight / 3)
+        Dim totalHeight As Integer = Me.gbxLegend.Height - 6 * Me.LegendSeparation - Me.m_LegendTopSeparation
+        Dim individualHeight As Integer = CInt(totalHeight / 6)
 
-        Me.lblLegendCircleA.Top = Me.m_LegendTopSeperation
+        Me.lblLegendCircleA.Top = Me.m_LegendTopSeparation
         Me.lblLegendCircleA.Height = individualHeight
 
-        Me.lblLegendOverlap.Top = Me.m_LegendTopSeperation + 1 * (Me.LegendSeparation + individualHeight)
-        Me.lblLegendOverlap.Height = individualHeight
+        Me.lblLegendOverlapAB.Top = Me.m_LegendTopSeparation + 1 * (Me.LegendSeparation + individualHeight)
+        Me.lblLegendOverlapAB.Height = individualHeight
 
-        Me.lblLegendCircleB.Top = Me.m_LegendTopSeperation + 2 * (Me.LegendSeparation + individualHeight)
+        Me.lblLegendCircleB.Top = Me.m_LegendTopSeparation + 2 * (Me.LegendSeparation + individualHeight)
         Me.lblLegendCircleB.Height = individualHeight
+
+        Me.lblLegendOverlapBC.Top = Me.m_LegendTopSeparation + 3 * (Me.LegendSeparation + individualHeight)
+        Me.lblLegendOverlapBC.Height = individualHeight
+
+        Me.lblLegendCircleC.Top = Me.m_LegendTopSeparation + 4 * (Me.LegendSeparation + individualHeight)
+        Me.lblLegendCircleC.Height = individualHeight
+
+        Me.lblLegendOverlapAC.Top = Me.m_LegendTopSeparation + 5 * (Me.LegendSeparation + individualHeight)
+        Me.lblLegendOverlapAC.Height = individualHeight
+
     End Sub
 End Class

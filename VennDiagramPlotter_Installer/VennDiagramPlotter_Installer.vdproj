@@ -33,8 +33,44 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_6DB46C7494264D26B732C56DC5D8E512"
+        "OwnerKey" = "8:_23DD59EC478C45709A785E9001DF8055"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6DB46C7494264D26B732C56DC5D8E512"
+        "OwnerKey" = "8:_7199F07669E16E86E65C8D1E66520FD1"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6DB46C7494264D26B732C56DC5D8E512"
+        "OwnerKey" = "8:_9EB06872B09718873FD4701D438D12CF"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7199F07669E16E86E65C8D1E66520FD1"
+        "OwnerKey" = "8:_23DD59EC478C45709A785E9001DF8055"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_8CEC0684A92243F4BFDE54F7D17A50D6"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_9EB06872B09718873FD4701D438D12CF"
+        "OwnerKey" = "8:_23DD59EC478C45709A785E9001DF8055"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_9EB06872B09718873FD4701D438D12CF"
+        "OwnerKey" = "8:_7199F07669E16E86E65C8D1E66520FD1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -45,56 +81,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_D1E09DA5A101A78EC8A75A3073090F25"
-        "OwnerKey" = "8:_23DD59EC478C45709A785E9001DF8055"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D1E09DA5A101A78EC8A75A3073090F25"
-        "OwnerKey" = "8:_E98FD5D2135A843AE0C25F6391052E2D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_DCF8B24E764B6BDA263A8A930926D687"
-        "OwnerKey" = "8:_23DD59EC478C45709A785E9001DF8055"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E98FD5D2135A843AE0C25F6391052E2D"
-        "OwnerKey" = "8:_23DD59EC478C45709A785E9001DF8055"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_EDA758BB6A6E4355BA42C3E4642DBA03"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_FB5AC1E721844C7EBA58BD1476CC549A"
-        "OwnerKey" = "8:_23DD59EC478C45709A785E9001DF8055"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_FB5AC1E721844C7EBA58BD1476CC549A"
-        "OwnerKey" = "8:_E98FD5D2135A843AE0C25F6391052E2D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_FB5AC1E721844C7EBA58BD1476CC549A"
-        "OwnerKey" = "8:_D1E09DA5A101A78EC8A75A3073090F25"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_FB5AC1E721844C7EBA58BD1476CC549A"
-        "OwnerKey" = "8:_DCF8B24E764B6BDA263A8A930926D687"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -202,6 +190,37 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{FB480208-1853-44D0-9ABD-A3B734C3FAAA}:_7199F07669E16E86E65C8D1E66520FD1"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:VennDiagrams, Version=1.1.2413.39777, Culture=neutral"
+                "ScatterAssemblies"
+                {
+                    "_7199F07669E16E86E65C8D1E66520FD1"
+                    {
+                    "Name" = "8:VennDiagrams.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:VennDiagrams.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_E551FF1FF72B425DB50F2A16756B14E9"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{A582A373-4685-4296-BEFE-614B80A702C3}:_8CEC0684A92243F4BFDE54F7D17A50D6"
             {
             "SourcePath" = "8:..\\bin\\RevisionHistory.txt"
@@ -222,45 +241,14 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{FB480208-1853-44D0-9ABD-A3B734C3FAAA}:_BE16F70FB6C31C96962AE76301FEA30C"
+            "{FB480208-1853-44D0-9ABD-A3B734C3FAAA}:_9EB06872B09718873FD4701D438D12CF"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
+            "AssemblyAsmDisplayName" = "8:ControlPrinter, Version=1.0.2413.39777, Culture=neutral"
                 "ScatterAssemblies"
                 {
-                    "_BE16F70FB6C31C96962AE76301FEA30C"
-                    {
-                    "Name" = "8:stdole.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:stdole.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_E551FF1FF72B425DB50F2A16756B14E9"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{FB480208-1853-44D0-9ABD-A3B734C3FAAA}:_D1E09DA5A101A78EC8A75A3073090F25"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ControlPrinter, Version=1.0.2104.29155, Culture=neutral"
-                "ScatterAssemblies"
-                {
-                    "_D1E09DA5A101A78EC8A75A3073090F25"
+                    "_9EB06872B09718873FD4701D438D12CF"
                     {
                     "Name" = "8:ControlPrinter.dll"
                     "Attributes" = "3:512"
@@ -284,51 +272,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{FB480208-1853-44D0-9ABD-A3B734C3FAAA}:_DCF8B24E764B6BDA263A8A930926D687"
+            "{FB480208-1853-44D0-9ABD-A3B734C3FAAA}:_BE16F70FB6C31C96962AE76301FEA30C"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:PRISM, Version=1.0.2008.29786, Culture=neutral"
+            "AssemblyAsmDisplayName" = "8:stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
                 "ScatterAssemblies"
                 {
-                    "_DCF8B24E764B6BDA263A8A930926D687"
+                    "_BE16F70FB6C31C96962AE76301FEA30C"
                     {
-                    "Name" = "8:PRISM.dll"
+                    "Name" = "8:stdole.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:PRISM.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_E551FF1FF72B425DB50F2A16756B14E9"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{FB480208-1853-44D0-9ABD-A3B734C3FAAA}:_E98FD5D2135A843AE0C25F6391052E2D"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:VennDiagrams, Version=1.1.2104.29155, Culture=neutral"
-                "ScatterAssemblies"
-                {
-                    "_E98FD5D2135A843AE0C25F6391052E2D"
-                    {
-                    "Name" = "8:VennDiagrams.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:VennDiagrams.dll"
+            "SourcePath" = "8:stdole.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_E551FF1FF72B425DB50F2A16756B14E9"
@@ -432,13 +389,13 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:VennDiagramPlotter"
-        "ProductCode" = "8:{4BB963C9-2C4B-42AF-937E-773F44EA24F8}"
-        "PackageCode" = "8:{25DBCF3A-4919-4348-AD7F-E299DB76D26C}"
+        "ProductCode" = "8:{71BA080E-9548-4FD6-AFF4-32081E3717EE}"
+        "PackageCode" = "8:{722ECE3F-5706-4DC1-BC3D-006E83FF3D6A}"
         "UpgradeCode" = "8:{658E9429-43A4-404C-BEF3-45AACB8B3130}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "ProductVersion" = "8:1.1.1"
+        "ProductVersion" = "8:1.3.0"
         "Manufacturer" = "8:Battelle Memorial Institute"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -944,7 +901,7 @@
         }
         "MergeModule"
         {
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_FB5AC1E721844C7EBA58BD1476CC549A"
+            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_6DB46C7494264D26B732C56DC5D8E512"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -989,9 +946,6 @@
                 {
                 }
             }
-        }
-        "VJSharpPlugin"
-        {
         }
     }
 }

@@ -74,6 +74,11 @@
                     Project = "{827331C0-0D9C-4AAA-A984-ADE4EE059C18}"
                     Package = "{F184B08F-C81C-45F6-A57F-5ABD9991F28F}"
                 />
+                <Reference
+                    Name = "System.Data"
+                    AssemblyName = "System.Data"
+                    HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Data.dll"
+                />
             </References>
             <Imports>
                 <Import Namespace = "Microsoft.VisualBasic" />
@@ -92,6 +97,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "clsMatrixSolver.vb"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "ExperimentationDiagram.vb"
                     SubType = "UserControl"
                     BuildAction = "Compile"
@@ -102,23 +112,33 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
-                    RelPath = "TestPresenter.vb"
+                    RelPath = "ThreeCircleVennDiagram.vb"
                     SubType = "UserControl"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "TestPresenter.resx"
-                    DependentUpon = "TestPresenter.vb"
+                    RelPath = "ThreeCircleVennDiagram.resx"
+                    DependentUpon = "ThreeCircleVennDiagram.vb"
                     BuildAction = "EmbeddedResource"
                 />
                 <File
-                    RelPath = "TwoCircleDiagramOnly.vb"
+                    RelPath = "ThreeCircleVennDiagramPlain.vb"
                     SubType = "UserControl"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "TwoCircleDiagramOnly.resx"
-                    DependentUpon = "TwoCircleDiagramOnly.vb"
+                    RelPath = "ThreeCircleVennDiagramPlain.resx"
+                    DependentUpon = "ThreeCircleVennDiagramPlain.vb"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "ThreeCircleVennDiagramPresenter.vb"
+                    SubType = "UserControl"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ThreeCircleVennDiagramPresenter.resx"
+                    DependentUpon = "ThreeCircleVennDiagramPresenter.vb"
                     BuildAction = "EmbeddedResource"
                 />
                 <File
@@ -132,6 +152,16 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
+                    RelPath = "TwoCircleVennDiagramPlain.vb"
+                    SubType = "UserControl"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "TwoCircleVennDiagramPlain.resx"
+                    DependentUpon = "TwoCircleVennDiagramPlain.vb"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "TwoCircleVennDiagramPresenter.vb"
                     SubType = "UserControl"
                     BuildAction = "Compile"
@@ -139,6 +169,16 @@
                 <File
                     RelPath = "TwoCircleVennDiagramPresenter.resx"
                     DependentUpon = "TwoCircleVennDiagramPresenter.vb"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "VennDiagramBaseClass.vb"
+                    SubType = "UserControl"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "VennDiagramBaseClass.resx"
+                    DependentUpon = "VennDiagramBaseClass.vb"
                     BuildAction = "EmbeddedResource"
                 />
             </Include>

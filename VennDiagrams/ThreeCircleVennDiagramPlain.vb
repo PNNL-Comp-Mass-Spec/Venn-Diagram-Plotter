@@ -1,8 +1,7 @@
 Option Strict On
 
 ' -------------------------------------------------------------------------------
-' Written by Kyle Littlefield for the Department of Energy (PNNL, Richland, WA)
-' Software maintained by Matthew Monroe (PNNL, Richland, WA)
+' Written by Matthew Monroe for the Department of Energy (PNNL, Richland, WA)
 ' Program started in August 2004
 '
 ' E-mail: matthew.monroe@pnl.gov or matt@alchemistmatt.com
@@ -13,7 +12,7 @@ Option Strict On
 ' in compliance with the License.  You may obtain a copy of the License at 
 ' http://www.apache.org/licenses/LICENSE-2.0
 '
-Public Class TestPresenter
+Public Class ThreeCircleVennDiagramPlain
     Inherits System.Windows.Forms.UserControl
     Implements ControlPrinter.IPrintableControlContainer
 
@@ -46,9 +45,9 @@ Public Class TestPresenter
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    Friend WithEvents vdgVennDiagram As VennDiagrams.TwoCircleVennDiagram
+    Friend WithEvents vdgVennDiagram As VennDiagrams.ThreeCircleVennDiagram
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Me.vdgVennDiagram = New VennDiagrams.TwoCircleVennDiagram
+        Me.vdgVennDiagram = New VennDiagrams.ThreeCircleVennDiagram
         Me.SuspendLayout()
         '
         'vdgVennDiagram
@@ -56,27 +55,35 @@ Public Class TestPresenter
         Me.vdgVennDiagram.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
                     Or System.Windows.Forms.AnchorStyles.Left) _
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.vdgVennDiagram.CircleAColor = System.Drawing.Color.FromArgb(CType(255, Byte), CType(192, Byte), CType(192, Byte))
+        Me.vdgVennDiagram.CircleAColor = Me.vdgVennDiagram.DefaultColorCircleA
         Me.vdgVennDiagram.CircleALabel = New String() {Nothing}
         Me.vdgVennDiagram.CircleASize = 1
-        Me.vdgVennDiagram.CircleBColor = System.Drawing.Color.FromArgb(CType(192, Byte), CType(255, Byte), CType(255, Byte))
+        Me.vdgVennDiagram.CircleBColor = Me.vdgVennDiagram.DefaultColorCircleB
         Me.vdgVennDiagram.CircleBLabel = New String() {Nothing}
         Me.vdgVennDiagram.CircleBSize = 1
-        Me.vdgVennDiagram.FillSize = 0.9
+        Me.vdgVennDiagram.CircleCColor = Me.vdgVennDiagram.DefaultColorCircleC
+        Me.vdgVennDiagram.CircleCLabel = New String() {Nothing}
+        Me.vdgVennDiagram.CircleCSize = 1
+        Me.vdgVennDiagram.FillFactor = 0.95
         Me.vdgVennDiagram.Font = New System.Drawing.Font("Arial", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.vdgVennDiagram.Location = New System.Drawing.Point(0, 0)
         Me.vdgVennDiagram.Name = "vdgVennDiagram"
-        Me.vdgVennDiagram.OverlapColor = System.Drawing.Color.FromArgb(CType(192, Byte), CType(255, Byte), CType(192, Byte))
-        Me.vdgVennDiagram.OverlapLabel = New String() {Nothing}
-        Me.vdgVennDiagram.OverlapSize = 0.5
+        Me.vdgVennDiagram.OverlapABColor = Me.vdgVennDiagram.DefaultColorOverlapAB
+        Me.vdgVennDiagram.OverlapBCColor = Me.vdgVennDiagram.DefaultColorOverlapBC
+        Me.vdgVennDiagram.OverlapACColor = Me.vdgVennDiagram.DefaultColorOverlapAC
+        Me.vdgVennDiagram.OverlapABCColor = Me.vdgVennDiagram.DefaultColorOverlapABC
+        Me.vdgVennDiagram.OverlapABLabel = New String() {Nothing}
+        Me.vdgVennDiagram.OverlapABSize = 0.35
+        Me.vdgVennDiagram.OverlapBCSize = 0.15
+        Me.vdgVennDiagram.OverlapACSize = 0.2
         Me.vdgVennDiagram.Size = New System.Drawing.Size(280, 232)
         Me.vdgVennDiagram.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default
         Me.vdgVennDiagram.TabIndex = 0
         '
-        'TestPresenter
+        'ThreeCircleVennDiagramPlain
         '
         Me.Controls.Add(Me.vdgVennDiagram)
-        Me.Name = "TestPresenter"
+        Me.Name = "ThreeCircleVennDiagramPlain"
         Me.Size = New System.Drawing.Size(280, 232)
         Me.ResumeLayout(False)
 
@@ -84,7 +91,7 @@ Public Class TestPresenter
 
 #End Region
 
-    Public ReadOnly Property VennDiagram() As TwoCircleVennDiagram
+    Public ReadOnly Property VennDiagram() As ThreeCircleVennDiagram
         Get
             Return vdgVennDiagram
         End Get

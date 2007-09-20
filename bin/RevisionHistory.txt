@@ -1,6 +1,15 @@
 Venn Diagram Plotter Change Log
 
-Version 1.0.2104.29100; October 5, 2005
+Version 1.3.2818; September 19, 2007
+	- Improved logic for auto-updating values 
+	- Added coloring of all of the separate regions in 3 circle overlaps (though coloring can be disabled)
+	- Added option to move the 3 circle overlap plot around (rotate, zoom, or translate)
+
+Version 1.2.2686; May 10, 2007
+	- Added the option of specifying the overlap sizes rather than the total circle sizes
+	- Added the ability to perform three circle overlaps
+
+Version 1.1.2104.29100; October 5, 2005
 	- Updated to use PRISM.Files.XmlSettingsFileAccessor (in PRISM.dll)
 	- Updated about box to assert the Apache License, Version 2.0
 	- Removed unused modules

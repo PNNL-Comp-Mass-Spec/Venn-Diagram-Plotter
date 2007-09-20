@@ -1,13 +1,16 @@
 Venn Diagram Plotter
 
-This program will draw correctly proportioned and positioned Venn diagrams.  A 
-Venn diagram is a method of visualizing the amount of overlap between two lists 
-of data, using circles to signify the size of each circle and positioning the 
-circles such that the area of overlap represents the amount of list overlap.  
+This program will draw correctly proportioned and positioned Venn diagrams,
+supporting both 2-circle and 3-circle Venn diagrams (though the overlap regions
+of 3-circle Venn diagrams are not always to scale).  A Venn diagram is a method 
+of visualizing the amount of overlap between two (or three) lists of data, using 
+circles to signify the size of each circle and positioning the circles such that the 
+area of overlap represents the amount of list overlap.  
+
 The program includes a graphical user interface (GUI) where the user enters 
-sizes and amount of overlap between the two lists (the overlap must be 
+sizes and amount of overlap between the two (or three) lists (the overlap must be 
 determined separately by the user).  The resultant Venn diagrams are displayed, 
-the colors can be customized, and the diagrams copied to the clipboard or 
+the colors can be customized, and the diagrams can be copied to the clipboard or 
 saved to disk.
 
 Double click the VennDiagramPlotter_Installer.msi file to install.  The program
@@ -15,7 +18,7 @@ shortcut can be found at Start Menu -> Programs -> PAST Toolkit -> Venn Diagram 
 
 -------------------------------------------------------------------------------
 Written by Kyle Littlefield for the Department of Energy (PNNL, Richland, WA)
-Software maintained by Matthew Monroe (PNNL, Richland, WA)
+Three circle overlap added by Matthew Monroe in 2007 (PNNL, Richland, WA)
 Program started in August 2004
 
 E-mail: matthew.monroe@pnl.gov or matt@alchemistmatt.com
@@ -42,4 +45,3 @@ provided in the Contract.  NEITHER THE GOVERNMENT NOR THE CONTRACTOR MAKES ANY
 WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY LIABILITY FOR THE USE OF THIS 
 SOFTWARE.  This notice including this sentence must appear on any copies of 
 this computer software.
-
