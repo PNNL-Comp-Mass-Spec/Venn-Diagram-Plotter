@@ -1133,7 +1133,7 @@ Public Class DisplayForm
     Private Const DEFAULT_WINDOW_WIDTH_TWO_CIRCLE As Integer = 637
     Private Const DEFAULT_WINDOW_WIDTH_THREE_CIRCLE As Integer = 820
 
-    Private Const PROGRAM_DATE As String = "September 20, 2007"
+    Private Const PROGRAM_DATE As String = "January 14, 2008"
 #End Region
 
 #Region "Structures and Enums"
@@ -1963,6 +1963,7 @@ Public Class DisplayForm
         vdgThreeCircles.VennDiagram.OverlapABColor = vdgThreeCircles.VennDiagram.DefaultColorOverlapAB
         vdgThreeCircles.VennDiagram.OverlapBCColor = vdgThreeCircles.VennDiagram.DefaultColorOverlapBC
         vdgThreeCircles.VennDiagram.OverlapACColor = vdgThreeCircles.VennDiagram.DefaultColorOverlapAC
+        vdgThreeCircles.VennDiagram.OverlapABCColor = vdgThreeCircles.VennDiagram.DefaultColorOverlapABC
 
         vdgThreeCircles.VennDiagram.BackColor = Color.White
 

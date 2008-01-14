@@ -1,5 +1,8 @@
 Venn Diagram Plotter Change Log
 
+Version 1.3.2935; January 14, 2008
+	- Fixed bug that prevented the user from updating the color for the ABC overlap region
+
 Version 1.3.2819; September 20, 2007
 	- Improved logic for auto-updating values 
 	- Added coloring of all of the separate regions in 3 circle overlaps (though coloring can be disabled)

@@ -27,19 +27,19 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_2F8DFC25ABD74E0A9CC877CF926DF333"
+        "MsmKey" = "8:_50F3D1505492480FA68240B0933E4A0F"
         "OwnerKey" = "8:_23DD59EC478C45709A785E9001DF8055"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_2F8DFC25ABD74E0A9CC877CF926DF333"
+        "MsmKey" = "8:_50F3D1505492480FA68240B0933E4A0F"
         "OwnerKey" = "8:_7199F07669E16E86E65C8D1E66520FD1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_2F8DFC25ABD74E0A9CC877CF926DF333"
+        "MsmKey" = "8:_50F3D1505492480FA68240B0933E4A0F"
         "OwnerKey" = "8:_9EB06872B09718873FD4701D438D12CF"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -194,7 +194,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:VennDiagrams, Version=1.3.2818.39951, Culture=neutral"
+            "AssemblyAsmDisplayName" = "8:VennDiagrams, Version=1.3.2819.16326, Culture=neutral"
                 "ScatterAssemblies"
                 {
                     "_7199F07669E16E86E65C8D1E66520FD1"
@@ -245,7 +245,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ControlPrinter, Version=1.0.2818.39951, Culture=neutral"
+            "AssemblyAsmDisplayName" = "8:ControlPrinter, Version=1.0.2819.16326, Culture=neutral"
                 "ScatterAssemblies"
                 {
                     "_9EB06872B09718873FD4701D438D12CF"
@@ -389,13 +389,13 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:VennDiagramPlotter"
-        "ProductCode" = "8:{1C17A746-3B10-431B-825E-32CFC328804A}"
-        "PackageCode" = "8:{86022F1E-DE1B-494C-8D05-7AAA746C5F03}"
+        "ProductCode" = "8:{BEB110B9-1D69-4123-AD04-44FDD2C1B50D}"
+        "PackageCode" = "8:{4345CD58-1C48-4B2B-BBAC-18CA7A43E815}"
         "UpgradeCode" = "8:{658E9429-43A4-404C-BEF3-45AACB8B3130}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "ProductVersion" = "8:1.3.2"
+        "ProductVersion" = "8:1.3.4"
         "Manufacturer" = "8:Battelle Memorial Institute"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -901,7 +901,7 @@
         }
         "MergeModule"
         {
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_2F8DFC25ABD74E0A9CC877CF926DF333"
+            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_50F3D1505492480FA68240B0933E4A0F"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"

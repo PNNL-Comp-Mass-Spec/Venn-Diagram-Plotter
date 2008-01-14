@@ -106,8 +106,6 @@ Public Class ThreeCircleVennDiagram
     Protected mCirclesBC As TwoCircleVennDiagram
     Protected mCirclesAC As TwoCircleVennDiagram
 
-    Protected m_overlapABCColor As System.Drawing.Color
-
     'Computation World Coordinates
     Protected m_CircleC_Loc As udtPointXYType
     Protected m_CircleC_Radius_Compute As Double
@@ -248,10 +246,10 @@ Public Class ThreeCircleVennDiagram
 
     Public Property OverlapABCColor() As Color
         Get
-            Return Me.m_overlapABCColor
+            Return Me.m_overlapABC.Color
         End Get
         Set(ByVal Value As Color)
-            Me.m_overlapABCColor = Value
+            Me.m_overlapABC.Color = Value
             Me.Invalidate()
             RaiseEvent DrawingChangeCircleC(Me)
         End Set

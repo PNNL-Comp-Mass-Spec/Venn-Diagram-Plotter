@@ -3,7 +3,7 @@ Option Strict On
 Public Class clsMatrixSolver
     ' From http://www.vb-helper.com/howto_net_gaussian_elimination.html
 
-    ' This class can be used to solave a system of equations using Gaussian Elimination
+    ' This class can be used to solve a system of equations using Gaussian Elimination
     ' The system of equations is of the form: 
     '     A1*x1 + B1*x2 + ... + N1*xn = c1
     '     A2*x1 + B2*x2 + ... + N2*xn = c2

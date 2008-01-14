@@ -16,7 +16,7 @@
     <item key="OverlapACColor" value="255,128,128,255" />
     <item key="OverlapBC" value="10" />
     <item key="OverlapAC" value="15" />
-    <item key="OverlapABCColor" value="255,255,0,128" />
+    <item key="OverlapABCColor" value="Silver" />
     <item key="FillCirclesWithColor" value="True" />
     <item key="EnterCircleTotals" value="True" />
     <item key="ThreeCircleMode" value="False" />
