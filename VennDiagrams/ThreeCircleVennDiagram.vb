@@ -114,6 +114,8 @@ Public Class ThreeCircleVennDiagram
     Protected m_XOffset As Integer         ' Allows fine-tuning of the center of the Venn Diagram within the window; percentage of window width (-100 to 100)
     Protected m_YOffset As Integer         ' Allows fine-tuning of the center of the Venn Diagram within the window; percentage of window width (-100 to 100)
     Protected m_Rotation As Integer        ' Rotates the image by the given number of degrees (0 to 360)
+
+    Protected m_DrawOverlapRegionsOnError As Boolean = True
 #End Region
 
 #Region "Properties "
@@ -878,14 +880,14 @@ Public Class ThreeCircleVennDiagram
         Me.m_circleC.DrawingPath.AddEllipse(circleCBoundingBox)
 
         If Me.PaintSolidColorCircles Then
-            ComputeScreenOverlapCoordinates(circleABoundingBox, circleBBoundingBox, circleCBoundingBox)
+            ComputeScreenOverlapCoordinates(circleABoundingBox, circleBBoundingBox, circleCBoundingBox, m_DrawOverlapRegionsOnError)
         End If
 
         'Console.WriteLine("calculated screen coordinates")
         Me.m_ScreenCoordinatesValid = True
     End Sub
 
-    Private Sub ComputeScreenOverlapCoordinates(ByVal circleABoundingBox As RectangleF, ByVal circleBBoundingBox As RectangleF, ByVal circleCBoundingBox As RectangleF)
+    Private Sub ComputeScreenOverlapCoordinates(ByVal circleABoundingBox As RectangleF, ByVal circleBBoundingBox As RectangleF, ByVal circleCBoundingBox As RectangleF, ByVal blnContinueOnError As Boolean)
         Dim sngAngleStart As Single
         Dim sngAngleStartB As Single
         Dim sngSweep As Single
@@ -915,12 +917,13 @@ Public Class ThreeCircleVennDiagram
 
         sngSweep = sngSweepB - (sngAngleStart - sngAngleStartB)
         If sngSweep < 0 Then
+            ' Invalid sweep; skip this arc
             blnInvalidSweepComputed = True
         Else
             m_overlapABC.DrawingPath.AddArc(circleABoundingBox, sngAngleStart, sngSweep)
         End If
 
-        If Not blnInvalidSweepComputed Then
+        If Not blnInvalidSweepComputed OrElse blnContinueOnError Then
             ' The second arc (goes along circle B)
             sngAngleStart = CSng(180 - Me.mCirclesAB.OverlapABBeta / 2)
 
@@ -929,13 +932,14 @@ Public Class ThreeCircleVennDiagram
 
             sngSweep = sngSweepB - (sngAngleStart - sngAngleStartB)
             If sngSweep < 0 Then
+                ' Invalid sweep; skip this arc
                 blnInvalidSweepComputed = True
             Else
                 m_overlapABC.DrawingPath.AddArc(circleBBoundingBox, sngAngleStart, sngSweep)
             End If
         End If
 
-        If Not blnInvalidSweepComputed Then
+        If Not blnInvalidSweepComputed OrElse blnContinueOnError Then
             ' The third arc (goes along circle C)
             sngAngleStart = CSng(180 - Me.mCirclesBC.OverlapABBeta / 2 + mOverlapBCArcAdj.BetaAdd)
 
@@ -944,6 +948,7 @@ Public Class ThreeCircleVennDiagram
 
             sngSweep = sngSweepB - (sngAngleStart - sngAngleStartB)
             If sngSweep < 0 Then
+                ' Invalid sweep; skip this arc
                 blnInvalidSweepComputed = True
             Else
                 m_overlapABC.DrawingPath.AddArc(circleCBoundingBox, sngAngleStart, sngSweep)

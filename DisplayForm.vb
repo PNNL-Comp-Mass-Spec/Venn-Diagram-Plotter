@@ -1133,7 +1133,7 @@ Public Class DisplayForm
     Private Const DEFAULT_WINDOW_WIDTH_TWO_CIRCLE As Integer = 637
     Private Const DEFAULT_WINDOW_WIDTH_THREE_CIRCLE As Integer = 820
 
-    Private Const PROGRAM_DATE As String = "January 14, 2008"
+    Private Const PROGRAM_DATE As String = "June 30, 2008"
 #End Region
 
 #Region "Structures and Enums"
@@ -1847,31 +1847,26 @@ Public Class DisplayForm
 
     Private Sub PositionControls()
 
-        Const ColorButtonsPanelLeftA As Integer = 208
-        Const ColorButtonsPanelLeftB As Integer = 296
-
-        Const ColorButtonsPanelWidthA As Integer = 80
-        Const ColorButtonsPanelWidthB As Integer = 168
-
-        Const ParametersFrameWidth As Integer = 472
         Const FrameSpacing As Integer = 8
 
         If chkCircleC.Checked Then
-            pnlColorButtons.Left = ColorButtonsPanelLeftB
-            pnlColorButtons.Width = ColorButtonsPanelWidthB
+            ' 3-circle mode
+            cmdOverlapABColor.Left = cmdOverlapBCColor.Left
+            cmdOverlapABColor.Top = cmdCircleAColor.Top
 
-            cmdOverlapABColor.Left = 88
-            cmdOverlapABColor.Top = 0
+            pnlColorButtons.Left = txtSizeOverlapAC.Left + txtSizeOverlapAC.Width + 8
+            pnlColorButtons.Width = cmdOverlapBCColor.Left + cmdOverlapBCColor.Width + 8
 
-            fraParameters.Width = ParametersFrameWidth
+            fraParameters.Width = pnlColorButtons.Left + pnlColorButtons.Width + 2
         Else
-            pnlColorButtons.Left = ColorButtonsPanelLeftA
-            pnlColorButtons.Width = ColorButtonsPanelWidthA
+            ' 2-circle mode
+            cmdOverlapABColor.Left = cmdCircleCColor.Left
+            cmdOverlapABColor.Top = cmdCircleCColor.Top
 
-            cmdOverlapABColor.Left = 0
-            cmdOverlapABColor.Top = 48
+            pnlColorButtons.Left = txtSizeB.Left + txtSizeB.Width + 12
+            pnlColorButtons.Width = cmdCircleAColor.Left + cmdCircleAColor.Width + 8
 
-            fraParameters.Width = ParametersFrameWidth - (ColorButtonsPanelLeftB - ColorButtonsPanelLeftA) - (ColorButtonsPanelWidthB - ColorButtonsPanelWidthA)
+            fraParameters.Width = pnlColorButtons.Left + pnlColorButtons.Width + 2
         End If
 
         fraTrasks.Left = fraParameters.Left + fraParameters.Width + FrameSpacing

@@ -39,7 +39,7 @@ echo.
 echo 3a) Updating Source Code file for %ProgramName%
 Move %SourceCodeFile% ..\..\
 CD ..\..
-"c:\program files\winrar\winRar.exe" f %SourceCodeFile%
+for %%i in (%SourceCodeFile%) do "c:\program files\winrar\winRar.exe" f %%i
 Move %SourceCodeFile% %SourceCodeFolder%\SourceAndSupportingDLLs\
 
 cd %SourceCodeFolder%\SourceAndSupportingDLLs
@@ -48,7 +48,7 @@ echo.
 echo 3b) Updating Source Code file for %SourceCodeFile2%
 Move %SourceCodeFile2% ..\..\VennDiagrams\
 CD ..\..\VennDiagrams
-"c:\program files\winrar\winRar.exe" f %SourceCodeFile2%
+for %%i in (%SourceCodeFile2%) do "c:\program files\winrar\winRar.exe" f %%i
 Move %SourceCodeFile2% ..\%SourceCodeFolder%\SourceAndSupportingDLLs\
 cd ..\%SourceCodeFolder%\SourceAndSupportingDLLs
 
@@ -56,7 +56,7 @@ echo.
 echo 3c) Updating Source Code file for %SourceCodeFile3%
 Move %SourceCodeFile3% ..\..\ControlPrinter\
 CD ..\..\ControlPrinter
-"c:\program files\winrar\winRar.exe" f %SourceCodeFile3%
+for %%i in (%SourceCodeFile3%) do "c:\program files\winrar\winRar.exe" f %%i
 Move %SourceCodeFile3% ..\%SourceCodeFolder%\SourceAndSupportingDLLs\
 cd ..\%SourceCodeFolder%
 

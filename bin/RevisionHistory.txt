@@ -1,5 +1,14 @@
 Venn Diagram Plotter Change Log
 
+Version 1.3.3250; November 24, 2008
+	- Fixed a button positioning bug that occurs at certain screen resolutions when 3-circle overlap mode is enabled
+
+Version 1.3.3103; June 30, 2008
+	- Fixed coloring bug that failed to color the ABC overlap when Circle B overlapped entirely with Circle A
+		- There is still some odd plotting behavior when the overlap between two circles becomes <10% of the total circle count
+		- In these cases, your only option is to uncheck "Use fill color", then copy to the clipboard paste into a painting program 
+          (e.g. Paint Shop Pro, Photoshop, or Windows Paint) and use the Fill command (aka the paint bucket) to manually color the regions
+
 Version 1.3.2935; January 14, 2008
 	- Fixed bug that prevented the user from updating the color for the ABC overlap region
 
