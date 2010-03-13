@@ -254,7 +254,7 @@ Public Class TwoCircleVennDiagram
             End If
 
             tries = tries + 1
-            If tries > Me.MAX_COMPUTE_TRIES Then
+            If tries > VennDiagramBaseClass.MAX_COMPUTE_TRIES Then
                 'This should only happen in the case that the user 
                 'specifies an overlap that is bigger than one or both of the base sets.
                 'can also happen when size of component is very small (like 1 * 1 pixels)

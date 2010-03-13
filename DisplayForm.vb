@@ -147,6 +147,7 @@ Public Class DisplayForm
     Friend WithEvents cmdCircleBColor As System.Windows.Forms.Button
     Friend WithEvents cmdCircleAColor As System.Windows.Forms.Button
     Friend WithEvents chkFillCirclesWithColor As System.Windows.Forms.CheckBox
+    Friend WithEvents mnuEditCopyOverlapValues As System.Windows.Forms.MenuItem
     Friend WithEvents fraTrasks As System.Windows.Forms.GroupBox
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
@@ -185,7 +186,7 @@ Public Class DisplayForm
         Me.cmdSaveToDisk = New System.Windows.Forms.Button
         Me.dlgSave = New System.Windows.Forms.SaveFileDialog
         Me.ToolTipControl = New System.Windows.Forms.ToolTip(Me.components)
-        Me.MainMenu1 = New System.Windows.Forms.MainMenu
+        Me.MainMenu1 = New System.Windows.Forms.MainMenu(Me.components)
         Me.mnuFile = New System.Windows.Forms.MenuItem
         Me.mnuSaveFile = New System.Windows.Forms.MenuItem
         Me.mnuFileSep1 = New System.Windows.Forms.MenuItem
@@ -198,6 +199,7 @@ Public Class DisplayForm
         Me.mnuEditCopy = New System.Windows.Forms.MenuItem
         Me.mnuEditRefreshPlot = New System.Windows.Forms.MenuItem
         Me.mnuEditSep1 = New System.Windows.Forms.MenuItem
+        Me.mnuEditCopyOverlapValues = New System.Windows.Forms.MenuItem
         Me.mnuEditResetValues = New System.Windows.Forms.MenuItem
         Me.mnuHelp = New System.Windows.Forms.MenuItem
         Me.mnuHelpAbout = New System.Windows.Forms.MenuItem
@@ -590,7 +592,7 @@ Public Class DisplayForm
         '
         Me.mnuSaveDefaults.Index = 3
         Me.mnuSaveDefaults.Shortcut = System.Windows.Forms.Shortcut.CtrlD
-        Me.mnuSaveDefaults.Text = "&Save Settings"
+        Me.mnuSaveDefaults.Text = "Sa&ve Settings"
         '
         'mnuReset
         '
@@ -610,30 +612,36 @@ Public Class DisplayForm
         'mnuEdit
         '
         Me.mnuEdit.Index = 1
-        Me.mnuEdit.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.mnuEditCopy, Me.mnuEditRefreshPlot, Me.mnuEditSep1, Me.mnuEditResetValues})
+        Me.mnuEdit.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.mnuEditCopyOverlapValues, Me.mnuEditCopy, Me.mnuEditRefreshPlot, Me.mnuEditSep1, Me.mnuEditResetValues})
         Me.mnuEdit.Text = "&Edit"
         '
         'mnuEditCopy
         '
-        Me.mnuEditCopy.Index = 0
+        Me.mnuEditCopy.Index = 1
         Me.mnuEditCopy.Shortcut = System.Windows.Forms.Shortcut.CtrlC
         Me.mnuEditCopy.Text = "&Copy Plot to Clipboard"
         '
         'mnuEditRefreshPlot
         '
-        Me.mnuEditRefreshPlot.Index = 1
+        Me.mnuEditRefreshPlot.Index = 2
         Me.mnuEditRefreshPlot.Shortcut = System.Windows.Forms.Shortcut.CtrlR
         Me.mnuEditRefreshPlot.Text = "&Refresh Plot"
         '
         'mnuEditSep1
         '
-        Me.mnuEditSep1.Index = 2
+        Me.mnuEditSep1.Index = 3
         Me.mnuEditSep1.Text = "-"
+        '
+        'mnuEditCopyOverlapValues
+        '
+        Me.mnuEditCopyOverlapValues.Index = 0
+        Me.mnuEditCopyOverlapValues.Shortcut = System.Windows.Forms.Shortcut.Ctrl1
+        Me.mnuEditCopyOverlapValues.Text = "Copy &Overlap Values to Clipboard"
         '
         'mnuEditResetValues
         '
-        Me.mnuEditResetValues.Index = 3
-        Me.mnuEditResetValues.Text = "Reset Values"
+        Me.mnuEditResetValues.Index = 4
+        Me.mnuEditResetValues.Text = "Reset &Values"
         '
         'mnuHelp
         '
@@ -869,7 +877,6 @@ Public Class DisplayForm
         Me.txtStatus.ReadOnly = True
         Me.txtStatus.Size = New System.Drawing.Size(808, 10)
         Me.txtStatus.TabIndex = 7
-        Me.txtStatus.Text = ""
         '
         'fraMessageDisplayOptions
         '
@@ -1090,18 +1097,23 @@ Public Class DisplayForm
         Me.Name = "DisplayForm"
         Me.Text = "Venn Diagram Plotter"
         Me.fraParameters.ResumeLayout(False)
+        Me.fraParameters.PerformLayout()
         Me.pnlColorButtons.ResumeLayout(False)
         Me.fraTrasks.ResumeLayout(False)
         Me.fraThreeCircleRegionCounts.ResumeLayout(False)
+        Me.fraThreeCircleRegionCounts.PerformLayout()
         Me.fraMessageDisplayOptions.ResumeLayout(False)
+        Me.fraMessageDisplayOptions.PerformLayout()
         CType(Me.tbarDuplicateMessageIgnoreWindowSeconds, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbarMessageDisplayTimeSeconds, System.ComponentModel.ISupportInitialize).EndInit()
         Me.fraImageAdjustmentControls.ResumeLayout(False)
+        Me.fraImageAdjustmentControls.PerformLayout()
         CType(Me.tbarImgYOffset, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbarImgXOffset, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbarImgZoom, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbarImgRotation, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
@@ -1133,7 +1145,7 @@ Public Class DisplayForm
     Private Const DEFAULT_WINDOW_WIDTH_TWO_CIRCLE As Integer = 637
     Private Const DEFAULT_WINDOW_WIDTH_THREE_CIRCLE As Integer = 820
 
-    Private Const PROGRAM_DATE As String = "June 30, 2008"
+    Private Const PROGRAM_DATE As String = "March 12, 2010"
 #End Region
 
 #Region "Structures and Enums"
@@ -1192,7 +1204,7 @@ Public Class DisplayForm
 
 #End Region
 
-    ''' Unused function
+    '' Unused function
     ''Private Sub AutoResizeExpand()
     ''    vdgTwoCircles.VennDiagram.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
     ''    vdgTwoCircles.VennDiagram.Height = CInt(vdgTwoCircles.VennDiagram.Height + vdgTwoCircles.VennDiagram.Height * 0.1)
@@ -1201,7 +1213,7 @@ Public Class DisplayForm
     ''    vdgTwoCircles.Width = CInt(vdgTwoCircles.Width + vdgTwoCircles.Width * 0.1)
     ''End Sub
 
-    ''' Unused function
+    '' Unused function
     ''Private Sub AutoResizeShrink()
     ''    vdgTwoCircles.VennDiagram.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
     ''    vdgTwoCircles.VennDiagram.Height = CInt(vdgTwoCircles.VennDiagram.Height - vdgTwoCircles.VennDiagram.Height * 0.1)
@@ -1282,6 +1294,53 @@ Public Class DisplayForm
         End If
     End Sub
 
+    Private Sub CopyOverlapValues()
+        Dim sbOverlapData As System.Text.StringBuilder
+
+        Dim strTab1x As String
+
+        Try
+            sbOverlapData = New System.Text.StringBuilder
+
+            strTab1x = ControlChars.Tab
+
+            ' Header line
+
+            sbOverlapData.Length = 0
+            If Not chkCircleC.Checked Then
+                ' 2 circle mode
+                sbOverlapData.AppendLine("" & strTab1x & "Circle A" & strTab1x & "Circle B")
+                sbOverlapData.AppendLine("Total" & strTab1x & txtSizeA.Text & strTab1x & txtSizeB.Text)
+                sbOverlapData.AppendLine("Count distinct" & strTab1x & txtDistinctA.Text & strTab1x & txtDistinctB.Text)
+                sbOverlapData.AppendLine("Overlap" & strTab1x & txtSizeOverlapAB.Text)
+            Else
+                ' 3 circle mode
+                sbOverlapData.AppendLine("" & strTab1x & "Circle A" & strTab1x & "Circle B" & strTab1x & "Circle C")
+                sbOverlapData.AppendLine("Total" & strTab1x & txtSizeA.Text & strTab1x & txtSizeB.Text & strTab1x & txtSizeC.Text)
+                sbOverlapData.AppendLine("Overlap" & strTab1x & txtSizeOverlapAB.Text & strTab1x & txtSizeOverlapBC.Text & strTab1x & txtSizeOverlapAC.Text)
+
+                ' 3 Circle Mode Region counts
+                sbOverlapData.AppendLine()
+                sbOverlapData.AppendLine("Category" & strTab1x & "Value")
+                sbOverlapData.AppendLine("Only in A" & strTab1x & txtRegionAx.Text)
+                sbOverlapData.AppendLine("Only in B" & strTab1x & txtRegionBx.Text)
+                sbOverlapData.AppendLine("Only in C" & strTab1x & txtRegionCx.Text)
+                sbOverlapData.AppendLine("In A and B" & strTab1x & txtRegionABx.Text)
+                sbOverlapData.AppendLine("In B and C" & strTab1x & txtRegionBCx.Text)
+                sbOverlapData.AppendLine("In A and C" & strTab1x & txtRegionACx.Text)
+                sbOverlapData.AppendLine("In A, B, and C" & strTab1x & txtRegionABC.Text)
+                sbOverlapData.AppendLine("Unique item count" & strTab1x & txtRegionUniqueItemCountAllCircles.Text)
+
+            End If
+
+
+            Clipboard.SetText(sbOverlapData.ToString)
+        Catch ex As Exception
+            System.Windows.Forms.MessageBox.Show("Error copying data to clipboard: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+       
+    End Sub
+
     Private Sub CopyVennToClipboard()
         Try
             Dim bitmap As Bitmap
@@ -1303,7 +1362,7 @@ Public Class DisplayForm
 
             Clipboard.SetDataObject(bitmap)
         Catch ex As Exception
-            MsgBox("Error copying Venn diagram to clipboard: " & ControlChars.NewLine & ex.Message, MsgBoxStyle.Exclamation Or MsgBoxStyle.OKOnly, "Error")
+            System.Windows.Forms.MessageBox.Show("Error copying Venn diagram to clipboard: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
@@ -1411,6 +1470,8 @@ Public Class DisplayForm
         Dim intControlHeight As Integer
 
         Dim intIndex As Integer
+
+        strMessageList = String.Empty
 
         If mMessageQueueCount > 0 Then
             If mMessageQueueCount = 1 Then
@@ -1637,7 +1698,7 @@ Public Class DisplayForm
         With vdgTwoCircles
             With .VennDiagram
                 .SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
-                .BackColor = dlgColor.Color.White
+                .BackColor = System.Drawing.Color.White
             End With
             .Visible = True
         End With
@@ -1645,7 +1706,7 @@ Public Class DisplayForm
         With vdgThreeCircles
             With .VennDiagram
                 .SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
-                .BackColor = dlgColor.Color.White
+                .BackColor = System.Drawing.Color.White
             End With
             .Visible = False
             .Left = fraThreeCircleRegionCounts.Left + fraThreeCircleRegionCounts.Width + 12
@@ -1813,7 +1874,7 @@ Public Class DisplayForm
             RefreshVennDiagrams(True)
 
         Catch ex As Exception
-            MsgBox("Error loading Defaults from " & outputFilepath & ControlChars.NewLine & ex.Message, MsgBoxStyle.Exclamation Or MsgBoxStyle.OKOnly, "Error")
+            System.Windows.Forms.MessageBox.Show("Error loading Defaults from " & outputFilepath & ControlChars.NewLine & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
@@ -1926,7 +1987,7 @@ Public Class DisplayForm
             End If
 
         Catch ex As Exception
-            MsgBox("Error refreshing Venn diagrams: " & ControlChars.NewLine & ex.Message, MsgBoxStyle.Exclamation Or MsgBoxStyle.OKOnly, "Error")
+            System.Windows.Forms.MessageBox.Show("Error refreshing Venn diagrams:" & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
@@ -1980,7 +2041,7 @@ Public Class DisplayForm
 
     Private Sub RestorePreviousDimensions(ByVal udtCircleDimensions As udtCircleDimensionsType, ByVal blnInformUser As Boolean)
         If blnInformUser Then
-            MsgBox("Invalid overlap values; restoring the previous, valid values.", MsgBoxStyle.Exclamation Or MsgBoxStyle.OKOnly, "Invalid numbers")
+            System.Windows.Forms.MessageBox.Show("Invalid overlap values; restoring the previous, valid values.", "Invalid Numbers", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         End If
 
         With udtCircleDimensions
@@ -2019,7 +2080,7 @@ Public Class DisplayForm
                     System.Threading.Thread.Sleep(100)
 
                 Catch ex As Exception
-                    MsgBox("Error creating new Default XML file at " & outputFilepath & ControlChars.NewLine & ex.Message, MsgBoxStyle.Exclamation Or MsgBoxStyle.OKOnly, "Error")
+                    System.Windows.Forms.MessageBox.Show("Error creating new Default XML file at " & outputFilepath & ControlChars.NewLine & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                     Return
                 End Try
             End If
@@ -2069,7 +2130,7 @@ Public Class DisplayForm
             End With
 
         Catch ex As Exception
-            MsgBox("Error saving Defaults to " & outputFilepath & ControlChars.NewLine & ex.Message, MsgBoxStyle.Exclamation Or MsgBoxStyle.OKOnly, "Error")
+            System.Windows.Forms.MessageBox.Show("Error saving Defaults to " & outputFilepath & ControlChars.NewLine & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         End Try
     End Sub
 
@@ -2104,7 +2165,7 @@ Public Class DisplayForm
                 End If
             End If
         Catch ex As Exception
-            MsgBox("Error saving Venn diagram to file " & outputFilepath & ":" & ControlChars.NewLine & ex.Message, MsgBoxStyle.Exclamation Or MsgBoxStyle.OKOnly, "Error")
+            System.Windows.Forms.MessageBox.Show("Error saving Venn diagram to file " & outputFilepath & ":" & ControlChars.NewLine & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         End Try
     End Sub
 
@@ -2302,14 +2363,14 @@ Public Class DisplayForm
 
             Select Case eRegionCountMode
                 Case eRegionCountModeConstants.CountOverlappingAllCircles
-                    blnSuccess = vdgThreeCircles.VennDiagram.ComputeThreeCircleAreasGivenOverlapABC(udtCircleRegions, dblRegionCountValue)
+                    blnSuccess = VennDiagrams.ThreeCircleVennDiagram.ComputeThreeCircleAreasGivenOverlapABC(udtCircleRegions, dblRegionCountValue)
 
                     If dblRegionCountValue <= 0 Then
                         UpdateStatus("Region count value of " & NumToString(dblRegionCountValue, 1) & " is <= 0; this is not allowable; using optimal value of " & NumToString(udtCircleRegions.ABC, 0) & " instead")
                     End If
 
                 Case eRegionCountModeConstants.UniqueItemCountAcrossAllCircles
-                    blnSuccess = vdgThreeCircles.VennDiagram.ComputeThreeCircleAreasGivenTotalUniqueCount(udtCircleRegions, dblRegionCountValue)
+                    blnSuccess = VennDiagrams.ThreeCircleVennDiagram.ComputeThreeCircleAreasGivenTotalUniqueCount(udtCircleRegions, dblRegionCountValue)
                 Case Else
                     ' Unknown value
                     UpdateStatus("Unknown Region Count Mode in Sub UpdateThreeCircleDistinctCounts")
@@ -2692,6 +2753,10 @@ Public Class DisplayForm
 
     Private Sub mnuEditCopy_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuEditCopy.Click
         CopyVennToClipboard()
+    End Sub
+
+    Private Sub mnuEditCopyOverlapValues_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuEditCopyOverlapValues.Click
+        CopyOverlapValues()
     End Sub
 
     Private Sub mnuEditRefreshPlot_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuEditRefreshPlot.Click

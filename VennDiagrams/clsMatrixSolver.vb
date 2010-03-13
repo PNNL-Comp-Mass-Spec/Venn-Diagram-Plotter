@@ -408,7 +408,6 @@ Public Class clsMatrixSolver
     Public Shared Sub PrintArray(ByRef dblArray() As Double)
         Dim intDataCount As Integer
         Dim x As Integer
-        Dim strRow As String
 
         intDataCount = UBound(dblArray) + 1
 

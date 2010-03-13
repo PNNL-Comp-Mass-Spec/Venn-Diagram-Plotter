@@ -11,12 +11,10 @@ rem 6. Create the zipped installer file
 rem 7. Copy the zipped installer file to the final folder
 
 Set ProgramName=VennDiagramPlotter
-Set DistributionFolderBase=D:\Public\Software
+Set DistributionFolderBase=F:\Public\Software
 
 Set SourceCodeFolder=%ProgramName%_SourceCode
 Set SourceCodeFile=%ProgramName%_Source_v*.zip
-Set SourceCodeFile2=VennDiagrams_Source_v*.zip
-Set SourceCodeFile3=ControlPrinter_Source_v*.zip
 Set SourceAndSupportingDLLsFile=%ProgramName%_SourceAndSupportingDLLs.zip
 
 Set ZippedInstallerFile=%ProgramName%_Installer.zip
@@ -36,30 +34,13 @@ echo 2) Updating Supporting DLL Zip Files
 Call Update_Supporting_Source_Code.bat
 
 echo.
-echo 3a) Updating Source Code file for %ProgramName%
+echo 3) Updating Source Code file for %ProgramName%
 Move %SourceCodeFile% ..\..\
 CD ..\..
 for %%i in (%SourceCodeFile%) do "c:\program files\winrar\winRar.exe" f %%i
 Move %SourceCodeFile% %SourceCodeFolder%\SourceAndSupportingDLLs\
 
-cd %SourceCodeFolder%\SourceAndSupportingDLLs
-
-echo.
-echo 3b) Updating Source Code file for %SourceCodeFile2%
-Move %SourceCodeFile2% ..\..\VennDiagrams\
-CD ..\..\VennDiagrams
-for %%i in (%SourceCodeFile2%) do "c:\program files\winrar\winRar.exe" f %%i
-Move %SourceCodeFile2% ..\%SourceCodeFolder%\SourceAndSupportingDLLs\
-cd ..\%SourceCodeFolder%\SourceAndSupportingDLLs
-
-echo.
-echo 3c) Updating Source Code file for %SourceCodeFile3%
-Move %SourceCodeFile3% ..\..\ControlPrinter\
-CD ..\..\ControlPrinter
-for %%i in (%SourceCodeFile3%) do "c:\program files\winrar\winRar.exe" f %%i
-Move %SourceCodeFile3% ..\%SourceCodeFolder%\SourceAndSupportingDLLs\
-cd ..\%SourceCodeFolder%
-
+cd %SourceCodeFolder%
 
 echo.
 echo 4) Creating %SourceAndSupportingDLLsFile%

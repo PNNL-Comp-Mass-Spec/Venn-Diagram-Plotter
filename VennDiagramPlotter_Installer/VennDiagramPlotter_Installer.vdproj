@@ -1,7 +1,7 @@
 "DeployProject"
 {
-"VSVersion" = "3:701"
-"ProjectType" = "8:{2C2AF0D9-9B47-4FE5-BEF2-169778172667}"
+"VSVersion" = "3:800"
+"ProjectType" = "8:{978C614F-708E-4E1A-B201-565925725DBA}"
 "IsWebType" = "8:FALSE"
 "ProjectName" = "8:VennDiagramPlotterInstaller"
 "LanguageId" = "3:1033"
@@ -33,7 +33,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_7199F07669E16E86E65C8D1E66520FD1"
+        "MsmKey" = "8:_8675CE25FEFEF8D8AD9CCF41299C869A"
         "OwnerKey" = "8:_23DD59EC478C45709A785E9001DF8055"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -45,44 +45,38 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_9EB06872B09718873FD4701D438D12CF"
+        "MsmKey" = "8:_92DE55BE0858E79DD14FE046A304B44F"
         "OwnerKey" = "8:_23DD59EC478C45709A785E9001DF8055"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_9EB06872B09718873FD4701D438D12CF"
-        "OwnerKey" = "8:_7199F07669E16E86E65C8D1E66520FD1"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A31F3C19748C442BAA48B07969D30C9A"
-        "OwnerKey" = "8:_23DD59EC478C45709A785E9001DF8055"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A31F3C19748C442BAA48B07969D30C9A"
-        "OwnerKey" = "8:_7199F07669E16E86E65C8D1E66520FD1"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A31F3C19748C442BAA48B07969D30C9A"
-        "OwnerKey" = "8:_9EB06872B09718873FD4701D438D12CF"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_BE16F70FB6C31C96962AE76301FEA30C"
-        "OwnerKey" = "8:_23DD59EC478C45709A785E9001DF8055"
+        "MsmKey" = "8:_92DE55BE0858E79DD14FE046A304B44F"
+        "OwnerKey" = "8:_8675CE25FEFEF8D8AD9CCF41299C869A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_EDA758BB6A6E4355BA42C3E4642DBA03"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_23DD59EC478C45709A785E9001DF8055"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_8675CE25FEFEF8D8AD9CCF41299C869A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_92DE55BE0858E79DD14FE046A304B44F"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -103,6 +97,27 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.3.5.SP1"
+                    {
+                    "Name" = "8:.NET Framework 3.5 SP1"
+                    "ProductCode" = "8:Microsoft.Net.Framework.3.5.SP1"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -119,6 +134,27 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:1"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:FALSE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.3.5.SP1"
+                    {
+                    "Name" = "8:.NET Framework 3.5 SP1"
+                    "ProductCode" = "8:Microsoft.Net.Framework.3.5.SP1"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -136,21 +172,20 @@
         {
             "LaunchCondition"
             {
-                "{2522A265-4974-4402-83C5-3B575A2E935A}:_742B42DAA0C14297BB1E2B23503D1708"
+                "{A06ECF26-33A3-4562-8140-9B0E340D4F24}:_742B42DAA0C14297BB1E2B23503D1708"
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "SupportedRuntimes" = "8:1.1.4322"
+                "Version" = "8:3.5.30729"
+                "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=9832"
+                "SupportedRuntimes" = "8:1.1.4322"
                 }
             }
         }
-        "Feature"
-        {
-        }
         "File"
         {
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_263CBC0379244A34A7A875A469417D7F"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_263CBC0379244A34A7A875A469417D7F"
             {
             "SourcePath" = "8:..\\bin\\Readme.txt"
             "TargetName" = "8:Readme.txt"
@@ -170,7 +205,7 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_6AB4E2914BC94C7A9973E8D70FA9C96A"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6AB4E2914BC94C7A9973E8D70FA9C96A"
             {
             "SourcePath" = "8:..\\bin\\Venn_Diagram_Examples.ppt"
             "TargetName" = "8:Venn_Diagram_Examples.ppt"
@@ -190,14 +225,14 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{FB480208-1853-44D0-9ABD-A3B734C3FAAA}:_7199F07669E16E86E65C8D1E66520FD1"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8675CE25FEFEF8D8AD9CCF41299C869A"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:VennDiagrams, Version=1.3.3103.24313, Culture=neutral"
+            "AssemblyAsmDisplayName" = "8:VennDiagrams, Version=1.4.3723.27818, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_7199F07669E16E86E65C8D1E66520FD1"
+                    "_8675CE25FEFEF8D8AD9CCF41299C869A"
                     {
                     "Name" = "8:VennDiagrams.dll"
                     "Attributes" = "3:512"
@@ -221,7 +256,7 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_8CEC0684A92243F4BFDE54F7D17A50D6"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8CEC0684A92243F4BFDE54F7D17A50D6"
             {
             "SourcePath" = "8:..\\bin\\RevisionHistory.txt"
             "TargetName" = "8:RevisionHistory.txt"
@@ -241,14 +276,14 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{FB480208-1853-44D0-9ABD-A3B734C3FAAA}:_9EB06872B09718873FD4701D438D12CF"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_92DE55BE0858E79DD14FE046A304B44F"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ControlPrinter, Version=1.0.3103.24313, Culture=neutral"
+            "AssemblyAsmDisplayName" = "8:ControlPrinter, Version=1.1.3723.27818, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_9EB06872B09718873FD4701D438D12CF"
+                    "_92DE55BE0858E79DD14FE046A304B44F"
                     {
                     "Name" = "8:ControlPrinter.dll"
                     "Attributes" = "3:512"
@@ -272,38 +307,7 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{FB480208-1853-44D0-9ABD-A3B734C3FAAA}:_BE16F70FB6C31C96962AE76301FEA30C"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
-                "ScatterAssemblies"
-                {
-                    "_BE16F70FB6C31C96962AE76301FEA30C"
-                    {
-                    "Name" = "8:stdole.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:stdole.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_E551FF1FF72B425DB50F2A16756B14E9"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_EDA758BB6A6E4355BA42C3E4642DBA03"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EDA758BB6A6E4355BA42C3E4642DBA03"
             {
             "SourcePath" = "8:..\\bin\\VennDiagramPlotter.xml"
             "TargetName" = "8:VennDiagramPlotter.xml"
@@ -329,7 +333,7 @@
         }
         "Folder"
         {
-            "{78BAF5CE-F2E5-45BE-83BC-DB6AF387E941}:_220684457C694183AC5D4C3596A24650"
+            "{1525181F-901A-416C-8A58-119130FE478E}:_220684457C694183AC5D4C3596A24650"
             {
             "Name" = "8:#1916"
             "AlwaysCreate" = "11:FALSE"
@@ -340,7 +344,7 @@
                 {
                 }
             }
-            "{58C0ADA3-3CEA-43BD-A3B3-2EA121BC8217}:_E551FF1FF72B425DB50F2A16756B14E9"
+            "{3C67513D-01DD-4637-8A68-80971EB9504F}:_E551FF1FF72B425DB50F2A16756B14E9"
             {
             "DefaultLocation" = "8:[ProgramFilesFolder]\\[ProductName]"
             "Name" = "8:#1925"
@@ -352,7 +356,7 @@
                 {
                 }
             }
-            "{78BAF5CE-F2E5-45BE-83BC-DB6AF387E941}:_F762A23BD4F342F78AF1EE0B075F8FCE"
+            "{1525181F-901A-416C-8A58-119130FE478E}:_F762A23BD4F342F78AF1EE0B075F8FCE"
             {
             "Name" = "8:#1919"
             "AlwaysCreate" = "11:FALSE"
@@ -361,7 +365,7 @@
             "Property" = "8:ProgramMenuFolder"
                 "Folders"
                 {
-                    "{F27BD5C5-A65D-4608-96D4-7C5DA1F76302}:_8A8DDEA9132E432DB77B37A93B17A4DD"
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_8A8DDEA9132E432DB77B37A93B17A4DD"
                     {
                     "Name" = "8:PAST Toolkit"
                     "AlwaysCreate" = "11:FALSE"
@@ -384,18 +388,20 @@
         "MsiBootstrapper"
         {
         "LangId" = "3:1033"
+        "RequiresElevation" = "11:FALSE"
         }
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:VennDiagramPlotter"
-        "ProductCode" = "8:{6DBF5B51-A16C-4FF9-9076-C7E287B2E4D1}"
-        "PackageCode" = "8:{4BB4A52A-0A72-44AE-82E4-10478E87CED6}"
+        "ProductCode" = "8:{C189A12E-2DD6-46A6-B071-A72AE38F30B8}"
+        "PackageCode" = "8:{7C37B72B-135A-4210-9EAE-F51BEBFADB1A}"
         "UpgradeCode" = "8:{658E9429-43A4-404C-BEF3-45AACB8B3130}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "ProductVersion" = "8:1.3.6"
+        "InstallAllUsers" = "11:FALSE"
+        "ProductVersion" = "8:1.4.2"
         "Manufacturer" = "8:Battelle Memorial Institute"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -409,6 +415,10 @@
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
+        "TargetPlatform" = "3:0"
+        "PreBuildEvent" = "8:"
+        "PostBuildEvent" = "8:"
+        "RunPostBuildEvent" = "3:0"
         }
         "Registry"
         {
@@ -416,7 +426,7 @@
             {
                 "Keys"
                 {
-                    "{6A471EEF-D31B-40F8-BCF6-C9E8EC783F36}:_51868AFDFF8744058DE965625FC742B9"
+                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_51868AFDFF8744058DE965625FC742B9"
                     {
                     "Name" = "8:Software"
                     "Condition" = "8:"
@@ -425,7 +435,7 @@
                     "Transitive" = "11:FALSE"
                         "Keys"
                         {
-                            "{6A471EEF-D31B-40F8-BCF6-C9E8EC783F36}:_E3BD1A514C5F4AF19D91417E5B5F3503"
+                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_E3BD1A514C5F4AF19D91417E5B5F3503"
                             {
                             "Name" = "8:[Manufacturer]"
                             "Condition" = "8:"
@@ -450,7 +460,7 @@
             {
                 "Keys"
                 {
-                    "{6A471EEF-D31B-40F8-BCF6-C9E8EC783F36}:_31EC437CC1374641B076386EA98B6995"
+                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_31EC437CC1374641B076386EA98B6995"
                     {
                     "Name" = "8:Software"
                     "Condition" = "8:"
@@ -459,7 +469,7 @@
                     "Transitive" = "11:FALSE"
                         "Keys"
                         {
-                            "{6A471EEF-D31B-40F8-BCF6-C9E8EC783F36}:_B1056B72E53E46B6B0042B87B41FCF3C"
+                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_B1056B72E53E46B6B0042B87B41FCF3C"
                             {
                             "Name" = "8:[Manufacturer]"
                             "Condition" = "8:"
@@ -504,7 +514,7 @@
         }
         "Shortcut"
         {
-            "{478F747B-8505-45D1-9AAE-8C3B645C26E3}:_768E55AA3EBF4455B4C6880E51F2E9E7"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_768E55AA3EBF4455B4C6880E51F2E9E7"
             {
             "Name" = "8:Venn Diagram Plotter"
             "Arguments" = "8:"
@@ -521,14 +531,14 @@
         }
         "UserInterface"
         {
-            "{8D9DEE8B-DD8B-4F48-9072-C4364E4F4011}:_5FEF6B8B99804DEFAD3E3BC9003B57CB"
+            "{DF760B10-853B-4699-99F2-AFF7185B4A62}:_5FEF6B8B99804DEFAD3E3BC9003B57CB"
             {
             "Name" = "8:#1902"
             "Sequence" = "3:2"
             "Attributes" = "3:3"
                 "Dialogs"
                 {
-                    "{18ADD6EC-89FE-4ED7-AD3E-211C40278470}:_C8C8CE8FEFA049799CAE5D1C804B5156"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_C8C8CE8FEFA049799CAE5D1C804B5156"
                     {
                     "Sequence" = "3:100"
                     "DisplayName" = "8:Finished"
@@ -552,14 +562,14 @@
                     }
                 }
             }
-            "{8D9DEE8B-DD8B-4F48-9072-C4364E4F4011}:_791D5C5023AC4C5BB2277E1D7B74706A"
+            "{DF760B10-853B-4699-99F2-AFF7185B4A62}:_791D5C5023AC4C5BB2277E1D7B74706A"
             {
             "Name" = "8:#1900"
             "Sequence" = "3:2"
             "Attributes" = "3:1"
                 "Dialogs"
                 {
-                    "{18ADD6EC-89FE-4ED7-AD3E-211C40278470}:_0309E87EF1574537AF4EAEF6DA425863"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_0309E87EF1574537AF4EAEF6DA425863"
                     {
                     "Sequence" = "3:100"
                     "DisplayName" = "8:Welcome"
@@ -607,7 +617,7 @@
                             }
                         }
                     }
-                    "{18ADD6EC-89FE-4ED7-AD3E-211C40278470}:_3C5015A8C3AB48048CEE9572ED8B8EB4"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_3C5015A8C3AB48048CEE9572ED8B8EB4"
                     {
                     "Sequence" = "3:200"
                     "DisplayName" = "8:Installation Folder"
@@ -629,7 +639,7 @@
                             }
                         }
                     }
-                    "{18ADD6EC-89FE-4ED7-AD3E-211C40278470}:_4437B04843914423A803A5E7074D9949"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_4437B04843914423A803A5E7074D9949"
                     {
                     "Sequence" = "3:300"
                     "DisplayName" = "8:Confirm Installation"
@@ -653,20 +663,20 @@
                     }
                 }
             }
-            "{B654A020-6903-4E6A-A86C-75DC463DB54B}:_95E50878A1654BE2A31165415EDE6255"
+            "{2479F3F5-0309-486D-8047-8187E2CE5BA0}:_95E50878A1654BE2A31165415EDE6255"
             {
             "UseDynamicProperties" = "11:FALSE"
             "IsDependency" = "11:FALSE"
             "SourcePath" = "8:<VsdDialogDir>\\VsdUserInterface.wim"
             }
-            "{8D9DEE8B-DD8B-4F48-9072-C4364E4F4011}:_CF55B9C0F96F47A390048AEC250CAA42"
+            "{DF760B10-853B-4699-99F2-AFF7185B4A62}:_CF55B9C0F96F47A390048AEC250CAA42"
             {
             "Name" = "8:#1901"
             "Sequence" = "3:1"
             "Attributes" = "3:2"
                 "Dialogs"
                 {
-                    "{18ADD6EC-89FE-4ED7-AD3E-211C40278470}:_0D9B7C61D1884BB48850B5C32E3E56E3"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_0D9B7C61D1884BB48850B5C32E3E56E3"
                     {
                     "Sequence" = "3:100"
                     "DisplayName" = "8:Progress"
@@ -703,14 +713,14 @@
                     }
                 }
             }
-            "{8D9DEE8B-DD8B-4F48-9072-C4364E4F4011}:_E61653B83F404A73BB7C4EABB832E9C4"
+            "{DF760B10-853B-4699-99F2-AFF7185B4A62}:_E61653B83F404A73BB7C4EABB832E9C4"
             {
             "Name" = "8:#1900"
             "Sequence" = "3:1"
             "Attributes" = "3:1"
                 "Dialogs"
                 {
-                    "{18ADD6EC-89FE-4ED7-AD3E-211C40278470}:_4857EC1030EE45EB968334711BA0EAB9"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_4857EC1030EE45EB968334711BA0EAB9"
                     {
                     "Sequence" = "3:300"
                     "DisplayName" = "8:Confirm Installation"
@@ -732,7 +742,7 @@
                             }
                         }
                     }
-                    "{18ADD6EC-89FE-4ED7-AD3E-211C40278470}:_687087B5828F45FFBFD5C315E0F703D5"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_687087B5828F45FFBFD5C315E0F703D5"
                     {
                     "Sequence" = "3:200"
                     "DisplayName" = "8:Installation Folder"
@@ -752,9 +762,22 @@
                             "Setting" = "3:1"
                             "UsePlugInResources" = "11:TRUE"
                             }
+                            "InstallAllUsersVisible"
+                            {
+                            "Name" = "8:InstallAllUsersVisible"
+                            "DisplayName" = "8:#1059"
+                            "Description" = "8:#1159"
+                            "Type" = "3:5"
+                            "ContextData" = "8:1;True=1;False=0"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:0"
+                            "Value" = "3:1"
+                            "DefaultValue" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
                         }
                     }
-                    "{18ADD6EC-89FE-4ED7-AD3E-211C40278470}:_7CBBFF12D8224238AEEE5512833BF59F"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_7CBBFF12D8224238AEEE5512833BF59F"
                     {
                     "Sequence" = "3:100"
                     "DisplayName" = "8:Welcome"
@@ -804,20 +827,20 @@
                     }
                 }
             }
-            "{B654A020-6903-4E6A-A86C-75DC463DB54B}:_F2D2A8D4A64F459A843358C7D82F9E45"
+            "{2479F3F5-0309-486D-8047-8187E2CE5BA0}:_F2D2A8D4A64F459A843358C7D82F9E45"
             {
             "UseDynamicProperties" = "11:FALSE"
             "IsDependency" = "11:FALSE"
             "SourcePath" = "8:<VsdDialogDir>\\VsdBasicDialogs.wim"
             }
-            "{8D9DEE8B-DD8B-4F48-9072-C4364E4F4011}:_F5E16C6747064182BF60377E619F718A"
+            "{DF760B10-853B-4699-99F2-AFF7185B4A62}:_F5E16C6747064182BF60377E619F718A"
             {
             "Name" = "8:#1901"
             "Sequence" = "3:2"
             "Attributes" = "3:2"
                 "Dialogs"
                 {
-                    "{18ADD6EC-89FE-4ED7-AD3E-211C40278470}:_FA8F4F51689447529A92BE734534748E"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_FA8F4F51689447529A92BE734534748E"
                     {
                     "Sequence" = "3:100"
                     "DisplayName" = "8:Progress"
@@ -854,14 +877,14 @@
                     }
                 }
             }
-            "{8D9DEE8B-DD8B-4F48-9072-C4364E4F4011}:_FF03FBE67D2B4B0DAE29933FCB96D21D"
+            "{DF760B10-853B-4699-99F2-AFF7185B4A62}:_FF03FBE67D2B4B0DAE29933FCB96D21D"
             {
             "Name" = "8:#1902"
             "Sequence" = "3:1"
             "Attributes" = "3:3"
                 "Dialogs"
                 {
-                    "{18ADD6EC-89FE-4ED7-AD3E-211C40278470}:_48B9D115410F4F99A30780898184D7DC"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_48B9D115410F4F99A30780898184D7DC"
                     {
                     "Sequence" = "3:100"
                     "DisplayName" = "8:Finished"
@@ -901,24 +924,10 @@
         }
         "MergeModule"
         {
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_A31F3C19748C442BAA48B07969D30C9A"
-            {
-            "UseDynamicProperties" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:dotnetfxredist_x86.msm"
-                "Properties"
-                {
-                }
-            "LanguageId" = "3:1033"
-            "Exclude" = "11:TRUE"
-            "Folder" = "8:"
-            "Feature" = "8:"
-            "IsolateTo" = "8:"
-            }
         }
         "ProjectOutput"
         {
-            "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_23DD59EC478C45709A785E9001DF8055"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_23DD59EC478C45709A785E9001DF8055"
             {
             "SourcePath" = "8:..\\obj\\Release\\VennDiagramPlotter.exe"
             "TargetName" = "8:"

@@ -411,7 +411,7 @@ Public Class ThreeCircleVennDiagram
         Dim intABCIteration As Integer
         Dim intMinimumABC As Integer
         Dim intMaximumABC As Integer
-        Dim x As Integer, y As Integer
+        Dim x As Integer
         Dim intBestIndex As Integer
 
         If dblUserSuppliedABC <= 0 Then
@@ -451,7 +451,7 @@ Public Class ThreeCircleVennDiagram
                 'objMatrixSolver.PrintArray(dblConstants)
                 'objMatrixSolver.PrintArray(dblXValues)
 
-                ''' Optionally check the results
+                '' Optionally check the results
                 ''Dim dblResults() As Double
                 ''objMatrixSolver.MultiplyMatrices(dblCoefMatrix, dblXValues, dblResults)
                 ''dblResidual = 0
@@ -580,7 +580,7 @@ Public Class ThreeCircleVennDiagram
         Dim intTotalUniqueCountIteration As Integer
         Dim intMinimumTotalUniqueCount As Integer
         Dim intMaximumTotalUniqueCount As Integer
-        Dim x As Integer, y As Integer
+        Dim x As Integer
         Dim intBestIndex As Integer
 
 
@@ -624,7 +624,7 @@ Public Class ThreeCircleVennDiagram
                 ''objMatrixSolver.PrintArray(dblConstants)
                 ''objMatrixSolver.PrintArray(dblXValues)
 
-                ''' Optionally check the results
+                '' Optionally check the results
                 ''Dim dblResults() As Double
                 ''Dim dblResidual As Double
                 ''objMatrixSolver.MultiplyMatrices(dblCoefMatrix, dblXValues, dblResults)
