@@ -80,11 +80,40 @@ Public MustInherit Class VennDiagramBaseClass
         Public UpperLeft As udtPointXYType
         Public LowerRight As udtPointXYType
     End Structure
+
+    Protected Structure udtSVGOverlapArcSegmentType
+        Public Radius As Double
+        Public Rotation As Single
+        Public LargeArcFlag As Byte
+        Public SweepFlag As Byte
+        Public Sub Clear()
+            Radius = 0
+            Rotation = 0
+            LargeArcFlag = 0
+            SweepFlag = 0
+        End Sub
+    End Structure
+
+    Protected Structure udtSVGOverlapDetailsType
+        Public LocStart As udtPointXYType
+        Public LocEnd As udtPointXYType
+        Public ArcA As udtSVGOverlapArcSegmentType
+        Public ArcB As udtSVGOverlapArcSegmentType
+        Public Sub Clear()
+            LocStart.X = 0
+            LocStart.Y = 0
+            LocEnd.X = 0
+            LocEnd.Y = 0
+            ArcA.clear()
+            ArcB.clear()
+        End Sub
+    End Structure
+
 #End Region
 
 #Region "Constants"
     Protected Const MAX_COMPUTE_TRIES As Integer = 1000
-
+    Protected Const CALCULATE_SVG_ARCS As Boolean = False
 #End Region
 
 #Region "Member Variables"
@@ -105,19 +134,25 @@ Public MustInherit Class VennDiagramBaseClass
 
 
     'Computation World Coordinates
-    ''    Protected Const m_CircleA_Center_Compute As Double = 0.0
-    Protected m_CircleA_Loc As udtPointXYType
+    Protected m_CircleA_Loc As udtPointXYType       ' Note: Circle A is always located at 0,0
     Protected m_CircleA_Radius_Compute As Double
 
-    ''Protected m_CircleB_Center_Compute As Double            ' Distance from the center of Circle B to the center of circle A
     Protected m_CircleB_Loc As udtPointXYType
     Protected m_CircleB_Radius_Compute As Double
 
-    Protected m_OverlapAB_alpha As Double                     ' Angle of the arc to draw that defines the overlap region (in degrees)
-    Protected m_OverlapAB_beta As Double                      ' Angle of the arc to draw that defines the overlap region (in degrees)
+    Protected m_OverlapAB_alpha As Double                     ' Angle (in degrees) of the arc to draw that defines the overlap region (in degrees)
+    Protected m_OverlapAB_beta As Double                      ' Angle (in degrees) of the arc to draw that defines the overlap region (in degrees)
 
     'the amount the inner part of the venn diagram attempts to fill - by dimension, not area
     Protected m_FillFactor As Double = 0.95        ' Larger values increase the size of the circles by decrease the white space on the edges (0 to 2)
+
+    Protected m_CircleA_ScreenLoc As udtPointXYType
+    Protected m_CircleA_ScreenRadius As Double
+
+    Protected m_CircleB_ScreenLoc As udtPointXYType
+    Protected m_CircleB_ScreenRadius As Double
+
+    Protected m_OverlapAB_ArcDetails As udtSVGOverlapDetailsType
 
 #End Region
 
@@ -432,6 +467,79 @@ Public MustInherit Class VennDiagramBaseClass
     'into screen coordinates that are then used to draw GDI+ shapes.
     Protected MustOverride Sub ComputeScreenCoordinatesFromWorldCoordinates()
 
+    Protected Sub ComputeSVGArcCoordinates(ByVal udtCircleALoc As udtPointXYType, _
+                                           ByVal udtCircleBLoc As udtPointXYType, _
+                                           ByVal dblCircleARadius As Double, _
+                                           ByVal dblCircleBRadius As Double, _
+                                           ByVal dblAlpha As Double, _
+                                           ByVal dblBeta As Double, _
+                                           ByVal dblAlphaStartAddon As Double, _
+                                           ByVal dblBetaStartAddon As Double, _
+                                           ByRef udtArcDetails As udtSVGOverlapDetailsType)
+
+        ' Center of Circle A is at point A
+        ' Radius is line b
+        ' Angle is returned in radians
+        '
+        '
+        '       C
+        '      /|
+        '   R / |
+        '    /  |y
+        '   / x |
+        ' A-----B
+        '   \ x |
+        '    \  |y
+        '     \ |
+        '   R  \|
+        '       D
+
+
+        ' Compute the start location of the arc for circle A
+        ' The center of the circle is A
+        ' The radius of the circle is R
+        ' Compute distances x and y given the angle between sides AC and AB
+
+
+        Dim dblStartAngleA As Double
+        Dim dblAngleAC_AB As Double
+
+        ' Initialize udtArcDetails
+        udtArcDetails.Clear()
+
+        ' Compute the angle between sides AC and AB
+        dblStartAngleA = -dblAlpha / 2 + dblAlphaStartAddon
+        dblAngleAC_AB = 90 + dblStartAngleA
+
+        ' Compute the X value for udtArcLocStart
+        udtArcDetails.LocStart.X = udtCircleALoc.X + Math.Sin(ConvertDegreesToRadians(dblAngleAC_AB)) * dblCircleARadius
+
+        ' Compute the Y value for udtArcLocStart
+        udtArcDetails.LocStart.Y = udtCircleALoc.Y - Math.Cos(ConvertDegreesToRadians(dblAngleAC_AB)) * dblCircleARadius
+
+
+        ' Compute the X value for udtArcLocEnd
+        udtArcDetails.LocEnd.X = udtCircleALoc.X + Math.Sin(ConvertDegreesToRadians(dblAngleAC_AB)) * dblCircleARadius
+
+        ' Compute the Y value for udtArcLocEnd
+        udtArcDetails.LocEnd.Y = udtCircleALoc.Y + Math.Cos(ConvertDegreesToRadians(dblAngleAC_AB)) * dblCircleARadius
+
+        With udtArcDetails.ArcA
+            .Radius = dblCircleARadius
+            .Rotation = 0
+            .LargeArcFlag = 0
+            .SweepFlag = 1
+        End With
+
+        With udtArcDetails.ArcB
+            .Radius = dblCircleBRadius
+            .Rotation = 0
+            .LargeArcFlag = 0
+            .SweepFlag = 1
+        End With
+
+    End Sub
+
     Public Shared Function ConvertDegreesToRadians(ByVal degrees As Double) As Double
         Return degrees * Math.PI / 180
     End Function
@@ -447,11 +555,129 @@ Public MustInherit Class VennDiagramBaseClass
         Me.OnPaint(New PaintEventArgs(g, New Rectangle(0, 0, 0, 0)))
     End Sub
 
-    Protected Sub DrawOverlapRegion(ByRef objDrawingPath As System.Drawing.Drawing2D.GraphicsPath, ByVal BoundingBoxA As RectangleF, ByVal BoundingBoxB As RectangleF, ByVal dblAlpha As Double, ByVal dblBeta As Double, ByVal dblAlphaStartAddon As Double, ByVal dblBetaStartAddon As Double)
+    Protected Sub DrawOverlapRegion(ByRef objDrawingPath As System.Drawing.Drawing2D.GraphicsPath, _
+                                    ByVal BoundingBoxA As RectangleF, _
+                                    ByVal BoundingBoxB As RectangleF, _
+                                    ByVal dblAlpha As Double, _
+                                    ByVal dblBeta As Double, _
+                                    ByVal dblAlphaStartAddon As Double, _
+                                    ByVal dblBetaStartAddon As Double)
         objDrawingPath.Reset()
         objDrawingPath.AddArc(BoundingBoxA, CSng(-dblAlpha / 2 + dblAlphaStartAddon), CSng(dblAlpha))
         objDrawingPath.AddArc(BoundingBoxB, CSng(180 - dblBeta / 2 + dblBetaStartAddon), CSng(dblBeta))
     End Sub
+
+    ''' <summary>
+    ''' Constructs the SVG file text for the overlapping circles
+    ''' </summary>
+    ''' <param name="blnFillCircles">True to color the circles, false to leave empty</param>
+    ''' <param name="sngOpacity">Value between 0 and 1 representing transparency; 1 means fully opaque</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public MustOverride Function GetSVG(ByVal blnFillCircles As Boolean, ByVal sngOpacity As Single) As String
+
+    Protected Function GetSVGCirclesAB(ByVal intStrokeWidthPixels As Integer, _
+                                       ByVal blnFillCircles As Boolean, _
+                                       ByVal sngOpacity As Single) As String
+
+        Dim strSVG As New System.Text.StringBuilder
+
+        strSVG.AppendLine(ControlChars.Tab & "<desc>Circle A</desc>")
+        strSVG.AppendLine(GetSVGCircleText(m_CircleA_ScreenLoc, m_CircleA_ScreenRadius, blnFillCircles, CircleAColor, sngOpacity, intStrokeWidthPixels))
+        strSVG.AppendLine()
+
+        strSVG.AppendLine(ControlChars.Tab & "<desc>Circle B</desc>")
+        strSVG.AppendLine(GetSVGCircleText(m_CircleB_ScreenLoc, m_CircleB_ScreenRadius, blnFillCircles, CircleBColor, sngOpacity, intStrokeWidthPixels))
+
+
+        ' This code could be used to draw an arc
+        ' However, it doesn't quit draw the arcs correctly, and thus it will be skipped since CALCULATE_SVG_ARCS should be False
+        If CALCULATE_SVG_ARCS Then
+            If blnFillCircles Then
+                strSVG.AppendLine()
+                strSVG.AppendLine(GetSVGArcText(m_OverlapAB_ArcDetails, True, m_overlapAB.Color, sngOpacity, intStrokeWidthPixels))
+            End If
+        End If
+
+        Return strSVG.ToString
+
+    End Function
+
+    Protected Function GetSVGCircleText(ByVal udtPoint As udtPointXYType, ByVal dblRadius As Double, _
+                                        ByVal blnFillCircle As Boolean, ByVal cColor As System.Drawing.Color, _
+                                        ByVal sngOpacity As Single, ByVal intStrokeWidthPixels As Integer) As String
+        Dim strSVG As String
+
+        strSVG = ControlChars.Tab & ControlChars.Tab & "<circle cx=" & QuoteNumber(udtPoint.X, 2) & " cy=" & QuoteNumber(udtPoint.Y, 2) & " r=" & QuoteNumber(dblRadius, 2)
+        If blnFillCircle Then
+            strSVG &= " fill=""" & System.Drawing.ColorTranslator.ToHtml(cColor) & """ fill-opacity=" & QuoteNumber(sngOpacity, 2)
+        Else
+            strSVG &= " fill=""none"" fill-opacity=" & QuoteNumber(sngOpacity, 2)
+        End If
+
+        strSVG &= " stroke=""" & System.Drawing.ColorTranslator.ToHtml(System.Drawing.Color.Black) & """ stroke-width=" & QuoteNumber(intStrokeWidthPixels) & " stroke-opacity=" & QuoteNumber(1) & "/>"
+
+        Return strSVG
+
+    End Function
+
+    Protected Function GetSVGArcText(ByRef udtArcDetails As udtSVGOverlapDetailsType, _
+                                     ByVal blnFillArc As Boolean, ByVal cColor As System.Drawing.Color, _
+                                     ByVal sngOpacity As Single, ByVal intStrokeWidthPixels As Integer) As String
+
+        Dim strSVG As String
+
+        ' Construct the path text
+        ' Example: <path d = "M 50 200 a 100 50 0 1 1 250 50"/>
+        ' The The arc starts at point 50,200 and ends at point 250,50
+        ' The first two numbers after the "a" are the X and Y radius values; to create a circle, just use "1 1"
+        ' the "0 1 1" in the middle represents x-axis rotation, the large arc flag and the sweep flag; the flags can be 0 or 1 and will have the effect of flipping the arc
+
+        strSVG = ""
+        With udtArcDetails
+            strSVG &= ControlChars.Tab & "<path d=""M " & .LocStart.X.ToString("0.000000") & " " & .LocStart.Y.ToString("0.000000") & " A " & .ArcA.Radius.ToString("0.000000") & " " & .ArcA.Radius.ToString("0.000000") & " " & .ArcA.Rotation.ToString("0.000") & " " & .ArcA.LargeArcFlag & " " & .ArcA.SweepFlag & " " & .LocEnd.X.ToString("0.000000") & " " & .LocEnd.Y.ToString("0.000000")
+
+            strSVG &= " A " & .ArcB.Radius.ToString("0.000000") & " " & .ArcB.Radius.ToString("0.000000") & " " & .ArcB.Rotation.ToString("0.000") & " " & .ArcB.LargeArcFlag & " " & .ArcB.SweepFlag & " " & .LocStart.X.ToString("0.000000") & " " & .LocStart.Y.ToString("0.000000") & """"
+        End With
+
+        If blnFillArc Then
+            strSVG &= " fill=""" & System.Drawing.ColorTranslator.ToHtml(cColor) & """ fill-opacity=" & QuoteNumber(sngOpacity, 2)
+        Else
+            strSVG &= " fill=""none"" fill-opacity=" & QuoteNumber(sngOpacity, 2)
+        End If
+
+        strSVG &= " stroke=""" & System.Drawing.ColorTranslator.ToHtml(System.Drawing.Color.Black) & """ stroke-width=" & QuoteNumber(intStrokeWidthPixels) & " stroke-opacity=" & QuoteNumber(1) & "/>"
+
+        Return strSVG
+
+    End Function
+
+    Protected Function GetSVGArcText(ByVal udtStartPoint As udtPointXYType, ByVal udtEndPoint As udtPointXYType, _
+                                     ByVal dblRadius As Double, _
+                                     ByVal intRotation As Single, ByVal intLargeArcFlag As Byte, ByVal intSweepFlag As Byte, _
+                                     ByVal blnFillArc As Boolean, ByVal cColor As System.Drawing.Color, _
+                                     ByVal sngOpacity As Single, ByVal intStrokeWidthPixels As Integer) As String
+        Dim strSVG As String
+
+        ' Construct the path text
+        ' Example: <path d = "M 50 200 a 100 50 0 1 1 250 50"/>
+        ' The The arc starts at point 50,200 and ends at point 250,50
+        ' The first two numbers after the "a" are the X and Y radius values; to create a circle, just use "1 1"
+        ' the "0 1 1" in the middle represents x-axis rotation, the large arc flag and the sweep flag; the flags can be 0 or 1 and will have the effect of flipping the arc
+
+        strSVG = ControlChars.Tab & "<path d=""M " & udtStartPoint.X.ToString("0.000000") & " " & udtStartPoint.Y.ToString("0.000000") & " A " & dblRadius.ToString("0.000000") & " " & dblRadius.ToString("0.000000") & " " & intRotation.ToString("0.000") & " " & intLargeArcFlag & " " & intSweepFlag & " " & udtEndPoint.X.ToString("0.000000") & " " & udtEndPoint.Y.ToString("0.000000") & """"
+
+        If blnFillArc Then
+            strSVG &= " fill=""" & System.Drawing.ColorTranslator.ToHtml(cColor) & """ fill-opacity=" & QuoteNumber(sngOpacity, 2)
+        Else
+            strSVG &= " fill=""none"" fill-opacity=" & QuoteNumber(sngOpacity, 2)
+        End If
+
+        strSVG &= " stroke=""" & System.Drawing.ColorTranslator.ToHtml(System.Drawing.Color.Black) & """ stroke-width=" & QuoteNumber(intStrokeWidthPixels) & " stroke-opacity=" & QuoteNumber(1) & "/>"
+
+        Return strSVG
+
+    End Function
 
     Protected Overridable Sub InitializeVariables()
         'm_tip.AutomaticDelay = 1000
@@ -495,6 +721,36 @@ Public MustInherit Class VennDiagramBaseClass
         graphics.DrawPath(Me.OutlinePen, info.DrawingPath)
 
     End Sub
+
+    Protected Function QuoteNumber(ByVal intNumber As Integer) As String
+        Return """" & intNumber.ToString & """"
+    End Function
+
+    Protected Function QuoteNumber(ByVal dblNumber As Double, ByVal intDigitsOfPrecision As Integer) As String
+        Static strFormatCode As String
+        Static intFormatCodeDigits As Integer
+
+        If intDigitsOfPrecision <= 0 Then
+            Return """" & dblNumber.ToString("0") & """"
+        Else
+            If strFormatCode Is Nothing Then
+                ' Set intFormatCodeDigits to a number not equal to intDigitsOfPrecision to force strFormatCode to get updated
+                intFormatCodeDigits = intDigitsOfPrecision - 1
+            End If
+
+            If intFormatCodeDigits <> intDigitsOfPrecision Then
+                ' Saved value of strFormatCode isn't appropriate for intDigitsOfPrecision
+                ' Update strFormatCode
+                strFormatCode = "0.0"
+                For x As Integer = 1 To intDigitsOfPrecision - 1
+                    strFormatCode &= "0"
+                Next
+            End If
+
+            Return """" & dblNumber.ToString(strFormatCode) & """"
+        End If
+
+    End Function
 
     'Protected Sub UpdateOverlapColor()
     '    Me.m_overlapAB.Color = Me.MergeTwoColors(Me.CircleAColor, Me.CircleBColor)

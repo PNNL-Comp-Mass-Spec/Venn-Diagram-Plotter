@@ -134,6 +134,16 @@ Public Class TwoCircleVennDiagram
         Dim circleBTop As Double = (Me.Height) / 2 - (Me.m_CircleB_Radius_Compute * scaleFactor)
 
 
+        ' Update the ScreenLoc member variables (used when creating an SVG file)
+        m_CircleA_ScreenRadius = circleAWidth / 2
+        m_CircleA_ScreenLoc.X = circleALeft + m_CircleA_ScreenRadius
+        m_CircleA_ScreenLoc.Y = circleATop + m_CircleA_ScreenRadius
+
+        m_CircleB_ScreenRadius = circleBWidth / 2
+        m_CircleB_ScreenLoc.X = circleBLeft + m_CircleB_ScreenRadius
+        m_CircleB_ScreenLoc.Y = circleBTop + m_CircleB_ScreenRadius
+
+
         'Rectangles around circleA and circleB
         Dim circleABoundingBox As RectangleF = New RectangleF(CSng(circleALeft), CSng(circleATop), CSng(circleAWidth), CSng(circleAWidth))
         Dim circleBBoundingBox As RectangleF = New RectangleF(CSng(circleBLeft), CSng(circleBTop), CSng(circleBWidth), CSng(circleBWidth))
@@ -151,6 +161,14 @@ Public Class TwoCircleVennDiagram
         If Me.PaintSolidColorCircles Then
             'create overlap region by taking an arc from each circle
             DrawOverlapRegion(Me.m_overlapAB.DrawingPath, circleABoundingBox, circleBBoundingBox, Me.m_OverlapAB_alpha, Me.m_OverlapAB_beta, 0, 0)
+
+            If CALCULATE_SVG_ARCS Then
+                ' Compute and store the details for drawing the arcs in an SVG file
+                ComputeSVGArcCoordinates(m_CircleA_ScreenLoc, m_CircleB_ScreenLoc, m_CircleA_ScreenRadius, m_CircleB_ScreenRadius, _
+                                         m_OverlapAB_alpha, m_OverlapAB_beta, 0, 0, _
+                                         m_OverlapAB_ArcDetails)
+
+            End If
         End If
 
         'Console.WriteLine("calculated screen coordinates")
@@ -282,6 +300,44 @@ Public Class TwoCircleVennDiagram
 
         'Me.m_readyToDraw = True
     End Sub
+
+    ''' <summary>
+    ''' Constructs the SVG file text for the overlapping circles
+    ''' </summary>
+    ''' <param name="blnFillCircles">True to color the circles, false to leave empty</param>
+    ''' <param name="sngOpacity">Value between 0 and 1 representing transparency; 1 means fully opaque</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Overrides Function GetSVG(ByVal blnFillCircles As Boolean, ByVal sngOpacity As Single) As String
+        Dim strSVG As System.Text.StringBuilder
+        Dim intStrokeWidthPixels As Integer = 1
+
+        ' Create the SVG text
+        strSVG = New System.Text.StringBuilder
+
+        strSVG.AppendLine("<?xml version=""1.0"" standalone=""no""?>")
+        strSVG.AppendLine("<!DOCTYPE svg PUBLIC ""-//W3C//DTD SVG 1.1//EN"" ""http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"">")
+        strSVG.AppendLine()
+        strSVG.AppendLine("<svg width=""100%"" height=""100%"" version=""1.1"" xmlns=""http://www.w3.org/2000/svg"">")
+        strSVG.AppendLine()
+
+        strSVG.AppendLine("<g id=""OverlappingCircles"">")
+
+        strSVG.AppendLine(MyBase.GetSVGCirclesAB(intStrokeWidthPixels, blnFillCircles, sngOpacity))
+
+        strSVG.AppendLine("</g>")
+
+        'strSVG.AppendLine("<g id=""Text"">")
+        'strSVG.AppendLine("	<text x=""240"" y=""50"" font-family=""Verdana"" font-size=""20"" fill=""black"" text-anchor=""middle"">220</text>")
+        'strSVG.AppendLine("	<text x=""350"" y=""75"" font-family=""Verdana"" font-size=""20"" fill=""black"" text-anchor=""middle"">75</text>")
+        'strSVG.AppendLine("	<text x=""400"" y=""50"" font-family=""Verdana"" font-size=""20"" fill=""black"" text-anchor=""middle"">150</text>")
+        'strSVG.AppendLine("</g>")
+        strSVG.AppendLine()
+        strSVG.AppendLine("</svg>")
+
+        Return strSVG.ToString
+
+    End Function
 
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         'Me.m_overlapAB.Color = Color.WhiteSmoke

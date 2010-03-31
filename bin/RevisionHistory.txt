@@ -1,6 +1,11 @@
 Venn Diagram Plotter Change Log
 
-Verion 1.4.3723; March 12, 2010
+Version 1.4.3740; March 29, 2010
+	- Added ability to create a .SVG file that shows the overlap circles
+		- Does not include the overlap region
+		- Does not include any of the numbers
+
+Version 1.4.3723; March 12, 2010
 	- Added option to copy the overlap values to the clipboard
 		- Copied as tab-delimited text, which can easily be pasted into Excel
 

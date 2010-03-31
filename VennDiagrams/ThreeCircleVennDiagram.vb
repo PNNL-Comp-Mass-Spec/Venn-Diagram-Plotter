@@ -115,6 +115,9 @@ Public Class ThreeCircleVennDiagram
     Protected m_YOffset As Integer         ' Allows fine-tuning of the center of the Venn Diagram within the window; percentage of window width (-100 to 100)
     Protected m_Rotation As Integer        ' Rotates the image by the given number of degrees (0 to 360)
 
+    Protected m_CircleC_ScreenLoc As udtPointXYType
+    Protected m_CircleC_ScreenRadius As Double
+
     Protected m_DrawOverlapRegionsOnError As Boolean = True
 #End Region
 
@@ -861,6 +864,20 @@ Public Class ThreeCircleVennDiagram
 
         circleCTop = circleATop + (Me.m_CircleA_Radius_Compute + m_CircleC_Loc.Y - Me.m_CircleC_Radius_Compute) * scaleFactor
 
+        ' Update the ScreenLoc member variables (used when creating an SVG file)
+        m_CircleA_ScreenRadius = circleAWidth / 2
+        m_CircleA_ScreenLoc.X = circleALeft + m_CircleA_ScreenRadius
+        m_CircleA_ScreenLoc.Y = circleATop + m_CircleA_ScreenRadius
+
+        m_CircleB_ScreenRadius = circleBWidth / 2
+        m_CircleB_ScreenLoc.X = circleBLeft + m_CircleB_ScreenRadius
+        m_CircleB_ScreenLoc.Y = circleBTop + m_CircleB_ScreenRadius
+
+        m_CircleC_ScreenRadius = circleCWidth / 2
+        m_CircleC_ScreenLoc.X = circleCLeft + m_CircleC_ScreenRadius
+        m_CircleC_ScreenLoc.Y = circleCTop + m_CircleC_ScreenRadius
+
+
         'Rectangles around circleA and circleB
         Dim circleABoundingBox As RectangleF = New RectangleF(CSng(circleALeft), CSng(circleATop), CSng(circleAWidth), CSng(circleAWidth))
         Dim circleBBoundingBox As RectangleF = New RectangleF(CSng(circleBLeft), CSng(circleBTop), CSng(circleBWidth), CSng(circleBWidth))
@@ -1152,6 +1169,48 @@ Public Class ThreeCircleVennDiagram
         udtBounds.LowerRight.Y = udtCircleLoc.Y + dblRadius
 
     End Sub
+
+    ''' <summary>
+    ''' Constructs the SVG file text for the overlapping circles
+    ''' </summary>
+    ''' <param name="blnFillCircles">True to color the circles, false to leave empty</param>
+    ''' <param name="sngOpacity">Value between 0 and 1 representing transparency; 1 means fully opaque</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Overrides Function GetSVG(ByVal blnFillCircles As Boolean, ByVal sngOpacity As Single) As String
+        Dim strSVG As System.Text.StringBuilder
+        Dim intStrokeWidthPixels As Integer = 1
+
+
+        ' Create the SVG text
+        strSVG = New System.Text.StringBuilder
+
+        strSVG.AppendLine("<?xml version=""1.0"" standalone=""no""?>")
+        strSVG.AppendLine("<!DOCTYPE svg PUBLIC ""-//W3C//DTD SVG 1.1//EN"" ""http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"">")
+        strSVG.AppendLine()
+        strSVG.AppendLine("<svg width=""100%"" height=""100%"" version=""1.1"" xmlns=""http://www.w3.org/2000/svg"">")
+        strSVG.AppendLine()
+
+        strSVG.AppendLine("<g id=""OverlappingCircles"">")
+
+        strSVG.AppendLine(MyBase.GetSVGCirclesAB(intStrokeWidthPixels, blnFillCircles, sngOpacity))
+
+        strSVG.AppendLine(ControlChars.Tab & "<desc>Circle C</desc>")
+        strSVG.AppendLine(GetSVGCircleText(m_CircleC_ScreenLoc, m_CircleC_ScreenRadius, blnFillCircles, CircleCColor, sngOpacity, intStrokeWidthPixels))
+
+        strSVG.AppendLine("</g>")
+
+        'strSVG.AppendLine("<g id=""Text"">")
+        'strSVG.AppendLine("	<text x=""240"" y=""50"" font-family=""Verdana"" font-size=""20"" fill=""black"" text-anchor=""middle"">220</text>")
+        'strSVG.AppendLine("	<text x=""350"" y=""75"" font-family=""Verdana"" font-size=""20"" fill=""black"" text-anchor=""middle"">75</text>")
+        'strSVG.AppendLine("	<text x=""400"" y=""50"" font-family=""Verdana"" font-size=""20"" fill=""black"" text-anchor=""middle"">150</text>")
+        'strSVG.AppendLine("</g>")
+        strSVG.AppendLine()
+        strSVG.AppendLine("</svg>")
+
+        Return strSVG.ToString
+
+    End Function
 
     Protected Overrides Sub InitializeVariables()
         MyBase.InitializeVariables()

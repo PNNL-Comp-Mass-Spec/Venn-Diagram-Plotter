@@ -146,8 +146,12 @@ Public Class DisplayForm
     Friend WithEvents cmdBackgroundColor As System.Windows.Forms.Button
     Friend WithEvents cmdCircleBColor As System.Windows.Forms.Button
     Friend WithEvents cmdCircleAColor As System.Windows.Forms.Button
-    Friend WithEvents chkFillCirclesWithColor As System.Windows.Forms.CheckBox
     Friend WithEvents mnuEditCopyOverlapValues As System.Windows.Forms.MenuItem
+    Friend WithEvents fraSVGOptions As System.Windows.Forms.GroupBox
+    Friend WithEvents lblSVGOpacity As System.Windows.Forms.Label
+    Friend WithEvents txtSVGOpacity As System.Windows.Forms.TextBox
+    Friend WithEvents cmdSaveSVG As System.Windows.Forms.Button
+    Friend WithEvents chkFillCirclesWithColor As System.Windows.Forms.CheckBox
     Friend WithEvents fraTrasks As System.Windows.Forms.GroupBox
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
@@ -196,10 +200,10 @@ Public Class DisplayForm
         Me.mnuFileSep2 = New System.Windows.Forms.MenuItem
         Me.mnuExit = New System.Windows.Forms.MenuItem
         Me.mnuEdit = New System.Windows.Forms.MenuItem
+        Me.mnuEditCopyOverlapValues = New System.Windows.Forms.MenuItem
         Me.mnuEditCopy = New System.Windows.Forms.MenuItem
         Me.mnuEditRefreshPlot = New System.Windows.Forms.MenuItem
         Me.mnuEditSep1 = New System.Windows.Forms.MenuItem
-        Me.mnuEditCopyOverlapValues = New System.Windows.Forms.MenuItem
         Me.mnuEditResetValues = New System.Windows.Forms.MenuItem
         Me.mnuHelp = New System.Windows.Forms.MenuItem
         Me.mnuHelpAbout = New System.Windows.Forms.MenuItem
@@ -243,9 +247,13 @@ Public Class DisplayForm
         Me.tbarImgZoom = New System.Windows.Forms.TrackBar
         Me.lblImgRotation = New System.Windows.Forms.Label
         Me.tbarImgRotation = New System.Windows.Forms.TrackBar
+        Me.ContextMenu1 = New System.Windows.Forms.ContextMenu
+        Me.fraSVGOptions = New System.Windows.Forms.GroupBox
+        Me.lblSVGOpacity = New System.Windows.Forms.Label
+        Me.txtSVGOpacity = New System.Windows.Forms.TextBox
+        Me.cmdSaveSVG = New System.Windows.Forms.Button
         Me.vdgThreeCircles = New VennDiagrams.ThreeCircleVennDiagramPlain
         Me.vdgTwoCircles = New VennDiagrams.TwoCircleVennDiagramPlain
-        Me.ContextMenu1 = New System.Windows.Forms.ContextMenu
         Me.fraParameters.SuspendLayout()
         Me.pnlColorButtons.SuspendLayout()
         Me.fraTrasks.SuspendLayout()
@@ -258,6 +266,7 @@ Public Class DisplayForm
         CType(Me.tbarImgXOffset, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbarImgZoom, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbarImgRotation, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.fraSVGOptions.SuspendLayout()
         Me.SuspendLayout()
         '
         'fraParameters
@@ -521,7 +530,7 @@ Public Class DisplayForm
         Me.fraTrasks.Controls.Add(Me.cmdCopyToClipboard)
         Me.fraTrasks.Controls.Add(Me.cmdRefresh)
         Me.fraTrasks.Controls.Add(Me.cmdSaveToDisk)
-        Me.fraTrasks.Location = New System.Drawing.Point(488, 8)
+        Me.fraTrasks.Location = New System.Drawing.Point(486, 8)
         Me.fraTrasks.Name = "fraTrasks"
         Me.fraTrasks.Size = New System.Drawing.Size(106, 136)
         Me.fraTrasks.TabIndex = 1
@@ -615,6 +624,12 @@ Public Class DisplayForm
         Me.mnuEdit.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.mnuEditCopyOverlapValues, Me.mnuEditCopy, Me.mnuEditRefreshPlot, Me.mnuEditSep1, Me.mnuEditResetValues})
         Me.mnuEdit.Text = "&Edit"
         '
+        'mnuEditCopyOverlapValues
+        '
+        Me.mnuEditCopyOverlapValues.Index = 0
+        Me.mnuEditCopyOverlapValues.Shortcut = System.Windows.Forms.Shortcut.Ctrl1
+        Me.mnuEditCopyOverlapValues.Text = "Copy &Overlap Values to Clipboard"
+        '
         'mnuEditCopy
         '
         Me.mnuEditCopy.Index = 1
@@ -631,12 +646,6 @@ Public Class DisplayForm
         '
         Me.mnuEditSep1.Index = 3
         Me.mnuEditSep1.Text = "-"
-        '
-        'mnuEditCopyOverlapValues
-        '
-        Me.mnuEditCopyOverlapValues.Index = 0
-        Me.mnuEditCopyOverlapValues.Shortcut = System.Windows.Forms.Shortcut.Ctrl1
-        Me.mnuEditCopyOverlapValues.Text = "Copy &Overlap Values to Clipboard"
         '
         'mnuEditResetValues
         '
@@ -871,11 +880,11 @@ Public Class DisplayForm
         '
         Me.txtStatus.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtStatus.Location = New System.Drawing.Point(0, 592)
+        Me.txtStatus.Location = New System.Drawing.Point(0, 571)
         Me.txtStatus.Multiline = True
         Me.txtStatus.Name = "txtStatus"
         Me.txtStatus.ReadOnly = True
-        Me.txtStatus.Size = New System.Drawing.Size(808, 10)
+        Me.txtStatus.Size = New System.Drawing.Size(942, 10)
         Me.txtStatus.TabIndex = 7
         '
         'fraMessageDisplayOptions
@@ -1060,6 +1069,43 @@ Public Class DisplayForm
         Me.tbarImgRotation.TickFrequency = 45
         Me.tbarImgRotation.TickStyle = System.Windows.Forms.TickStyle.TopLeft
         '
+        'fraSVGOptions
+        '
+        Me.fraSVGOptions.Controls.Add(Me.lblSVGOpacity)
+        Me.fraSVGOptions.Controls.Add(Me.txtSVGOpacity)
+        Me.fraSVGOptions.Controls.Add(Me.cmdSaveSVG)
+        Me.fraSVGOptions.Location = New System.Drawing.Point(806, 8)
+        Me.fraSVGOptions.Name = "fraSVGOptions"
+        Me.fraSVGOptions.Size = New System.Drawing.Size(106, 80)
+        Me.fraSVGOptions.TabIndex = 11
+        Me.fraSVGOptions.TabStop = False
+        Me.fraSVGOptions.Text = "SVG Options"
+        '
+        'lblSVGOpacity
+        '
+        Me.lblSVGOpacity.Location = New System.Drawing.Point(6, 48)
+        Me.lblSVGOpacity.Name = "lblSVGOpacity"
+        Me.lblSVGOpacity.Size = New System.Drawing.Size(48, 16)
+        Me.lblSVGOpacity.TabIndex = 29
+        Me.lblSVGOpacity.Text = "Opacity"
+        Me.lblSVGOpacity.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'txtSVGOpacity
+        '
+        Me.txtSVGOpacity.Location = New System.Drawing.Point(55, 47)
+        Me.txtSVGOpacity.Name = "txtSVGOpacity"
+        Me.txtSVGOpacity.Size = New System.Drawing.Size(39, 20)
+        Me.txtSVGOpacity.TabIndex = 28
+        Me.txtSVGOpacity.Text = "0.75"
+        '
+        'cmdSaveSVG
+        '
+        Me.cmdSaveSVG.Location = New System.Drawing.Point(6, 16)
+        Me.cmdSaveSVG.Name = "cmdSaveSVG"
+        Me.cmdSaveSVG.Size = New System.Drawing.Size(88, 24)
+        Me.cmdSaveSVG.TabIndex = 1
+        Me.cmdSaveSVG.Text = "Save S&vg File"
+        '
         'vdgThreeCircles
         '
         Me.vdgThreeCircles.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -1068,7 +1114,7 @@ Public Class DisplayForm
         Me.vdgThreeCircles.BackColor = System.Drawing.SystemColors.ControlDark
         Me.vdgThreeCircles.Location = New System.Drawing.Point(320, 152)
         Me.vdgThreeCircles.Name = "vdgThreeCircles"
-        Me.vdgThreeCircles.Size = New System.Drawing.Size(480, 432)
+        Me.vdgThreeCircles.Size = New System.Drawing.Size(614, 411)
         Me.vdgThreeCircles.TabIndex = 9
         '
         'vdgTwoCircles
@@ -1078,13 +1124,14 @@ Public Class DisplayForm
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.vdgTwoCircles.Location = New System.Drawing.Point(8, 160)
         Me.vdgTwoCircles.Name = "vdgTwoCircles"
-        Me.vdgTwoCircles.Size = New System.Drawing.Size(792, 424)
+        Me.vdgTwoCircles.Size = New System.Drawing.Size(926, 403)
         Me.vdgTwoCircles.TabIndex = 10
         '
         'DisplayForm
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
-        Me.ClientSize = New System.Drawing.Size(808, 609)
+        Me.ClientSize = New System.Drawing.Size(942, 588)
+        Me.Controls.Add(Me.fraSVGOptions)
         Me.Controls.Add(Me.txtStatus)
         Me.Controls.Add(Me.fraImageAdjustmentControls)
         Me.Controls.Add(Me.fraThreeCircleRegionCounts)
@@ -1112,6 +1159,8 @@ Public Class DisplayForm
         CType(Me.tbarImgXOffset, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbarImgZoom, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbarImgRotation, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.fraSVGOptions.ResumeLayout(False)
+        Me.fraSVGOptions.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1142,10 +1191,10 @@ Public Class DisplayForm
     Private Const DEFAULT_WINDOW_HEIGHT_TWO_CIRCLE As Integer = 610
     Private Const DEFAULT_WINDOW_HEIGHT_THREE_CIRCLE As Integer = 610
 
-    Private Const DEFAULT_WINDOW_WIDTH_TWO_CIRCLE As Integer = 637
-    Private Const DEFAULT_WINDOW_WIDTH_THREE_CIRCLE As Integer = 820
+    Private Const DEFAULT_WINDOW_WIDTH_TWO_CIRCLE As Integer = 750
+    Private Const DEFAULT_WINDOW_WIDTH_THREE_CIRCLE As Integer = 940
 
-    Private Const PROGRAM_DATE As String = "March 12, 2010"
+    Private Const PROGRAM_DATE As String = "March 30, 2010"
 #End Region
 
 #Region "Structures and Enums"
@@ -1338,7 +1387,7 @@ Public Class DisplayForm
         Catch ex As Exception
             System.Windows.Forms.MessageBox.Show("Error copying data to clipboard: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
-       
+
     End Sub
 
     Private Sub CopyVennToClipboard()
@@ -1740,6 +1789,7 @@ Public Class DisplayForm
             RestorePreviousDimensions(mCircleDimensionsSaved, False)
         End If
 
+        AutoSizeWindow()
     End Sub
 
     Public Shared Function IsNumber(ByVal strValue As String) As Boolean
@@ -1932,6 +1982,8 @@ Public Class DisplayForm
 
         fraTrasks.Left = fraParameters.Left + fraParameters.Width + FrameSpacing
         fraMessageDisplayOptions.Left = fraTrasks.Left + fraTrasks.Width + FrameSpacing
+
+        fraSVGOptions.Left = fraMessageDisplayOptions.Left + fraMessageDisplayOptions.Width + FrameSpacing
 
         fraImageAdjustmentControls.Top = fraThreeCircleRegionCounts.Top + fraThreeCircleRegionCounts.Height + 2
 
@@ -2134,15 +2186,15 @@ Public Class DisplayForm
         End Try
     End Sub
 
-    Private Sub SaveGraphicToDisk()
+    Private Sub SaveGraphicToDisk(ByVal blnForceSVG As Boolean)
         If chkCircleC.Checked Then
-            SaveGraphicToDisk(vdgThreeCircles.VennDiagram)
+            SaveGraphicToDisk(blnForceSVG, vdgThreeCircles.VennDiagram)
         Else
-            SaveGraphicToDisk(vdgTwoCircles.VennDiagram)
+            SaveGraphicToDisk(blnForceSVG, vdgTwoCircles.VennDiagram)
         End If
     End Sub
 
-    Private Sub SaveGraphicToDisk(ByVal objVennDiagrams As VennDiagrams.VennDiagramBaseClass)
+    Private Sub SaveGraphicToDisk(ByVal blnForceSVG As Boolean, ByVal objVennDiagrams As VennDiagrams.VennDiagramBaseClass)
         Dim outputFilepath As String = String.Empty
         Dim ext As String
 
@@ -2150,23 +2202,71 @@ Public Class DisplayForm
             Dim bitmap As Bitmap = New Bitmap(objVennDiagrams.Width, objVennDiagrams.Height)
             Dim g As Graphics = Graphics.FromImage(bitmap)
 
-            dlgSave.Filter = "bmp files (*.bmp)|*.bmp|png files (*.png)|*.png"
+            dlgSave.Filter = "bmp files (*.bmp)|*.bmp|png files (*.png)|*.png|SVG files (*.svg)|*.svg"
+            If blnForceSVG Then
+                dlgSave.FilterIndex = 3
+            End If
 
             If dlgSave.ShowDialog = DialogResult.OK Then
                 outputFilepath = dlgSave.FileName
 
                 ControlPrinter.ControlPrinter.DrawControl(objVennDiagrams, g, True)
-                ext = Mid(outputFilepath, Len(outputFilepath) - 3).ToLower
-                If ext = ".bmp" Then
-                    bitmap.Save(outputFilepath, System.Drawing.Imaging.ImageFormat.Bmp)
-                End If
-                If ext = ".png" Then
-                    bitmap.Save(outputFilepath, System.Drawing.Imaging.ImageFormat.Png)
-                End If
+
+                ext = System.IO.Path.GetExtension(outputFilepath)
+                Select Case ext.ToLower
+                    Case ".bmp"
+                        bitmap.Save(outputFilepath, System.Drawing.Imaging.ImageFormat.Bmp)
+                    Case ".png"
+                        bitmap.Save(outputFilepath, System.Drawing.Imaging.ImageFormat.Png)
+                    Case ".svg"
+                        SaveSVGFile(outputFilepath)
+                    Case Else
+                        System.Windows.Forms.MessageBox.Show("Unsupported file extension: " & ext, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                End Select
+
             End If
         Catch ex As Exception
             System.Windows.Forms.MessageBox.Show("Error saving Venn diagram to file " & outputFilepath & ":" & ControlChars.NewLine & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         End Try
+
+    End Sub
+
+    Private Sub SaveSVGFile(ByVal outputFilepath As String)
+
+        Dim swFile As System.IO.StreamWriter
+        Dim sngOpacity As Single
+
+        Try
+            swFile = New System.IO.StreamWriter(New System.IO.FileStream(outputFilepath, IO.FileMode.Create, IO.FileAccess.Write, IO.FileShare.Read))
+
+            If txtSVGOpacity.TextLength = 0 Then
+                sngOpacity = 1
+            Else
+                If Not Single.TryParse(txtSVGOpacity.Text, sngOpacity) Then
+                    ' Set this to 2 so that the error message is shown
+                    sngOpacity = 2
+                End If
+
+                If sngOpacity < 0 Or sngOpacity > 1 Then
+                    System.Windows.Forms.MessageBox.Show("Opacity value should be between 0 (transparent) and 1 (opaque); will assume 1", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    sngOpacity = 1
+                End If
+            End If
+
+            If Not chkCircleC.Checked Then
+                ' 2 circle mode
+                swFile.WriteLine(vdgTwoCircles.VennDiagram.GetSVG(chkFillCirclesWithColor.Checked, sngOpacity))
+            Else
+                ' 3 circle mode
+                swFile.WriteLine(vdgThreeCircles.VennDiagram.GetSVG(chkFillCirclesWithColor.Checked, sngOpacity))
+            End If
+
+            swFile.Close()
+
+        Catch ex As Exception
+            System.Windows.Forms.MessageBox.Show("Error saving Venn diagram to SVG file " & outputFilepath & ":" & ControlChars.NewLine & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+        End Try
+
     End Sub
 
     Private Sub SetToolTips()
@@ -2674,7 +2774,12 @@ Public Class DisplayForm
     End Sub
 
     Private Sub cmdSaveToDisk_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSaveToDisk.Click
-        SaveGraphicToDisk()
+        SaveGraphicToDisk(False)
+    End Sub
+
+    Private Sub cmdSaveSVG_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSaveSVG.Click
+        RefreshVennDiagrams(False)
+        SaveGraphicToDisk(True)
     End Sub
 
     Private Sub cmdUpdateRegionCounts_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdUpdateRegionCounts.Click
@@ -2784,7 +2889,7 @@ Public Class DisplayForm
     End Sub
 
     Private Sub mnuSaveFile_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuSaveFile.Click
-        SaveGraphicToDisk()
+        SaveGraphicToDisk(False)
     End Sub
 
     Private Sub mnuSaveDefaults_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuSaveDefaults.Click

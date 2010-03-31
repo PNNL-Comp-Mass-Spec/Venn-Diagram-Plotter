@@ -229,7 +229,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:VennDiagrams, Version=1.4.3723.27818, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:VennDiagrams, Version=1.4.3740.38097, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_8675CE25FEFEF8D8AD9CCF41299C869A"
@@ -280,7 +280,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ControlPrinter, Version=1.1.3723.27818, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:ControlPrinter, Version=1.1.3740.37583, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_92DE55BE0858E79DD14FE046A304B44F"
@@ -394,14 +394,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:VennDiagramPlotter"
-        "ProductCode" = "8:{C189A12E-2DD6-46A6-B071-A72AE38F30B8}"
-        "PackageCode" = "8:{7C37B72B-135A-4210-9EAE-F51BEBFADB1A}"
+        "ProductCode" = "8:{E8E58746-4DA8-49E3-846C-F4FA69784CE8}"
+        "PackageCode" = "8:{780EBBFB-2C31-4902-A826-CC3D907C5844}"
         "UpgradeCode" = "8:{658E9429-43A4-404C-BEF3-45AACB8B3130}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.4.2"
+        "ProductVersion" = "8:1.4.3"
         "Manufacturer" = "8:Battelle Memorial Institute"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
