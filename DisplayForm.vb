@@ -1288,7 +1288,7 @@ Public Class DisplayForm
         ' If it does; then don't re-add it
         For intIndex = 0 To mMessageQueueCount - 1
             If mMessageQueue(intIndex).Message = strMessage Then
-                If System.DateTime.Now.Subtract(mMessageQueue(intIndex).DisplayTime).TotalSeconds <= Me.DuplicateMessageIgnoreWindow Then
+                If System.DateTime.UtcNow.Subtract(mMessageQueue(intIndex).DisplayTime).TotalSeconds <= Me.DuplicateMessageIgnoreWindow Then
                     blnSkipMessage = True
                     Exit For
                 End If
@@ -1297,7 +1297,7 @@ Public Class DisplayForm
 
         If Not blnSkipMessage Then
             With mMessageQueue(mMessageQueueCount)
-                .DisplayTime = System.DateTime.Now
+                .DisplayTime = System.DateTime.UtcNow
                 .Message = String.Copy(strMessage)
                 mMessageQueueGlobalCount += 1
                 .MessageNumber = mMessageQueueGlobalCount
@@ -2023,7 +2023,7 @@ Public Class DisplayForm
                         If chkHideMessagesOnSuccessfulUpdate.Checked Then
                             ' Truncate to only display the most recent message and to hide it in 1 second
                             mMessageQueueCount = 1
-                            mMessageQueue(0).DisplayTime = System.DateTime.Now.Subtract(New System.TimeSpan(0, 0, DEFAULT_SECONDS_TO_DISPLAY_EACH_MESSAGE - 1))
+                            mMessageQueue(0).DisplayTime = System.DateTime.UtcNow.Subtract(New System.TimeSpan(0, 0, DEFAULT_SECONDS_TO_DISPLAY_EACH_MESSAGE - 1))
                         End If
                     End If
 
@@ -2571,7 +2571,7 @@ Public Class DisplayForm
 
             intFirstIndexToKeep = 0
             For intIndex = 0 To mMessageQueueCount - 1
-                dblElapsedTimeSeconds = System.DateTime.Now.Subtract(mMessageQueue(intIndex).DisplayTime).TotalSeconds
+                dblElapsedTimeSeconds = System.DateTime.UtcNow.Subtract(mMessageQueue(intIndex).DisplayTime).TotalSeconds
                 If dblElapsedTimeSeconds >= Me.MessageDisplayTime Then
                     intFirstIndexToKeep = intIndex + 1
                 End If
