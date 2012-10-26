@@ -1194,7 +1194,7 @@ Public Class DisplayForm
     Private Const DEFAULT_WINDOW_WIDTH_TWO_CIRCLE As Integer = 750
     Private Const DEFAULT_WINDOW_WIDTH_THREE_CIRCLE As Integer = 940
 
-    Private Const PROGRAM_DATE As String = "March 30, 2010"
+	Private Const PROGRAM_DATE As String = "October 25, 2012"
 #End Region
 
 #Region "Structures and Enums"
@@ -1793,9 +1793,9 @@ Public Class DisplayForm
     End Sub
 
     Public Shared Function IsNumber(ByVal strValue As String) As Boolean
-        Dim objFormatProvider As System.Globalization.NumberFormatInfo
+		Dim dblValue As Double
         Try
-            Return Double.TryParse(strValue, Globalization.NumberStyles.Any, objFormatProvider, 0)
+			Return Double.TryParse(strValue, dblValue)
         Catch ex As Exception
             Return False
         End Try

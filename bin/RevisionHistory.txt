@@ -1,5 +1,8 @@
 Venn Diagram Plotter Change Log
 
+Version 1.5.4681; October 25, 2012
+	- Updated to Visual Studio 2010 and .NET 4
+
 Version 1.4.3740; March 29, 2010
 	- Added ability to create a .SVG file that shows the overlap circles
 		- Does not include the overlap region

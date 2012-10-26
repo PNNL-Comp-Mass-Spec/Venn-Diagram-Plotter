@@ -258,11 +258,11 @@ Public Class clsMatrixSolver
 
     Public Sub TestSolver()
         Dim dblCoefMatrix(,) As Double
-        Dim dblConstants() As Double
-        Dim dblXValues() As Double
+		Dim dblConstants() As Double = Nothing
+		Dim dblXValues() As Double = Nothing
 
         Dim blnSuccess As Boolean
-        Dim strMessage As String
+		Dim strMessage As String = String.Empty
 
         Dim intRowCount As Integer = 6
         Dim intColCount As Integer = 6

@@ -396,7 +396,10 @@ Public Class ThreeCircleVennDiagram
                                           {0, 0, 0, 1, 0, 0}, _
                                           {0, 0, 0, 0, 1, 0}, _
                                           {0, 0, 0, 0, 0, 1}}
-        Dim dblXValues() As Double      ' Will be of length DIM_COUNT
+
+		' dblXValues is initialized by objMatrixSolver.SolveEquations
+		' Will be of length DIM_COUNT
+		Dim dblXValues() As Double = Nothing
         Dim objMatrixSolver As New clsMatrixSolver
 
         ' dblPotentialXValues() will have DIM_COUNT+1 rows and intPotentialXValsCount columns; 
@@ -404,7 +407,7 @@ Public Class ThreeCircleVennDiagram
         Dim intPotentialXValsCount As Integer
         Dim dblPotentialXValues(,) As Double
 
-        Dim strMessage As String
+		Dim strMessage As String = String.Empty
         Dim blnSuccess As Boolean
         Dim blnUseUserSuppliedABC As Boolean
 
@@ -564,7 +567,9 @@ Public Class ThreeCircleVennDiagram
                                           {0, 0, 0, 0, 0, 1, 1}, _
                                           {1, 1, 1, 1, 1, 1, 1}}
 
-        Dim dblXValues() As Double      ' Will be of length DIM_COUNT
+		' dblXValues is initialized by objMatrixSolver.SolveEquations
+		' Will be of length DIM_COUNT
+		Dim dblXValues() As Double = Nothing
         Dim objMatrixSolver As New clsMatrixSolver
 
 
@@ -573,7 +578,7 @@ Public Class ThreeCircleVennDiagram
         Dim intPotentialXValsCount As Integer
         Dim dblPotentialXValues(,) As Double
 
-        Dim strMessage As String
+		Dim strMessage As String = String.Empty
         Dim blnSuccess As Boolean
         Dim blnUseUserSuppliedTotalUniqueCount As Boolean
 
