@@ -33,26 +33,32 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_8675CE25FEFEF8D8AD9CCF41299C869A"
-        "OwnerKey" = "8:_23DD59EC478C45709A785E9001DF8055"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_8CEC0684A92243F4BFDE54F7D17A50D6"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_92DE55BE0858E79DD14FE046A304B44F"
+        "MsmKey" = "8:_A6089DC85D831796F083675EA8DD5E36"
         "OwnerKey" = "8:_23DD59EC478C45709A785E9001DF8055"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_92DE55BE0858E79DD14FE046A304B44F"
-        "OwnerKey" = "8:_8675CE25FEFEF8D8AD9CCF41299C869A"
+        "MsmKey" = "8:_D507832FD6FEC807D2610EE08F41DCC0"
+        "OwnerKey" = "8:_23DD59EC478C45709A785E9001DF8055"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D507832FD6FEC807D2610EE08F41DCC0"
+        "OwnerKey" = "8:_E2F0978B156E87636797F0B1D811C156"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E2F0978B156E87636797F0B1D811C156"
+        "OwnerKey" = "8:_23DD59EC478C45709A785E9001DF8055"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -70,13 +76,19 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_8675CE25FEFEF8D8AD9CCF41299C869A"
+        "OwnerKey" = "8:_E2F0978B156E87636797F0B1D811C156"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_92DE55BE0858E79DD14FE046A304B44F"
+        "OwnerKey" = "8:_D507832FD6FEC807D2610EE08F41DCC0"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_A6089DC85D831796F083675EA8DD5E36"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -136,13 +148,18 @@
         "InstallerBootstrapper" = "3:1"
             "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
             {
-            "Enabled" = "11:FALSE"
+            "Enabled" = "11:TRUE"
             "PromptEnabled" = "11:TRUE"
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
                 "Items"
                 {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0"
+                    }
                     "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.3.5.SP1"
                     {
                     "Name" = "8:.NET Framework 3.5 SP1"
@@ -176,7 +193,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "Version" = "8:3.5.30729"
+                "FrameworkVersion" = "8:.NETFramework,Version=v4.0"
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=9832"
                 "SupportedRuntimes" = "8:1.1.4322"
@@ -225,37 +242,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8675CE25FEFEF8D8AD9CCF41299C869A"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:VennDiagrams, Version=1.4.3740.38097, Culture=neutral, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                    "_8675CE25FEFEF8D8AD9CCF41299C869A"
-                    {
-                    "Name" = "8:VennDiagrams.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:VennDiagrams.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_E551FF1FF72B425DB50F2A16756B14E9"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8CEC0684A92243F4BFDE54F7D17A50D6"
             {
             "SourcePath" = "8:..\\bin\\RevisionHistory.txt"
@@ -276,20 +262,82 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_92DE55BE0858E79DD14FE046A304B44F"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A6089DC85D831796F083675EA8DD5E36"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ControlPrinter, Version=1.1.3740.37583, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
                 "ScatterAssemblies"
                 {
-                    "_92DE55BE0858E79DD14FE046A304B44F"
+                    "_A6089DC85D831796F083675EA8DD5E36"
+                    {
+                    "Name" = "8:stdole.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:stdole.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_E551FF1FF72B425DB50F2A16756B14E9"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D507832FD6FEC807D2610EE08F41DCC0"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:ControlPrinter, Version=1.1.4798.30840, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_D507832FD6FEC807D2610EE08F41DCC0"
                     {
                     "Name" = "8:ControlPrinter.dll"
                     "Attributes" = "3:512"
                     }
                 }
             "SourcePath" = "8:ControlPrinter.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_E551FF1FF72B425DB50F2A16756B14E9"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E2F0978B156E87636797F0B1D811C156"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:VennDiagrams, Version=1.4.4798.30840, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_E2F0978B156E87636797F0B1D811C156"
+                    {
+                    "Name" = "8:VennDiagrams.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:VennDiagrams.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_E551FF1FF72B425DB50F2A16756B14E9"
@@ -394,15 +442,16 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:VennDiagramPlotter"
-        "ProductCode" = "8:{E8E58746-4DA8-49E3-846C-F4FA69784CE8}"
-        "PackageCode" = "8:{780EBBFB-2C31-4902-A826-CC3D907C5844}"
+        "ProductCode" = "8:{B79112A2-12E6-40CD-A7D8-A4532FD8441F}"
+        "PackageCode" = "8:{B00706DB-55C9-403C-8557-1B8AF564F1AC}"
         "UpgradeCode" = "8:{658E9429-43A4-404C-BEF3-45AACB8B3130}"
+        "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.4.3"
-        "Manufacturer" = "8:Battelle Memorial Institute"
+        "ProductVersion" = "8:1.5.0"
+        "Manufacturer" = "8:Pacific Northwest National Lab"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:Venn Diagram Plotter"

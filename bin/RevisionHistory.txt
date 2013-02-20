@@ -1,5 +1,8 @@
 Venn Diagram Plotter Change Log
 
+Version 1.5.4798; February 19, 2013
+	- Now saving the VennDiagramPlotter settings file in the user's AppData folder (e.g. C:\Users\username\AppData\Roaming\VennDiagramPlotter)
+
 Version 1.5.4681; October 25, 2012
 	- Updated to Visual Studio 2010 and .NET 4
 

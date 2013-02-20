@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sections>
+  <section name="CircleParams">
+    <item key="CircleADia" value="45" />
+    <item key="CircleBDia" value="25" />
+    <item key="CircleCDia" value="20" />
+    <item key="Overlap" value="18" />
+    <item key="OverlapBC" value="10" />
+    <item key="OverlapAC" value="15" />
+    <item key="CircleAColor" value="255,255,192,192" />
+    <item key="CircleBColor" value="255,192,255,255" />
+    <item key="CircleCColor" value="255,255,255,192" />
+    <item key="OverlapColor" value="255,192,255,192" />
+    <item key="OverlapBCColor" value="255,192,192,0" />
+    <item key="OverlapACColor" value="255,128,128,255" />
+    <item key="OverlapABCColor" value="255,192,192,192" />
+    <item key="FillCirclesWithColor" value="True" />
+    <item key="EnterCircleTotals" value="True" />
+    <item key="ThreeCircleMode" value="False" />
+    <item key="MessageDisplayTime." value="8" />
+    <item key="DuplicateMessageIgnoreWindow" value="4" />
+    <item key="HideMessagesOnSuccessfulUpdate" value="False" />
+    <item key="RegionCountMode" value="0" />
+    <item key="RegionCountValue" value="25" />
+    <item key="BackgroundColor" value="White" />
+    <item key="WindowWidth" value="750" />
+    <item key="WindowHeight" value="610" />
+  </section>
+</sections>

@@ -132,6 +132,7 @@
     <Compile Include="AssemblyInfo.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="clsProcessFilesBaseClass.vb" />
     <Compile Include="clsXmlSettingsFileAccessor.vb">
       <SubType>Code</SubType>
     </Compile>

@@ -1194,7 +1194,7 @@ Public Class DisplayForm
     Private Const DEFAULT_WINDOW_WIDTH_TWO_CIRCLE As Integer = 750
     Private Const DEFAULT_WINDOW_WIDTH_THREE_CIRCLE As Integer = 940
 
-	Private Const PROGRAM_DATE As String = "October 25, 2012"
+	Private Const PROGRAM_DATE As String = "February 29, 2013"
 #End Region
 
 #Region "Structures and Enums"
@@ -1223,968 +1223,961 @@ Public Class DisplayForm
 #Region "Module Variables"
 
     Protected mCircleDimensionsSaved As udtCircleDimensionsType
-    Protected mIniFileName As String = "VennDiagramPlotter.xml"
+	Protected mIniFilePath As String
 
-    Protected mMessageQueueCount As Integer
-    Protected mMessageQueue() As udtMessageQueueType
-    Protected mMessageQueueGlobalCount As Integer
+	Protected mMessageQueueCount As Integer
+	Protected mMessageQueue() As udtMessageQueueType
+	Protected mMessageQueueGlobalCount As Integer
 
-    Protected WithEvents mStatusTimer As Timer
+	Protected WithEvents mStatusTimer As Timer
 #End Region
 
 #Region "Properties"
-    Protected Property MessageDisplayTime() As Integer
-        Get
-            Return tbarMessageDisplayTimeSeconds.Value
-        End Get
-        Set(ByVal Value As Integer)
-            SetTrackbarValue(tbarMessageDisplayTimeSeconds, Value)
-        End Set
-    End Property
+	Protected Property MessageDisplayTime() As Integer
+		Get
+			Return tbarMessageDisplayTimeSeconds.Value
+		End Get
+		Set(ByVal Value As Integer)
+			SetTrackbarValue(tbarMessageDisplayTimeSeconds, Value)
+		End Set
+	End Property
 
-    Protected Property DuplicateMessageIgnoreWindow() As Integer
-        Get
-            Return tbarDuplicateMessageIgnoreWindowSeconds.Value
-        End Get
-        Set(ByVal Value As Integer)
-            SetTrackbarValue(tbarDuplicateMessageIgnoreWindowSeconds, Value)
-        End Set
-    End Property
+	Protected Property DuplicateMessageIgnoreWindow() As Integer
+		Get
+			Return tbarDuplicateMessageIgnoreWindowSeconds.Value
+		End Get
+		Set(ByVal Value As Integer)
+			SetTrackbarValue(tbarDuplicateMessageIgnoreWindowSeconds, Value)
+		End Set
+	End Property
 
 #End Region
 
-    '' Unused function
-    ''Private Sub AutoResizeExpand()
-    ''    vdgTwoCircles.VennDiagram.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
-    ''    vdgTwoCircles.VennDiagram.Height = CInt(vdgTwoCircles.VennDiagram.Height + vdgTwoCircles.VennDiagram.Height * 0.1)
-    ''    vdgTwoCircles.Height = CInt(vdgTwoCircles.Height + vdgTwoCircles.Height * 0.1)
-    ''    vdgTwoCircles.VennDiagram.Width = CInt(vdgTwoCircles.VennDiagram.Width + vdgTwoCircles.VennDiagram.Width * 0.1)
-    ''    vdgTwoCircles.Width = CInt(vdgTwoCircles.Width + vdgTwoCircles.Width * 0.1)
-    ''End Sub
-
-    '' Unused function
-    ''Private Sub AutoResizeShrink()
-    ''    vdgTwoCircles.VennDiagram.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
-    ''    vdgTwoCircles.VennDiagram.Height = CInt(vdgTwoCircles.VennDiagram.Height - vdgTwoCircles.VennDiagram.Height * 0.1)
-    ''    vdgTwoCircles.Height = CInt(vdgTwoCircles.Height - vdgTwoCircles.Height * 0.1)
-    ''    vdgTwoCircles.VennDiagram.Width = CInt(vdgTwoCircles.VennDiagram.Width - vdgTwoCircles.VennDiagram.Width * 0.1)
-    ''    vdgTwoCircles.Width = CInt(vdgTwoCircles.Width - vdgTwoCircles.Width * 0.1)
-    ''End Sub
-
-    Private Sub AppendToStatusLog(ByVal strMessage As String)
-        Dim intIndex As Integer
-        Dim blnSkipMessage As Boolean = False
-
-        If mMessageQueue Is Nothing Then
-            ReDim mMessageQueue(9)
-        End If
-
-        If mMessageQueueCount >= mMessageQueue.Length Then
-            ' Reserve more space in mMessageQueue
-            ReDim Preserve mMessageQueue(mMessageQueue.Length * 2 - 1)
-        End If
-
-        ' See if the queue already contains strMessage, posted within the last second
-        ' If it does; then don't re-add it
-        For intIndex = 0 To mMessageQueueCount - 1
-            If mMessageQueue(intIndex).Message = strMessage Then
-                If System.DateTime.UtcNow.Subtract(mMessageQueue(intIndex).DisplayTime).TotalSeconds <= Me.DuplicateMessageIgnoreWindow Then
-                    blnSkipMessage = True
-                    Exit For
-                End If
-            End If
-        Next intIndex
-
-        If Not blnSkipMessage Then
-            With mMessageQueue(mMessageQueueCount)
-                .DisplayTime = System.DateTime.UtcNow
-                .Message = String.Copy(strMessage)
-                mMessageQueueGlobalCount += 1
-                .MessageNumber = mMessageQueueGlobalCount
-            End With
-            mMessageQueueCount += 1
-
-            DisplayStatusLog()
-        End If
-
-    End Sub
-
-    Private Sub AutoSizeWindow()
-        If chkCircleC.Checked Then
-            Me.Width = DEFAULT_WINDOW_WIDTH_THREE_CIRCLE
-            Me.Height = DEFAULT_WINDOW_HEIGHT_THREE_CIRCLE
-        Else
-            Me.Width = DEFAULT_WINDOW_WIDTH_TWO_CIRCLE
-            Me.Height = DEFAULT_WINDOW_HEIGHT_TWO_CIRCLE
-        End If
-    End Sub
-
-    Private Sub AutoUpdateRegionCountValue()
-
-        Dim eRegionCountMode As eRegionCountModeConstants
-        eRegionCountMode = GetRegionCountMode()
-
-        Select Case eRegionCountMode
-            Case eRegionCountModeConstants.CountOverlappingAllCircles
-                txtRegionCountValue.Text = txtRegionABC.Text
-            Case eRegionCountModeConstants.UniqueItemCountAcrossAllCircles
-                txtRegionCountValue.Text = txtRegionUniqueItemCountAllCircles.Text
-            Case Else
-                ' Unknown value
-                UpdateStatus("Unknown Region Count Mode in Sub AutoUpdateRegionCountValue")
-        End Select
-
-    End Sub
-
-    Private Sub ClearMessages()
-        If mMessageQueueCount > 0 Then
-            mMessageQueueCount = 0
-            DisplayStatusLog()
-        End If
-    End Sub
-
-    Private Sub CopyOverlapValues()
-        Dim sbOverlapData As System.Text.StringBuilder
-
-        Dim strTab1x As String
-
-        Try
-            sbOverlapData = New System.Text.StringBuilder
-
-            strTab1x = ControlChars.Tab
-
-            ' Header line
-
-            sbOverlapData.Length = 0
-            If Not chkCircleC.Checked Then
-                ' 2 circle mode
-                sbOverlapData.AppendLine("" & strTab1x & "Circle A" & strTab1x & "Circle B")
-                sbOverlapData.AppendLine("Total" & strTab1x & txtSizeA.Text & strTab1x & txtSizeB.Text)
-                sbOverlapData.AppendLine("Count distinct" & strTab1x & txtDistinctA.Text & strTab1x & txtDistinctB.Text)
-                sbOverlapData.AppendLine("Overlap" & strTab1x & txtSizeOverlapAB.Text)
-            Else
-                ' 3 circle mode
-                sbOverlapData.AppendLine("" & strTab1x & "Circle A" & strTab1x & "Circle B" & strTab1x & "Circle C")
-                sbOverlapData.AppendLine("Total" & strTab1x & txtSizeA.Text & strTab1x & txtSizeB.Text & strTab1x & txtSizeC.Text)
-                sbOverlapData.AppendLine("Overlap" & strTab1x & txtSizeOverlapAB.Text & strTab1x & txtSizeOverlapBC.Text & strTab1x & txtSizeOverlapAC.Text)
-
-                ' 3 Circle Mode Region counts
-                sbOverlapData.AppendLine()
-                sbOverlapData.AppendLine("Category" & strTab1x & "Value")
-                sbOverlapData.AppendLine("Only in A" & strTab1x & txtRegionAx.Text)
-                sbOverlapData.AppendLine("Only in B" & strTab1x & txtRegionBx.Text)
-                sbOverlapData.AppendLine("Only in C" & strTab1x & txtRegionCx.Text)
-                sbOverlapData.AppendLine("In A and B" & strTab1x & txtRegionABx.Text)
-                sbOverlapData.AppendLine("In B and C" & strTab1x & txtRegionBCx.Text)
-                sbOverlapData.AppendLine("In A and C" & strTab1x & txtRegionACx.Text)
-                sbOverlapData.AppendLine("In A, B, and C" & strTab1x & txtRegionABC.Text)
-                sbOverlapData.AppendLine("Unique item count" & strTab1x & txtRegionUniqueItemCountAllCircles.Text)
-
-            End If
-
-
-            Clipboard.SetText(sbOverlapData.ToString)
-        Catch ex As Exception
-            System.Windows.Forms.MessageBox.Show("Error copying data to clipboard: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-
-    End Sub
-
-    Private Sub CopyVennToClipboard()
-        Try
-            Dim bitmap As Bitmap
-
-            If chkCircleC.Checked Then
-                bitmap = New Bitmap(Me.vdgThreeCircles.Width, Me.vdgThreeCircles.Height)
-            Else
-                bitmap = New Bitmap(Me.vdgTwoCircles.Width, Me.vdgTwoCircles.Height)
-            End If
-
-            Dim g As Graphics = Graphics.FromImage(bitmap)
-
-            If chkCircleC.Checked Then
-                ControlPrinter.ControlPrinter.DrawControl(Me.vdgThreeCircles, g, True)
-            Else
-                ControlPrinter.ControlPrinter.DrawControl(Me.vdgTwoCircles, g, True)
-            End If
-
-
-            Clipboard.SetDataObject(bitmap)
-        Catch ex As Exception
-            System.Windows.Forms.MessageBox.Show("Error copying Venn diagram to clipboard: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
-
-    Public Function ColorToString(ByVal c As Color) As String
-
-        Dim s As String = c.ToString()
-        Dim tmpStr As String
-
-        s = s.Split(New Char() {"["c, "]"c})(1)
-
-        Dim strings() As String = s.Split(New Char() {"="c, ","c})
-        If strings(0) <> "" Then
-            tmpStr = strings(0)
-        End If
-
-        If strings.GetLength(0) > 7 Then
-            s = strings(1) + "," + strings(3) + "," + strings(5) + "," + strings(7)
-        End If
-
-        Return s
-
-    End Function
-
-    Private Sub ComputeOptimalRegionCount(ByVal blnUpdateDisplayedDistinctCounts As Boolean)
-        Dim eRegionCountMode As eRegionCountModeConstants
-        Dim dblRegionCountValue As Double
-
-        Dim udtCircleRegions As VennDiagrams.ThreeCircleVennDiagram.udtThreeCircleRegionsType
-
-        eRegionCountMode = GetRegionCountMode()
-        dblRegionCountValue = 5
-
-        If GetCircleDimensions(udtCircleRegions, True, False) Then
-
-            Me.Cursor = Cursors.WaitCursor
-
-            Select Case eRegionCountMode
-                Case eRegionCountModeConstants.CountOverlappingAllCircles
-                    With udtCircleRegions
-                        ' Initially define the default value as 50% of the smallest circle size
-                        dblRegionCountValue = Math.Min(Math.Min(.CircleA, .CircleB), .CircleC) / 2.0
-                        If dblRegionCountValue <= 0 Then dblRegionCountValue = 1
-                    End With
-
-                    If VennDiagrams.ThreeCircleVennDiagram.ComputeThreeCircleAreasGivenOverlapABC(udtCircleRegions, 0) Then
-                        ' Successfully computed the optimal value
-                        ' Obtain the optimal value from .ABC
-                        dblRegionCountValue = udtCircleRegions.ABC
-                    Else
-                        UpdateStatus("Unable to determine an optimal value for ABC overlap")
-                    End If
-
-
-                Case eRegionCountModeConstants.UniqueItemCountAcrossAllCircles
-                    With udtCircleRegions
-                        ' Initially define the default value as 50% of the sum of the three circles
-                        dblRegionCountValue = (.CircleA + .CircleB + .CircleC) / 2.0
-                        If dblRegionCountValue <= 0 Then dblRegionCountValue = 1
-                    End With
-
-                    If VennDiagrams.ThreeCircleVennDiagram.ComputeThreeCircleAreasGivenTotalUniqueCount(udtCircleRegions, 0) Then
-                        ' Successfully computed the optimal value
-                        ' Obtain the optimal value from .TotalUniqueCount
-                        dblRegionCountValue = udtCircleRegions.TotalUniqueCount
-                    Else
-                        UpdateStatus("Unable to determine an optimal value for total unique count")
-                    End If
-
-
-                Case Else
-                    ' Unknown value
-                    UpdateStatus("Unknown Region Count Mode in Sub ComputeOptimalRegionCount")
-            End Select
-
-            Me.Cursor = Cursors.Default
-        End If
-
-        txtRegionCountValue.Text = NumToString(dblRegionCountValue, 1)
-
-        If blnUpdateDisplayedDistinctCounts Then
-            UpdateThreeCircleDistinctCounts()
-        End If
-    End Sub
-
-    Private Sub DisplayDistinctRegionCount(ByVal dblValue As Double, ByVal objTextbox As TextBox, ByVal strRegionDescription As String)
-        If dblValue >= 0 Then
-            objTextbox.Text = NumToString(dblValue, 1)
-        Else
-            objTextbox.Text = String.Empty
-            If Not strRegionDescription Is Nothing AndAlso strRegionDescription.Length > 0 Then
-                UpdateStatus("Computed a value of " & NumToString(dblValue, 1) & " for the points " & strRegionDescription & "; use 'Compute Optimal' to auto-determine valid values.")
-            End If
-        End If
-    End Sub
-
-    Private Sub DisplayForm_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles MyBase.Resize
-        vdgTwoCircles.VennDiagram.Anchor = vdgTwoCircles.Anchor
-    End Sub
-
-    Private Sub DisplayStatusLog()
-        Const MAX_CONTROL_HEIGHT As Integer = 96
-        Const BUFFER_DISTANCE As Integer = 60
-
-        Dim strMessageList As String
-        Dim intControlHeight As Integer
-
-        Dim intIndex As Integer
-
-        strMessageList = String.Empty
-
-        If mMessageQueueCount > 0 Then
-            If mMessageQueueCount = 1 Then
-                intControlHeight = STATUS_HEIGHT_SINGLE_LINE
-            Else
-                intControlHeight = STATUS_HEIGHT_SINGLE_LINE + mMessageQueueCount * STATUS_HEIGHT_PER_LINE
-            End If
-
-            If intControlHeight > MAX_CONTROL_HEIGHT Then intControlHeight = MAX_CONTROL_HEIGHT
-
-            For intIndex = 0 To mMessageQueueCount - 1
-                If intIndex > 0 Then strMessageList &= ControlChars.NewLine
-
-                With mMessageQueue(intIndex)
-                    strMessageList &= "(" & (.MessageNumber).ToString & ") " & .DisplayTime.ToLongTimeString & ": " & .Message
-                End With
-            Next intIndex
-        Else
-            strMessageList = String.Empty
-            intControlHeight = STATUS_HEIGHT_NO_MESSAGE
-        End If
-
-        If txtStatus.Height <> intControlHeight Then
-            txtStatus.Top = Me.Height - intControlHeight - BUFFER_DISTANCE
-            txtStatus.Height = intControlHeight
-
-            If txtStatus.Height = STATUS_HEIGHT_NO_MESSAGE OrElse mMessageQueueCount = 1 Then
-                txtStatus.ScrollBars = ScrollBars.None
-            Else
-                txtStatus.ScrollBars = ScrollBars.Vertical
-            End If
-
-        End If
-        txtStatus.Text = strMessageList
-    End Sub
-
-    Private Sub EnableDisableControls()
-
-        Dim blnEnableTotals As Boolean
-        Dim blnThreeCircleMode As Boolean
-
-        blnThreeCircleMode = chkCircleC.Checked
-        If blnThreeCircleMode Then
-            ' Force Totals to be enabled
-            blnEnableTotals = True
-            If Not optTotal.Checked Then optTotal.Checked = True
-
-            ' Make sure form is at least DEFAULT_WINDOW_HEIGHT_THREE_CIRCLE units hight
-            If Me.Height < DEFAULT_WINDOW_HEIGHT_THREE_CIRCLE Then Me.Height = DEFAULT_WINDOW_HEIGHT_THREE_CIRCLE
-        Else
-            blnEnableTotals = optTotal.Checked
-        End If
-
-        fraThreeCircleRegionCounts.Visible = blnThreeCircleMode
-        fraImageAdjustmentControls.Visible = blnThreeCircleMode
-
-        txtSizeA.Enabled = blnEnableTotals
-        txtSizeB.Enabled = blnEnableTotals
-
-        txtSizeC.Enabled = blnThreeCircleMode And blnEnableTotals
-        txtSizeC.Visible = blnThreeCircleMode
-
-        txtDistinctA.Enabled = Not blnEnableTotals
-        txtDistinctB.Enabled = Not blnEnableTotals
-
-        optCountDistinct.Enabled = Not blnThreeCircleMode
-
-        txtSizeOverlapBC.Visible = blnThreeCircleMode
-        txtSizeOverlapAC.Visible = blnThreeCircleMode
-        lblOverlapBC.Visible = blnThreeCircleMode
-        lblOverlapAC.Visible = blnThreeCircleMode
-
-        cmdCircleCColor.Visible = blnThreeCircleMode
-
-        cmdOverlapBCColor.Visible = blnThreeCircleMode
-        cmdOverlapACColor.Visible = blnThreeCircleMode
-        cmdOverlapABCColor.Visible = blnThreeCircleMode
-
-        If Not vdgTwoCircles Is Nothing Then
-            vdgTwoCircles.Visible = Not blnThreeCircleMode
-            vdgThreeCircles.Visible = blnThreeCircleMode
-
-            If blnThreeCircleMode Then
-                txtStatus.Left = vdgThreeCircles.Left
-                txtStatus.Width = vdgThreeCircles.Width
-            Else
-                txtStatus.Left = vdgTwoCircles.Left
-                txtStatus.Width = vdgTwoCircles.Width
-            End If
-        End If
-
-        PositionControls()
-
-    End Sub
-
-    Private Function GetCircleDimensions(ByRef udtCircleRegions As VennDiagrams.ThreeCircleVennDiagram.udtThreeCircleRegionsType, ByVal blnIncludeThreeCircleValues As Boolean, ByVal blnWarnIfInvalid As Boolean) As Boolean
-        Dim udtCircleDimensions As udtCircleDimensionsType
-        Dim blnSuccess As Boolean
-
-        blnSuccess = GetCircleDimensions(udtCircleDimensions, blnIncludeThreeCircleValues, blnWarnIfInvalid)
-
-        ' Populate udtCircleRegions using udtCircleDimensions
-        With udtCircleDimensions
-            udtCircleRegions.CircleA = .CircleA
-            udtCircleRegions.CircleB = .CircleB
-            udtCircleRegions.CircleC = .CircleC
-            udtCircleRegions.OverlapAB = .OverlapAB
-            udtCircleRegions.OverlapBC = .OverlapBC
-            udtCircleRegions.OverlapAC = .OverlapAC
-        End With
-
-        Return blnSuccess
-    End Function
-
-    Private Function GetCircleDimensions(ByRef udtCircleDimensions As udtCircleDimensionsType, ByVal blnIncludeThreeCircleValues As Boolean, ByVal blnWarnIfInvalid As Boolean) As Boolean
-        ' Returns True if the dimensions are valid; false if not
-
-        Dim strMessage As String
-        Dim blnValid As Boolean
-
-        blnValid = True
-        strMessage = String.Empty
-
-        With udtCircleDimensions
-            .CircleA = 0
-            .CircleB = 0
-            .CircleC = 0
-            .OverlapAB = 0
-            .OverlapBC = 0
-            .OverlapAC = 0
-
-            If IsNumber(txtSizeA) Then
-                .CircleA = TextBoxToDbl(txtSizeA)
-            Else
-                If blnWarnIfInvalid Then strMessage &= "Value not provided for Circle A total;"
-                blnValid = False
-            End If
-
-            If IsNumber(txtSizeB) Then
-                .CircleB = TextBoxToDbl(txtSizeB)
-            Else
-                If blnWarnIfInvalid Then strMessage &= "Value not provided for Circle B total;"
-                blnValid = False
-            End If
-
-            If IsNumber(txtSizeOverlapAB) Then
-                .OverlapAB = TextBoxToDbl(txtSizeOverlapAB)
-            Else
-                If blnWarnIfInvalid Then strMessage &= "Value not provided for Overlap of Circles A and B;"
-                blnValid = False
-            End If
-
-            If blnIncludeThreeCircleValues Then
-                If IsNumber(txtSizeC) Then
-                    .CircleC = TextBoxToDbl(txtSizeC)
-                Else
-                    If blnWarnIfInvalid Then strMessage &= "Value not provided for Circle C total;"
-                    blnValid = False
-                End If
-
-                If IsNumber(txtSizeOverlapBC) Then
-                    .OverlapBC = TextBoxToDbl(txtSizeOverlapBC)
-                Else
-                    If blnWarnIfInvalid Then strMessage &= "Value not provided for Overlap of Circles B and C;"
-                    blnValid = False
-                End If
-
-                If IsNumber(txtSizeOverlapAC) Then
-                    .OverlapAC = TextBoxToDbl(txtSizeOverlapAC)
-                Else
-                    If blnWarnIfInvalid Then strMessage &= "Value not provided for Overlap of Circles A and C;"
-                    blnValid = False
-                End If
-            End If
-        End With
-
-        If blnWarnIfInvalid AndAlso strMessage.Length > 0 Then
-            UpdateStatus(strMessage.TrimEnd(";"c))
-        End If
-
-        Return blnValid
-
-    End Function
-
-    Private Function GetIniFilePath(ByVal IniFileName As String) As String
-        Dim fi As New System.IO.FileInfo(Application.ExecutablePath)
-        Return System.IO.Path.Combine(fi.DirectoryName, IniFileName)
-    End Function
-
-    Private Function GetRegionCountMode() As eRegionCountModeConstants
-        If cboRegionCountMode.SelectedIndex = eRegionCountModeConstants.CountOverlappingAllCircles Then
-            Return eRegionCountModeConstants.CountOverlappingAllCircles
-        Else
-            Return eRegionCountModeConstants.UniqueItemCountAcrossAllCircles
-        End If
-    End Function
-
-    Private Sub InitializeControls()
-
-        mMessageQueueCount = 0
-        ReDim mMessageQueue(9)
-        mMessageQueueGlobalCount = 0
-
-        Me.MessageDisplayTime = DEFAULT_SECONDS_TO_DISPLAY_EACH_MESSAGE
-        Me.DuplicateMessageIgnoreWindow = DEFAULT_DUPLICATE_IGNORE_WINDOW_SECONDS
-
-        mStatusTimer = New Timer
-        With mStatusTimer
-            .Interval = 200
-            .Enabled = True
-        End With
-
-        With cboRegionCountMode
-            With .Items
-                .Clear()
-                .Add("Define count overlapping all 3 circles ")
-                .Add("Define total unique item count")
-            End With
-            .SelectedIndex = eRegionCountModeConstants.CountOverlappingAllCircles
-        End With
-
-        ResetImageAdjustmentValues()
-
-        With vdgTwoCircles
-            With .VennDiagram
-                .SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
-                .BackColor = System.Drawing.Color.White
-            End With
-            .Visible = True
-        End With
-
-        With vdgThreeCircles
-            With .VennDiagram
-                .SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
-                .BackColor = System.Drawing.Color.White
-            End With
-            .Visible = False
-            .Left = fraThreeCircleRegionCounts.Left + fraThreeCircleRegionCounts.Width + 12
-            .Top = vdgTwoCircles.Top
-            .Width = vdgTwoCircles.Width - (vdgThreeCircles.Left - vdgTwoCircles.Left)
-            .Height = vdgTwoCircles.Height
-        End With
-
-        SetToolTips()
-
-        EnableDisableControls()
-
-        RefreshVennDiagrams(True)
-        LoadDefaults()
-
-        ' Initialize the default circle dimensions
-        Dim udtCircleDimensions As udtCircleDimensionsType
-
-        If GetCircleDimensions(udtCircleDimensions, True, False) Then
-            StoreCurrentDimensions(udtCircleDimensions)
-        Else
-            With mCircleDimensionsSaved
-                .CircleA = 45
-                .CircleB = 25
-                .CircleC = 15
-                .OverlapAB = 18
-                .OverlapBC = 5
-                .OverlapAC = 10
-            End With
-
-            RestorePreviousDimensions(mCircleDimensionsSaved, False)
-        End If
-
-        AutoSizeWindow()
-    End Sub
-
-    Public Shared Function IsNumber(ByVal strValue As String) As Boolean
+	'' Unused function
+	''Private Sub AutoResizeExpand()
+	''    vdgTwoCircles.VennDiagram.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+	''    vdgTwoCircles.VennDiagram.Height = CInt(vdgTwoCircles.VennDiagram.Height + vdgTwoCircles.VennDiagram.Height * 0.1)
+	''    vdgTwoCircles.Height = CInt(vdgTwoCircles.Height + vdgTwoCircles.Height * 0.1)
+	''    vdgTwoCircles.VennDiagram.Width = CInt(vdgTwoCircles.VennDiagram.Width + vdgTwoCircles.VennDiagram.Width * 0.1)
+	''    vdgTwoCircles.Width = CInt(vdgTwoCircles.Width + vdgTwoCircles.Width * 0.1)
+	''End Sub
+
+	'' Unused function
+	''Private Sub AutoResizeShrink()
+	''    vdgTwoCircles.VennDiagram.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+	''    vdgTwoCircles.VennDiagram.Height = CInt(vdgTwoCircles.VennDiagram.Height - vdgTwoCircles.VennDiagram.Height * 0.1)
+	''    vdgTwoCircles.Height = CInt(vdgTwoCircles.Height - vdgTwoCircles.Height * 0.1)
+	''    vdgTwoCircles.VennDiagram.Width = CInt(vdgTwoCircles.VennDiagram.Width - vdgTwoCircles.VennDiagram.Width * 0.1)
+	''    vdgTwoCircles.Width = CInt(vdgTwoCircles.Width - vdgTwoCircles.Width * 0.1)
+	''End Sub
+
+	Private Sub AppendToStatusLog(ByVal strMessage As String)
+		Dim intIndex As Integer
+		Dim blnSkipMessage As Boolean = False
+
+		If mMessageQueue Is Nothing Then
+			ReDim mMessageQueue(9)
+		End If
+
+		If mMessageQueueCount >= mMessageQueue.Length Then
+			' Reserve more space in mMessageQueue
+			ReDim Preserve mMessageQueue(mMessageQueue.Length * 2 - 1)
+		End If
+
+		' See if the queue already contains strMessage, posted within the last second
+		' If it does; then don't re-add it
+		For intIndex = 0 To mMessageQueueCount - 1
+			If mMessageQueue(intIndex).Message = strMessage Then
+				If System.DateTime.UtcNow.Subtract(mMessageQueue(intIndex).DisplayTime).TotalSeconds <= Me.DuplicateMessageIgnoreWindow Then
+					blnSkipMessage = True
+					Exit For
+				End If
+			End If
+		Next intIndex
+
+		If Not blnSkipMessage Then
+			With mMessageQueue(mMessageQueueCount)
+				.DisplayTime = System.DateTime.UtcNow
+				.Message = String.Copy(strMessage)
+				mMessageQueueGlobalCount += 1
+				.MessageNumber = mMessageQueueGlobalCount
+			End With
+			mMessageQueueCount += 1
+
+			DisplayStatusLog()
+		End If
+
+	End Sub
+
+	Private Sub AutoSizeWindow()
+		If chkCircleC.Checked Then
+			Me.Width = DEFAULT_WINDOW_WIDTH_THREE_CIRCLE
+			Me.Height = DEFAULT_WINDOW_HEIGHT_THREE_CIRCLE
+		Else
+			Me.Width = DEFAULT_WINDOW_WIDTH_TWO_CIRCLE
+			Me.Height = DEFAULT_WINDOW_HEIGHT_TWO_CIRCLE
+		End If
+	End Sub
+
+	Private Sub AutoUpdateRegionCountValue()
+
+		Dim eRegionCountMode As eRegionCountModeConstants
+		eRegionCountMode = GetRegionCountMode()
+
+		Select Case eRegionCountMode
+			Case eRegionCountModeConstants.CountOverlappingAllCircles
+				txtRegionCountValue.Text = txtRegionABC.Text
+			Case eRegionCountModeConstants.UniqueItemCountAcrossAllCircles
+				txtRegionCountValue.Text = txtRegionUniqueItemCountAllCircles.Text
+			Case Else
+				' Unknown value
+				UpdateStatus("Unknown Region Count Mode in Sub AutoUpdateRegionCountValue")
+		End Select
+
+	End Sub
+
+	Private Sub ClearMessages()
+		If mMessageQueueCount > 0 Then
+			mMessageQueueCount = 0
+			DisplayStatusLog()
+		End If
+	End Sub
+
+	Private Sub CopyOverlapValues()
+		Dim sbOverlapData As System.Text.StringBuilder
+
+		Dim strTab1x As String
+
+		Try
+			sbOverlapData = New System.Text.StringBuilder
+
+			strTab1x = ControlChars.Tab
+
+			' Header line
+
+			sbOverlapData.Length = 0
+			If Not chkCircleC.Checked Then
+				' 2 circle mode
+				sbOverlapData.AppendLine("" & strTab1x & "Circle A" & strTab1x & "Circle B")
+				sbOverlapData.AppendLine("Total" & strTab1x & txtSizeA.Text & strTab1x & txtSizeB.Text)
+				sbOverlapData.AppendLine("Count distinct" & strTab1x & txtDistinctA.Text & strTab1x & txtDistinctB.Text)
+				sbOverlapData.AppendLine("Overlap" & strTab1x & txtSizeOverlapAB.Text)
+			Else
+				' 3 circle mode
+				sbOverlapData.AppendLine("" & strTab1x & "Circle A" & strTab1x & "Circle B" & strTab1x & "Circle C")
+				sbOverlapData.AppendLine("Total" & strTab1x & txtSizeA.Text & strTab1x & txtSizeB.Text & strTab1x & txtSizeC.Text)
+				sbOverlapData.AppendLine("Overlap" & strTab1x & txtSizeOverlapAB.Text & strTab1x & txtSizeOverlapBC.Text & strTab1x & txtSizeOverlapAC.Text)
+
+				' 3 Circle Mode Region counts
+				sbOverlapData.AppendLine()
+				sbOverlapData.AppendLine("Category" & strTab1x & "Value")
+				sbOverlapData.AppendLine("Only in A" & strTab1x & txtRegionAx.Text)
+				sbOverlapData.AppendLine("Only in B" & strTab1x & txtRegionBx.Text)
+				sbOverlapData.AppendLine("Only in C" & strTab1x & txtRegionCx.Text)
+				sbOverlapData.AppendLine("In A and B" & strTab1x & txtRegionABx.Text)
+				sbOverlapData.AppendLine("In B and C" & strTab1x & txtRegionBCx.Text)
+				sbOverlapData.AppendLine("In A and C" & strTab1x & txtRegionACx.Text)
+				sbOverlapData.AppendLine("In A, B, and C" & strTab1x & txtRegionABC.Text)
+				sbOverlapData.AppendLine("Unique item count" & strTab1x & txtRegionUniqueItemCountAllCircles.Text)
+
+			End If
+
+
+			Clipboard.SetText(sbOverlapData.ToString)
+		Catch ex As Exception
+			System.Windows.Forms.MessageBox.Show("Error copying data to clipboard: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+		End Try
+
+	End Sub
+
+	Private Sub CopyVennToClipboard()
+		Try
+			Dim bitmap As Bitmap
+
+			If chkCircleC.Checked Then
+				bitmap = New Bitmap(Me.vdgThreeCircles.Width, Me.vdgThreeCircles.Height)
+			Else
+				bitmap = New Bitmap(Me.vdgTwoCircles.Width, Me.vdgTwoCircles.Height)
+			End If
+
+			Dim g As Graphics = Graphics.FromImage(bitmap)
+
+			If chkCircleC.Checked Then
+				ControlPrinter.ControlPrinter.DrawControl(Me.vdgThreeCircles, g, True)
+			Else
+				ControlPrinter.ControlPrinter.DrawControl(Me.vdgTwoCircles, g, True)
+			End If
+
+
+			Clipboard.SetDataObject(bitmap)
+		Catch ex As Exception
+			System.Windows.Forms.MessageBox.Show("Error copying Venn diagram to clipboard: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+		End Try
+	End Sub
+
+	Public Function ColorToString(ByVal c As Color) As String
+
+		Dim s As String = c.ToString()
+		Dim tmpStr As String
+
+		s = s.Split(New Char() {"["c, "]"c})(1)
+
+		Dim strings() As String = s.Split(New Char() {"="c, ","c})
+		If strings(0) <> "" Then
+			tmpStr = strings(0)
+		End If
+
+		If strings.GetLength(0) > 7 Then
+			s = strings(1) + "," + strings(3) + "," + strings(5) + "," + strings(7)
+		End If
+
+		Return s
+
+	End Function
+
+	Private Sub ComputeOptimalRegionCount(ByVal blnUpdateDisplayedDistinctCounts As Boolean)
+		Dim eRegionCountMode As eRegionCountModeConstants
+		Dim dblRegionCountValue As Double
+
+		Dim udtCircleRegions As VennDiagrams.ThreeCircleVennDiagram.udtThreeCircleRegionsType
+
+		eRegionCountMode = GetRegionCountMode()
+		dblRegionCountValue = 5
+
+		If GetCircleDimensions(udtCircleRegions, True, False) Then
+
+			Me.Cursor = Cursors.WaitCursor
+
+			Select Case eRegionCountMode
+				Case eRegionCountModeConstants.CountOverlappingAllCircles
+					With udtCircleRegions
+						' Initially define the default value as 50% of the smallest circle size
+						dblRegionCountValue = Math.Min(Math.Min(.CircleA, .CircleB), .CircleC) / 2.0
+						If dblRegionCountValue <= 0 Then dblRegionCountValue = 1
+					End With
+
+					If VennDiagrams.ThreeCircleVennDiagram.ComputeThreeCircleAreasGivenOverlapABC(udtCircleRegions, 0) Then
+						' Successfully computed the optimal value
+						' Obtain the optimal value from .ABC
+						dblRegionCountValue = udtCircleRegions.ABC
+					Else
+						UpdateStatus("Unable to determine an optimal value for ABC overlap")
+					End If
+
+
+				Case eRegionCountModeConstants.UniqueItemCountAcrossAllCircles
+					With udtCircleRegions
+						' Initially define the default value as 50% of the sum of the three circles
+						dblRegionCountValue = (.CircleA + .CircleB + .CircleC) / 2.0
+						If dblRegionCountValue <= 0 Then dblRegionCountValue = 1
+					End With
+
+					If VennDiagrams.ThreeCircleVennDiagram.ComputeThreeCircleAreasGivenTotalUniqueCount(udtCircleRegions, 0) Then
+						' Successfully computed the optimal value
+						' Obtain the optimal value from .TotalUniqueCount
+						dblRegionCountValue = udtCircleRegions.TotalUniqueCount
+					Else
+						UpdateStatus("Unable to determine an optimal value for total unique count")
+					End If
+
+
+				Case Else
+					' Unknown value
+					UpdateStatus("Unknown Region Count Mode in Sub ComputeOptimalRegionCount")
+			End Select
+
+			Me.Cursor = Cursors.Default
+		End If
+
+		txtRegionCountValue.Text = NumToString(dblRegionCountValue, 1)
+
+		If blnUpdateDisplayedDistinctCounts Then
+			UpdateThreeCircleDistinctCounts()
+		End If
+	End Sub
+
+	Private Sub DisplayDistinctRegionCount(ByVal dblValue As Double, ByVal objTextbox As TextBox, ByVal strRegionDescription As String)
+		If dblValue >= 0 Then
+			objTextbox.Text = NumToString(dblValue, 1)
+		Else
+			objTextbox.Text = String.Empty
+			If Not strRegionDescription Is Nothing AndAlso strRegionDescription.Length > 0 Then
+				UpdateStatus("Computed a value of " & NumToString(dblValue, 1) & " for the points " & strRegionDescription & "; use 'Compute Optimal' to auto-determine valid values.")
+			End If
+		End If
+	End Sub
+
+	Private Sub DisplayForm_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles MyBase.Resize
+		vdgTwoCircles.VennDiagram.Anchor = vdgTwoCircles.Anchor
+	End Sub
+
+	Private Sub DisplayStatusLog()
+		Const MAX_CONTROL_HEIGHT As Integer = 96
+		Const BUFFER_DISTANCE As Integer = 60
+
+		Dim strMessageList As String
+		Dim intControlHeight As Integer
+
+		Dim intIndex As Integer
+
+		strMessageList = String.Empty
+
+		If mMessageQueueCount > 0 Then
+			If mMessageQueueCount = 1 Then
+				intControlHeight = STATUS_HEIGHT_SINGLE_LINE
+			Else
+				intControlHeight = STATUS_HEIGHT_SINGLE_LINE + mMessageQueueCount * STATUS_HEIGHT_PER_LINE
+			End If
+
+			If intControlHeight > MAX_CONTROL_HEIGHT Then intControlHeight = MAX_CONTROL_HEIGHT
+
+			For intIndex = 0 To mMessageQueueCount - 1
+				If intIndex > 0 Then strMessageList &= ControlChars.NewLine
+
+				With mMessageQueue(intIndex)
+					strMessageList &= "(" & (.MessageNumber).ToString & ") " & .DisplayTime.ToLongTimeString & ": " & .Message
+				End With
+			Next intIndex
+		Else
+			strMessageList = String.Empty
+			intControlHeight = STATUS_HEIGHT_NO_MESSAGE
+		End If
+
+		If txtStatus.Height <> intControlHeight Then
+			txtStatus.Top = Me.Height - intControlHeight - BUFFER_DISTANCE
+			txtStatus.Height = intControlHeight
+
+			If txtStatus.Height = STATUS_HEIGHT_NO_MESSAGE OrElse mMessageQueueCount = 1 Then
+				txtStatus.ScrollBars = ScrollBars.None
+			Else
+				txtStatus.ScrollBars = ScrollBars.Vertical
+			End If
+
+		End If
+		txtStatus.Text = strMessageList
+	End Sub
+
+	Private Sub EnableDisableControls()
+
+		Dim blnEnableTotals As Boolean
+		Dim blnThreeCircleMode As Boolean
+
+		blnThreeCircleMode = chkCircleC.Checked
+		If blnThreeCircleMode Then
+			' Force Totals to be enabled
+			blnEnableTotals = True
+			If Not optTotal.Checked Then optTotal.Checked = True
+
+			' Make sure form is at least DEFAULT_WINDOW_HEIGHT_THREE_CIRCLE units hight
+			If Me.Height < DEFAULT_WINDOW_HEIGHT_THREE_CIRCLE Then Me.Height = DEFAULT_WINDOW_HEIGHT_THREE_CIRCLE
+		Else
+			blnEnableTotals = optTotal.Checked
+		End If
+
+		fraThreeCircleRegionCounts.Visible = blnThreeCircleMode
+		fraImageAdjustmentControls.Visible = blnThreeCircleMode
+
+		txtSizeA.Enabled = blnEnableTotals
+		txtSizeB.Enabled = blnEnableTotals
+
+		txtSizeC.Enabled = blnThreeCircleMode And blnEnableTotals
+		txtSizeC.Visible = blnThreeCircleMode
+
+		txtDistinctA.Enabled = Not blnEnableTotals
+		txtDistinctB.Enabled = Not blnEnableTotals
+
+		optCountDistinct.Enabled = Not blnThreeCircleMode
+
+		txtSizeOverlapBC.Visible = blnThreeCircleMode
+		txtSizeOverlapAC.Visible = blnThreeCircleMode
+		lblOverlapBC.Visible = blnThreeCircleMode
+		lblOverlapAC.Visible = blnThreeCircleMode
+
+		cmdCircleCColor.Visible = blnThreeCircleMode
+
+		cmdOverlapBCColor.Visible = blnThreeCircleMode
+		cmdOverlapACColor.Visible = blnThreeCircleMode
+		cmdOverlapABCColor.Visible = blnThreeCircleMode
+
+		If Not vdgTwoCircles Is Nothing Then
+			vdgTwoCircles.Visible = Not blnThreeCircleMode
+			vdgThreeCircles.Visible = blnThreeCircleMode
+
+			If blnThreeCircleMode Then
+				txtStatus.Left = vdgThreeCircles.Left
+				txtStatus.Width = vdgThreeCircles.Width
+			Else
+				txtStatus.Left = vdgTwoCircles.Left
+				txtStatus.Width = vdgTwoCircles.Width
+			End If
+		End If
+
+		PositionControls()
+
+	End Sub
+
+	Private Function GetCircleDimensions(ByRef udtCircleRegions As VennDiagrams.ThreeCircleVennDiagram.udtThreeCircleRegionsType, ByVal blnIncludeThreeCircleValues As Boolean, ByVal blnWarnIfInvalid As Boolean) As Boolean
+		Dim udtCircleDimensions As udtCircleDimensionsType
+		Dim blnSuccess As Boolean
+
+		blnSuccess = GetCircleDimensions(udtCircleDimensions, blnIncludeThreeCircleValues, blnWarnIfInvalid)
+
+		' Populate udtCircleRegions using udtCircleDimensions
+		With udtCircleDimensions
+			udtCircleRegions.CircleA = .CircleA
+			udtCircleRegions.CircleB = .CircleB
+			udtCircleRegions.CircleC = .CircleC
+			udtCircleRegions.OverlapAB = .OverlapAB
+			udtCircleRegions.OverlapBC = .OverlapBC
+			udtCircleRegions.OverlapAC = .OverlapAC
+		End With
+
+		Return blnSuccess
+	End Function
+
+	Private Function GetCircleDimensions(ByRef udtCircleDimensions As udtCircleDimensionsType, ByVal blnIncludeThreeCircleValues As Boolean, ByVal blnWarnIfInvalid As Boolean) As Boolean
+		' Returns True if the dimensions are valid; false if not
+
+		Dim strMessage As String
+		Dim blnValid As Boolean
+
+		blnValid = True
+		strMessage = String.Empty
+
+		With udtCircleDimensions
+			.CircleA = 0
+			.CircleB = 0
+			.CircleC = 0
+			.OverlapAB = 0
+			.OverlapBC = 0
+			.OverlapAC = 0
+
+			If IsNumber(txtSizeA) Then
+				.CircleA = TextBoxToDbl(txtSizeA)
+			Else
+				If blnWarnIfInvalid Then strMessage &= "Value not provided for Circle A total;"
+				blnValid = False
+			End If
+
+			If IsNumber(txtSizeB) Then
+				.CircleB = TextBoxToDbl(txtSizeB)
+			Else
+				If blnWarnIfInvalid Then strMessage &= "Value not provided for Circle B total;"
+				blnValid = False
+			End If
+
+			If IsNumber(txtSizeOverlapAB) Then
+				.OverlapAB = TextBoxToDbl(txtSizeOverlapAB)
+			Else
+				If blnWarnIfInvalid Then strMessage &= "Value not provided for Overlap of Circles A and B;"
+				blnValid = False
+			End If
+
+			If blnIncludeThreeCircleValues Then
+				If IsNumber(txtSizeC) Then
+					.CircleC = TextBoxToDbl(txtSizeC)
+				Else
+					If blnWarnIfInvalid Then strMessage &= "Value not provided for Circle C total;"
+					blnValid = False
+				End If
+
+				If IsNumber(txtSizeOverlapBC) Then
+					.OverlapBC = TextBoxToDbl(txtSizeOverlapBC)
+				Else
+					If blnWarnIfInvalid Then strMessage &= "Value not provided for Overlap of Circles B and C;"
+					blnValid = False
+				End If
+
+				If IsNumber(txtSizeOverlapAC) Then
+					.OverlapAC = TextBoxToDbl(txtSizeOverlapAC)
+				Else
+					If blnWarnIfInvalid Then strMessage &= "Value not provided for Overlap of Circles A and C;"
+					blnValid = False
+				End If
+			End If
+		End With
+
+		If blnWarnIfInvalid AndAlso strMessage.Length > 0 Then
+			UpdateStatus(strMessage.TrimEnd(";"c))
+		End If
+
+		Return blnValid
+
+	End Function
+
+	Private Function GetRegionCountMode() As eRegionCountModeConstants
+		If cboRegionCountMode.SelectedIndex = eRegionCountModeConstants.CountOverlappingAllCircles Then
+			Return eRegionCountModeConstants.CountOverlappingAllCircles
+		Else
+			Return eRegionCountModeConstants.UniqueItemCountAcrossAllCircles
+		End If
+	End Function
+
+	Private Sub InitializeControls()
+
+		mMessageQueueCount = 0
+		ReDim mMessageQueue(9)
+		mMessageQueueGlobalCount = 0
+
+		Me.MessageDisplayTime = DEFAULT_SECONDS_TO_DISPLAY_EACH_MESSAGE
+		Me.DuplicateMessageIgnoreWindow = DEFAULT_DUPLICATE_IGNORE_WINDOW_SECONDS
+
+		mStatusTimer = New Timer
+		With mStatusTimer
+			.Interval = 200
+			.Enabled = True
+		End With
+
+		With cboRegionCountMode
+			With .Items
+				.Clear()
+				.Add("Define count overlapping all 3 circles ")
+				.Add("Define total unique item count")
+			End With
+			.SelectedIndex = eRegionCountModeConstants.CountOverlappingAllCircles
+		End With
+
+		ResetImageAdjustmentValues()
+
+		With vdgTwoCircles
+			With .VennDiagram
+				.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+				.BackColor = System.Drawing.Color.White
+			End With
+			.Visible = True
+		End With
+
+		With vdgThreeCircles
+			With .VennDiagram
+				.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+				.BackColor = System.Drawing.Color.White
+			End With
+			.Visible = False
+			.Left = fraThreeCircleRegionCounts.Left + fraThreeCircleRegionCounts.Width + 12
+			.Top = vdgTwoCircles.Top
+			.Width = vdgTwoCircles.Width - (vdgThreeCircles.Left - vdgTwoCircles.Left)
+			.Height = vdgTwoCircles.Height
+		End With
+
+		SetToolTips()
+
+		EnableDisableControls()
+
+		RefreshVennDiagrams(True)
+
+		mIniFilePath = clsProcessFilesBaseClass.GetSettingsFilePathLocal("VennDiagramPlotter", "VennDiagramPlotter_Settings.xml")
+		clsProcessFilesBaseClass.CreateSettingsFileIfMissing(mIniFilePath)
+
+		LoadDefaults()
+
+		' Initialize the default circle dimensions
+		Dim udtCircleDimensions As udtCircleDimensionsType
+
+		If GetCircleDimensions(udtCircleDimensions, True, False) Then
+			StoreCurrentDimensions(udtCircleDimensions)
+		Else
+			With mCircleDimensionsSaved
+				.CircleA = 45
+				.CircleB = 25
+				.CircleC = 15
+				.OverlapAB = 18
+				.OverlapBC = 5
+				.OverlapAC = 10
+			End With
+
+			RestorePreviousDimensions(mCircleDimensionsSaved, False)
+		End If
+
+		AutoSizeWindow()
+	End Sub
+
+	Public Shared Function IsNumber(ByVal strValue As String) As Boolean
 		Dim dblValue As Double
-        Try
+		Try
 			Return Double.TryParse(strValue, dblValue)
-        Catch ex As Exception
-            Return False
-        End Try
-    End Function
-
-    Private Function IsNumber(ByVal objTextbox As TextBox) As Boolean
-        Try
-            If objTextbox.TextLength > 0 Then
-                Return IsNumber(objTextbox.Text)
-            Else
-                Return False
-            End If
-        Catch ex As Exception
-            Return False
-        End Try
-
-    End Function
-
-    Private Sub LoadDefaults()
-        Dim outputFilepath As String = String.Empty
-
-        Dim objXmlFile As New XmlSettingsFileAccessor
-        Dim valueNotPresent As Boolean
-
-        Try
-            outputFilepath = GetIniFilePath(mIniFileName)
-            If Not System.IO.File.Exists(outputFilepath) Then
-                SaveDefaults()
-            End If
-
-            ' Pass False to .LoadSettings() here to turn off case sensitive matching
-            objXmlFile.LoadSettings(outputFilepath, False)
-
-
-            Try
-                valueNotPresent = False
-                Try
-                    txtSizeA.Text = objXmlFile.GetParam(XML_SECTION_OPTIONS, "CircleADia", 45, valueNotPresent).ToString
-                Catch ex As Exception
-                    valueNotPresent = True
-                End Try
-
-                If valueNotPresent Then
-                    txtSizeA.Text = DEFAULT_DATA_CIRCLE_A.ToString
-                    txtSizeB.Text = DEFAULT_DATA_CIRCLE_B.ToString
-                    txtSizeC.Text = DEFAULT_DATA_CIRCLE_C.ToString
-                    txtSizeOverlapAB.Text = DEFAULT_DATA_OVERLAP_AB.ToString
-                    txtSizeOverlapBC.Text = DEFAULT_DATA_OVERLAP_BC.ToString
-                    txtSizeOverlapAC.Text = DEFAULT_DATA_OVERLAP_AC.ToString
-                Else
-                    With objXmlFile
-                        txtSizeB.Text = .GetParam(XML_SECTION_OPTIONS, "CircleBDia", txtSizeB.Text).ToString
-                        txtSizeC.Text = .GetParam(XML_SECTION_OPTIONS, "CircleCDia", txtSizeC.Text).ToString
-
-                        Try
-                            txtSizeOverlapAB.Text = NumToString(Math.Min(TextBoxToDbl(txtSizeA), TextBoxToDbl(txtSizeB)) / 2, 1)
-                        Catch ex2 As Exception
-                            txtSizeOverlapAB.Text = "0"
-                        End Try
-                        txtSizeOverlapAB.Text = .GetParam(XML_SECTION_OPTIONS, "Overlap", txtSizeOverlapAB.Text)
-
-                        Try
-                            txtSizeOverlapBC.Text = NumToString(Math.Min(TextBoxToDbl(txtSizeB), TextBoxToDbl(txtSizeC)) / 2, 1)
-                        Catch ex2 As Exception
-                            txtSizeOverlapBC.Text = "0"
-                        End Try
-                        txtSizeOverlapBC.Text = .GetParam(XML_SECTION_OPTIONS, "OverlapBC", txtSizeOverlapBC.Text)
-
-                        Try
-                            txtSizeOverlapAC.Text = NumToString(Math.Min(TextBoxToDbl(txtSizeA), TextBoxToDbl(txtSizeC)) / 2, 1)
-                        Catch ex2 As Exception
-                            txtSizeOverlapAC.Text = "0"
-                        End Try
-                        txtSizeOverlapAC.Text = .GetParam(XML_SECTION_OPTIONS, "OverlapAC", txtSizeOverlapAC.Text)
-                    End With
-                End If
-
-                Try
-                    vdgTwoCircles.VennDiagram.CircleAColor = LoadDefaultColorVal(objXmlFile, XML_SECTION_OPTIONS, "CircleAColor", vdgTwoCircles.VennDiagram.CircleAColor)
-                    vdgTwoCircles.VennDiagram.CircleBColor = LoadDefaultColorVal(objXmlFile, XML_SECTION_OPTIONS, "CircleBColor", vdgTwoCircles.VennDiagram.CircleBColor)
-
-                    vdgThreeCircles.VennDiagram.CircleAColor = vdgTwoCircles.VennDiagram.CircleAColor
-                    vdgThreeCircles.VennDiagram.CircleBColor = vdgTwoCircles.VennDiagram.CircleBColor
-                    vdgThreeCircles.VennDiagram.CircleCColor = LoadDefaultColorVal(objXmlFile, XML_SECTION_OPTIONS, "CircleCColor", vdgThreeCircles.VennDiagram.CircleCColor)
-
-                    vdgTwoCircles.VennDiagram.OverlapColor = LoadDefaultColorVal(objXmlFile, XML_SECTION_OPTIONS, "OverlapColor", vdgTwoCircles.VennDiagram.OverlapColor)
-                    vdgThreeCircles.VennDiagram.OverlapABColor = vdgTwoCircles.VennDiagram.OverlapColor
-
-                    vdgThreeCircles.VennDiagram.OverlapBCColor = LoadDefaultColorVal(objXmlFile, XML_SECTION_OPTIONS, "OverlapBCColor", vdgThreeCircles.VennDiagram.OverlapBCColor)
-                    vdgThreeCircles.VennDiagram.OverlapACColor = LoadDefaultColorVal(objXmlFile, XML_SECTION_OPTIONS, "OverlapACColor", vdgThreeCircles.VennDiagram.OverlapACColor)
-                    vdgThreeCircles.VennDiagram.OverlapABCColor = LoadDefaultColorVal(objXmlFile, XML_SECTION_OPTIONS, "OverlapABCColor", vdgThreeCircles.VennDiagram.OverlapABCColor)
-
-                    vdgTwoCircles.VennDiagram.BackColor = LoadDefaultColorVal(objXmlFile, XML_SECTION_OPTIONS, "BackgroundColor", vdgTwoCircles.VennDiagram.BackColor)
-                    vdgThreeCircles.VennDiagram.BackColor = vdgTwoCircles.VennDiagram.BackColor
-
-                Catch ex As Exception
-                    ' Don't worry about errors here
-                End Try
-
-                With objXmlFile
-                    chkFillCirclesWithColor.Checked = .GetParam(XML_SECTION_OPTIONS, "FillCirclesWithColor", chkFillCirclesWithColor.Checked)
+		Catch ex As Exception
+			Return False
+		End Try
+	End Function
+
+	Private Function IsNumber(ByVal objTextbox As TextBox) As Boolean
+		Try
+			If objTextbox.TextLength > 0 Then
+				Return IsNumber(objTextbox.Text)
+			Else
+				Return False
+			End If
+		Catch ex As Exception
+			Return False
+		End Try
+
+	End Function
+
+	Private Sub LoadDefaults()
+
+		Dim objXmlFile As New XmlSettingsFileAccessor
+		Dim valueNotPresent As Boolean
+
+		Try
+			If Not System.IO.File.Exists(mIniFilePath) Then
+				SaveDefaults()
+			End If
+
+			' Pass False to .LoadSettings() here to turn off case sensitive matching
+			objXmlFile.LoadSettings(mIniFilePath, False)
+
+			Try
+				valueNotPresent = False
+				Try
+					txtSizeA.Text = objXmlFile.GetParam(XML_SECTION_OPTIONS, "CircleADia", 45, valueNotPresent).ToString
+				Catch ex As Exception
+					valueNotPresent = True
+				End Try
+
+				If valueNotPresent Then
+					txtSizeA.Text = DEFAULT_DATA_CIRCLE_A.ToString
+					txtSizeB.Text = DEFAULT_DATA_CIRCLE_B.ToString
+					txtSizeC.Text = DEFAULT_DATA_CIRCLE_C.ToString
+					txtSizeOverlapAB.Text = DEFAULT_DATA_OVERLAP_AB.ToString
+					txtSizeOverlapBC.Text = DEFAULT_DATA_OVERLAP_BC.ToString
+					txtSizeOverlapAC.Text = DEFAULT_DATA_OVERLAP_AC.ToString
+				Else
+					With objXmlFile
+						txtSizeB.Text = .GetParam(XML_SECTION_OPTIONS, "CircleBDia", txtSizeB.Text).ToString
+						txtSizeC.Text = .GetParam(XML_SECTION_OPTIONS, "CircleCDia", txtSizeC.Text).ToString
+
+						Try
+							txtSizeOverlapAB.Text = NumToString(Math.Min(TextBoxToDbl(txtSizeA), TextBoxToDbl(txtSizeB)) / 2, 1)
+						Catch ex2 As Exception
+							txtSizeOverlapAB.Text = "0"
+						End Try
+						txtSizeOverlapAB.Text = .GetParam(XML_SECTION_OPTIONS, "Overlap", txtSizeOverlapAB.Text)
+
+						Try
+							txtSizeOverlapBC.Text = NumToString(Math.Min(TextBoxToDbl(txtSizeB), TextBoxToDbl(txtSizeC)) / 2, 1)
+						Catch ex2 As Exception
+							txtSizeOverlapBC.Text = "0"
+						End Try
+						txtSizeOverlapBC.Text = .GetParam(XML_SECTION_OPTIONS, "OverlapBC", txtSizeOverlapBC.Text)
+
+						Try
+							txtSizeOverlapAC.Text = NumToString(Math.Min(TextBoxToDbl(txtSizeA), TextBoxToDbl(txtSizeC)) / 2, 1)
+						Catch ex2 As Exception
+							txtSizeOverlapAC.Text = "0"
+						End Try
+						txtSizeOverlapAC.Text = .GetParam(XML_SECTION_OPTIONS, "OverlapAC", txtSizeOverlapAC.Text)
+					End With
+				End If
+
+				Try
+					vdgTwoCircles.VennDiagram.CircleAColor = LoadDefaultColorVal(objXmlFile, XML_SECTION_OPTIONS, "CircleAColor", vdgTwoCircles.VennDiagram.CircleAColor)
+					vdgTwoCircles.VennDiagram.CircleBColor = LoadDefaultColorVal(objXmlFile, XML_SECTION_OPTIONS, "CircleBColor", vdgTwoCircles.VennDiagram.CircleBColor)
+
+					vdgThreeCircles.VennDiagram.CircleAColor = vdgTwoCircles.VennDiagram.CircleAColor
+					vdgThreeCircles.VennDiagram.CircleBColor = vdgTwoCircles.VennDiagram.CircleBColor
+					vdgThreeCircles.VennDiagram.CircleCColor = LoadDefaultColorVal(objXmlFile, XML_SECTION_OPTIONS, "CircleCColor", vdgThreeCircles.VennDiagram.CircleCColor)
+
+					vdgTwoCircles.VennDiagram.OverlapColor = LoadDefaultColorVal(objXmlFile, XML_SECTION_OPTIONS, "OverlapColor", vdgTwoCircles.VennDiagram.OverlapColor)
+					vdgThreeCircles.VennDiagram.OverlapABColor = vdgTwoCircles.VennDiagram.OverlapColor
+
+					vdgThreeCircles.VennDiagram.OverlapBCColor = LoadDefaultColorVal(objXmlFile, XML_SECTION_OPTIONS, "OverlapBCColor", vdgThreeCircles.VennDiagram.OverlapBCColor)
+					vdgThreeCircles.VennDiagram.OverlapACColor = LoadDefaultColorVal(objXmlFile, XML_SECTION_OPTIONS, "OverlapACColor", vdgThreeCircles.VennDiagram.OverlapACColor)
+					vdgThreeCircles.VennDiagram.OverlapABCColor = LoadDefaultColorVal(objXmlFile, XML_SECTION_OPTIONS, "OverlapABCColor", vdgThreeCircles.VennDiagram.OverlapABCColor)
+
+					vdgTwoCircles.VennDiagram.BackColor = LoadDefaultColorVal(objXmlFile, XML_SECTION_OPTIONS, "BackgroundColor", vdgTwoCircles.VennDiagram.BackColor)
+					vdgThreeCircles.VennDiagram.BackColor = vdgTwoCircles.VennDiagram.BackColor
+
+				Catch ex As Exception
+					' Don't worry about errors here
+				End Try
+
+				With objXmlFile
+					chkFillCirclesWithColor.Checked = .GetParam(XML_SECTION_OPTIONS, "FillCirclesWithColor", chkFillCirclesWithColor.Checked)
+
+					optTotal.Checked = .GetParam(XML_SECTION_OPTIONS, "EnterCircleTotals", optTotal.Checked)
+
+					chkCircleC.Checked = .GetParam(XML_SECTION_OPTIONS, "ThreeCircleMode", chkCircleC.Checked)
 
-                    optTotal.Checked = .GetParam(XML_SECTION_OPTIONS, "EnterCircleTotals", optTotal.Checked)
+					Me.MessageDisplayTime = .GetParam(XML_SECTION_OPTIONS, "MessageDisplayTime.", Me.MessageDisplayTime)
+					Me.DuplicateMessageIgnoreWindow = .GetParam(XML_SECTION_OPTIONS, "DuplicateMessageIgnoreWindow", Me.DuplicateMessageIgnoreWindow)
+					chkHideMessagesOnSuccessfulUpdate.Checked = .GetParam(XML_SECTION_OPTIONS, "HideMessagesOnSuccessfulUpdate", chkHideMessagesOnSuccessfulUpdate.Checked)
 
-                    chkCircleC.Checked = .GetParam(XML_SECTION_OPTIONS, "ThreeCircleMode", chkCircleC.Checked)
-
-                    Me.MessageDisplayTime = .GetParam(XML_SECTION_OPTIONS, "MessageDisplayTime.", Me.MessageDisplayTime)
-                    Me.DuplicateMessageIgnoreWindow = .GetParam(XML_SECTION_OPTIONS, "DuplicateMessageIgnoreWindow", Me.DuplicateMessageIgnoreWindow)
-                    chkHideMessagesOnSuccessfulUpdate.Checked = .GetParam(XML_SECTION_OPTIONS, "HideMessagesOnSuccessfulUpdate", chkHideMessagesOnSuccessfulUpdate.Checked)
-
-                    Try
-                        cboRegionCountMode.SelectedIndex = .GetParam(XML_SECTION_OPTIONS, "RegionCountMode", cboRegionCountMode.SelectedIndex)
-                    Catch ex As Exception
-                        ' Ignore errors here
-                    End Try
-                    txtRegionCountValue.Text = .GetParam(XML_SECTION_OPTIONS, "RegionCountValue", txtRegionCountValue.Text)
-
-                    Me.Width = .GetParam(XML_SECTION_OPTIONS, "WindowWidth", Me.Width)
-                    Me.Height = .GetParam(XML_SECTION_OPTIONS, "WindowHeight", Me.Height)
-                End With
-
-            Catch ex As Exception
-                System.Windows.Forms.MessageBox.Show("Invalid parameter in settings file: " & outputFilepath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-            End Try
-
-            RefreshVennDiagrams(True)
-
-        Catch ex As Exception
-            System.Windows.Forms.MessageBox.Show("Error loading Defaults from " & outputFilepath & ControlChars.NewLine & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
-
-    Protected Function LoadDefaultColorVal(ByVal objXmlFile As XmlSettingsFileAccessor, ByVal strSection As String, ByVal strKeyName As String, ByVal objColorIfMissing As System.Drawing.Color) As System.Drawing.Color
-        Try
-            Return StringToColor(objXmlFile.GetParam(strSection, strKeyName, ColorToString(objColorIfMissing)))
-        Catch ex As Exception
-            Return objColorIfMissing
-        End Try
-    End Function
-
-    Protected Function NumToString(ByVal dblValue As Double, ByVal intDigitsToRound As Integer) As String
-        Dim strValue As String
-        Dim intPeriodIndex As Integer
-
-        If intDigitsToRound < 0 Then intDigitsToRound = 0
-        strValue = Math.Round(dblValue, intDigitsToRound).ToString
-
-        If intDigitsToRound > 0 Then
-            ' If the number looks like "34.230" then trim to "34.23"
-            ' If the number looks like "34.0000" then trim to "34"
-            intPeriodIndex = strValue.IndexOf("."c)
-            If intPeriodIndex >= 0 Then
-                strValue = strValue.Substring(0, intPeriodIndex) & strValue.Substring(intPeriodIndex).TrimEnd("0"c).TrimEnd("."c)
-            End If
-        End If
-
-        Return strValue
-
-    End Function
-
-    Private Sub PositionControls()
-
-        Const FrameSpacing As Integer = 8
-
-        If chkCircleC.Checked Then
-            ' 3-circle mode
-            cmdOverlapABColor.Left = cmdOverlapBCColor.Left
-            cmdOverlapABColor.Top = cmdCircleAColor.Top
-
-            pnlColorButtons.Left = txtSizeOverlapAC.Left + txtSizeOverlapAC.Width + 8
-            pnlColorButtons.Width = cmdOverlapBCColor.Left + cmdOverlapBCColor.Width + 8
-
-            fraParameters.Width = pnlColorButtons.Left + pnlColorButtons.Width + 2
-        Else
-            ' 2-circle mode
-            cmdOverlapABColor.Left = cmdCircleCColor.Left
-            cmdOverlapABColor.Top = cmdCircleCColor.Top
-
-            pnlColorButtons.Left = txtSizeB.Left + txtSizeB.Width + 12
-            pnlColorButtons.Width = cmdCircleAColor.Left + cmdCircleAColor.Width + 8
-
-            fraParameters.Width = pnlColorButtons.Left + pnlColorButtons.Width + 2
-        End If
-
-        fraTrasks.Left = fraParameters.Left + fraParameters.Width + FrameSpacing
-        fraMessageDisplayOptions.Left = fraTrasks.Left + fraTrasks.Width + FrameSpacing
-
-        fraSVGOptions.Left = fraMessageDisplayOptions.Left + fraMessageDisplayOptions.Width + FrameSpacing
-
-        fraImageAdjustmentControls.Top = fraThreeCircleRegionCounts.Top + fraThreeCircleRegionCounts.Height + 2
-
-    End Sub
-
-    Private Sub RefreshVennDiagrams(ByVal blnUpdateCountDistinct As Boolean)
-        RefreshVennDiagrams(blnUpdateCountDistinct, True)
-    End Sub
-
-    Private Sub RefreshVennDiagrams(ByVal blnUpdateCountDistinct As Boolean, ByVal blnWarnIfInvalid As Boolean)
-        Dim udtCircleDimensions As udtCircleDimensionsType
-
-        Try
-            ' First check that each of the controls contains a number
-            If GetCircleDimensions(udtCircleDimensions, chkCircleC.Checked, blnWarnIfInvalid) Then
-
-                ' Now make sure the dimensions are reasonable
-                If ValidDimensionsPresent(udtCircleDimensions, blnWarnIfInvalid) Then
-                    If chkCircleC.Checked Then
-                        With vdgThreeCircles.VennDiagram
-                            .CircleASize = udtCircleDimensions.CircleA
-                            .CircleBSize = udtCircleDimensions.CircleB
-                            .CircleCSize = udtCircleDimensions.CircleC
-                            .OverlapABSize = udtCircleDimensions.OverlapAB
-                            .OverlapBCSize = udtCircleDimensions.OverlapBC
-                            .OverlapACSize = udtCircleDimensions.OverlapAC
-                        End With
-                    Else
-                        With vdgTwoCircles.VennDiagram
-                            .CircleASize = udtCircleDimensions.CircleA
-                            .CircleBSize = udtCircleDimensions.CircleB
-                            .OverlapSize = udtCircleDimensions.OverlapAB
-                        End With
-                    End If
-
-                    If mMessageQueueCount > 0 OrElse (mMessageQueueCount = 0 AndAlso txtStatus.TextLength > 0) Then
-                        If chkHideMessagesOnSuccessfulUpdate.Checked Then
-                            ' Truncate to only display the most recent message and to hide it in 1 second
-                            mMessageQueueCount = 1
-                            mMessageQueue(0).DisplayTime = System.DateTime.UtcNow.Subtract(New System.TimeSpan(0, 0, DEFAULT_SECONDS_TO_DISPLAY_EACH_MESSAGE - 1))
-                        End If
-                    End If
-
-                    StoreCurrentDimensions(udtCircleDimensions)
-                Else
-                    RestorePreviousDimensions(mCircleDimensionsSaved, True)
-                End If
-
-                If blnUpdateCountDistinct Then
-                    UpdateCountDistinct()
-                End If
-
-            End If
-
-        Catch ex As Exception
-            System.Windows.Forms.MessageBox.Show("Error refreshing Venn diagrams:" & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
-
-    Private Sub ResetImageAdjustmentValues()
-        tbarImgRotation.Value = 0
-        tbarImgZoom.Value = 100
-        tbarImgXOffset.Value = 0
-        tbarImgYOffset.Value = 0
-    End Sub
-
-    Private Sub ResetValues(ByVal blnResetSettings As Boolean)
-        Me.txtSizeA.Text = DEFAULT_DATA_CIRCLE_A.ToString
-        Me.txtSizeB.Text = DEFAULT_DATA_CIRCLE_B.ToString
-        Me.txtSizeC.Text = DEFAULT_DATA_CIRCLE_C.ToString
-        Me.txtSizeOverlapAB.Text = DEFAULT_DATA_OVERLAP_AB.ToString
-        Me.txtSizeOverlapBC.Text = DEFAULT_DATA_OVERLAP_BC.ToString
-        Me.txtSizeOverlapAC.Text = DEFAULT_DATA_OVERLAP_AC.ToString
-
-        vdgTwoCircles.VennDiagram.CircleAColor = vdgTwoCircles.VennDiagram.DefaultColorCircleA
-        vdgTwoCircles.VennDiagram.CircleBColor = vdgTwoCircles.VennDiagram.DefaultColorCircleB
-        vdgTwoCircles.VennDiagram.OverlapABColor = vdgTwoCircles.VennDiagram.DefaultColorOverlapAB
-
-        vdgTwoCircles.VennDiagram.BackColor = Color.White
-
-        vdgThreeCircles.VennDiagram.CircleAColor = vdgThreeCircles.VennDiagram.DefaultColorCircleA
-        vdgThreeCircles.VennDiagram.CircleBColor = vdgThreeCircles.VennDiagram.DefaultColorCircleB
-        vdgThreeCircles.VennDiagram.CircleCColor = vdgThreeCircles.VennDiagram.DefaultColorCircleC
-
-        vdgThreeCircles.VennDiagram.OverlapABColor = vdgThreeCircles.VennDiagram.DefaultColorOverlapAB
-        vdgThreeCircles.VennDiagram.OverlapBCColor = vdgThreeCircles.VennDiagram.DefaultColorOverlapBC
-        vdgThreeCircles.VennDiagram.OverlapACColor = vdgThreeCircles.VennDiagram.DefaultColorOverlapAC
-        vdgThreeCircles.VennDiagram.OverlapABCColor = vdgThreeCircles.VennDiagram.DefaultColorOverlapABC
-
-        vdgThreeCircles.VennDiagram.BackColor = Color.White
-
-        If blnResetSettings Then
-            AutoSizeWindow()
-
-            Me.MessageDisplayTime = DEFAULT_SECONDS_TO_DISPLAY_EACH_MESSAGE
-            Me.DuplicateMessageIgnoreWindow = DEFAULT_DUPLICATE_IGNORE_WINDOW_SECONDS
-            chkHideMessagesOnSuccessfulUpdate.Checked = False
-            chkFillCirclesWithColor.Checked = True
-
-            ResetImageAdjustmentValues()
-        End If
-
-        RefreshVennDiagrams(True, True)
-        UpdateThreeCircleDistinctCounts()
-
-    End Sub
-
-    Private Sub RestorePreviousDimensions(ByVal udtCircleDimensions As udtCircleDimensionsType, ByVal blnInformUser As Boolean)
-        If blnInformUser Then
-            System.Windows.Forms.MessageBox.Show("Invalid overlap values; restoring the previous, valid values.", "Invalid Numbers", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-        End If
-
-        With udtCircleDimensions
-            Me.txtSizeA.Text = NumToString(.CircleA, 1)
-            Me.txtSizeB.Text = NumToString(.CircleB, 1)
-            Me.txtSizeC.Text = NumToString(.CircleC, 1)
-            Me.txtSizeOverlapAB.Text = NumToString(.OverlapAB, 1)
-            Me.txtSizeOverlapBC.Text = NumToString(.OverlapBC, 1)
-            Me.txtSizeOverlapAC.Text = NumToString(.OverlapAC, 1)
-        End With
-
-    End Sub
-
-    Private Sub SaveDefaults()
-        Dim outputFilepath As String = String.Empty
-        Dim objOutFile As System.IO.StreamWriter
-
-        Dim objXmlFile As New XmlSettingsFileAccessor
-
-        Try
-            outputFilepath = GetIniFilePath(mIniFileName)
-
-            If Not System.IO.File.Exists(outputFilepath) Then
-                ' Need to create a new, blank XML file
-
-                Try
-                    objOutFile = System.IO.File.CreateText(outputFilepath)
-                    objOutFile.WriteLine("<?xml version=""1.0"" encoding=""utf-8""?>")
-                    objOutFile.WriteLine(" <sections>")
-                    objOutFile.WriteLine(" <section name=""" & XML_SECTION_OPTIONS & """>")
-                    objOutFile.WriteLine("  <item key=""CircleADia"" value=""50"" />")
-                    objOutFile.WriteLine(" </section>")
-                    objOutFile.WriteLine("</sections>")
-                    objOutFile.Close()
-
-                    System.Threading.Thread.Sleep(100)
-
-                Catch ex As Exception
-                    System.Windows.Forms.MessageBox.Show("Error creating new Default XML file at " & outputFilepath & ControlChars.NewLine & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-                    Return
-                End Try
-            End If
-
-            With objXmlFile
-                ' Pass True to .LoadSettings() to turn on case sensitive matching
-                .LoadSettings(outputFilepath, True)
-
-                Try
-                    If ValidDimensionsPresent(False) Then
-                        .SetParam(XML_SECTION_OPTIONS, "CircleADia", txtSizeA.Text)
-                        .SetParam(XML_SECTION_OPTIONS, "CircleBDia", txtSizeB.Text)
-                        .SetParam(XML_SECTION_OPTIONS, "CircleCDia", txtSizeC.Text)
-                        .SetParam(XML_SECTION_OPTIONS, "Overlap", txtSizeOverlapAB.Text)
-                        .SetParam(XML_SECTION_OPTIONS, "OverlapBC", txtSizeOverlapBC.Text)
-                        .SetParam(XML_SECTION_OPTIONS, "OverlapAC", txtSizeOverlapAC.Text)
-                    End If
-                    .SetParam(XML_SECTION_OPTIONS, "CircleAColor", ColorToString(vdgTwoCircles.VennDiagram.CircleAColor))
-                    .SetParam(XML_SECTION_OPTIONS, "CircleBColor", ColorToString(vdgTwoCircles.VennDiagram.CircleBColor))
-                    .SetParam(XML_SECTION_OPTIONS, "CircleCColor", ColorToString(vdgThreeCircles.VennDiagram.CircleCColor))
-                    .SetParam(XML_SECTION_OPTIONS, "OverlapColor", ColorToString(vdgTwoCircles.VennDiagram.OverlapColor))
-                    .SetParam(XML_SECTION_OPTIONS, "OverlapBCColor", ColorToString(vdgThreeCircles.VennDiagram.OverlapBCColor))
-                    .SetParam(XML_SECTION_OPTIONS, "OverlapACColor", ColorToString(vdgThreeCircles.VennDiagram.OverlapACColor))
-                    .SetParam(XML_SECTION_OPTIONS, "OverlapABCColor", ColorToString(vdgThreeCircles.VennDiagram.OverlapABCColor))
-                    .SetParam(XML_SECTION_OPTIONS, "FillCirclesWithColor", chkFillCirclesWithColor.Checked)
-
-                    .SetParam(XML_SECTION_OPTIONS, "EnterCircleTotals", optTotal.Checked)
-
-                    .SetParam(XML_SECTION_OPTIONS, "ThreeCircleMode", chkCircleC.Checked)
-
-                    .SetParam(XML_SECTION_OPTIONS, "MessageDisplayTime.", Me.MessageDisplayTime)
-                    .SetParam(XML_SECTION_OPTIONS, "DuplicateMessageIgnoreWindow", Me.DuplicateMessageIgnoreWindow)
-                    .SetParam(XML_SECTION_OPTIONS, "HideMessagesOnSuccessfulUpdate", chkHideMessagesOnSuccessfulUpdate.Checked)
-
-                    .SetParam(XML_SECTION_OPTIONS, "RegionCountMode", cboRegionCountMode.SelectedIndex)
-                    .SetParam(XML_SECTION_OPTIONS, "RegionCountValue", txtRegionCountValue.Text)
-
-
-                    .SetParam(XML_SECTION_OPTIONS, "BackgroundColor", ColorToString(vdgTwoCircles.VennDiagram.BackColor))
-                    .SetParam(XML_SECTION_OPTIONS, "WindowWidth", Me.Width.ToString)
-                    .SetParam(XML_SECTION_OPTIONS, "WindowHeight", Me.Height.ToString)
-
-                    .SaveSettings()
-                Catch ex As Exception
-                    System.Windows.Forms.MessageBox.Show("Error storing parameter in settings file: " & outputFilepath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-                End Try
-            End With
-
-        Catch ex As Exception
-            System.Windows.Forms.MessageBox.Show("Error saving Defaults to " & outputFilepath & ControlChars.NewLine & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-        End Try
-    End Sub
+					Try
+						cboRegionCountMode.SelectedIndex = .GetParam(XML_SECTION_OPTIONS, "RegionCountMode", cboRegionCountMode.SelectedIndex)
+					Catch ex As Exception
+						' Ignore errors here
+					End Try
+					txtRegionCountValue.Text = .GetParam(XML_SECTION_OPTIONS, "RegionCountValue", txtRegionCountValue.Text)
+
+					Me.Width = .GetParam(XML_SECTION_OPTIONS, "WindowWidth", Me.Width)
+					Me.Height = .GetParam(XML_SECTION_OPTIONS, "WindowHeight", Me.Height)
+				End With
+
+			Catch ex As Exception
+				System.Windows.Forms.MessageBox.Show("Invalid parameter in settings file: " & mIniFilePath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+			End Try
+
+			RefreshVennDiagrams(True)
+
+		Catch ex As Exception
+			System.Windows.Forms.MessageBox.Show("Error loading Defaults from " & mIniFilePath & ControlChars.NewLine & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+		End Try
+	End Sub
+
+	Protected Function LoadDefaultColorVal(ByVal objXmlFile As XmlSettingsFileAccessor, ByVal strSection As String, ByVal strKeyName As String, ByVal objColorIfMissing As System.Drawing.Color) As System.Drawing.Color
+		Try
+			Return StringToColor(objXmlFile.GetParam(strSection, strKeyName, ColorToString(objColorIfMissing)))
+		Catch ex As Exception
+			Return objColorIfMissing
+		End Try
+	End Function
+
+	Protected Function NumToString(ByVal dblValue As Double, ByVal intDigitsToRound As Integer) As String
+		Dim strValue As String
+		Dim intPeriodIndex As Integer
+
+		If intDigitsToRound < 0 Then intDigitsToRound = 0
+		strValue = Math.Round(dblValue, intDigitsToRound).ToString
+
+		If intDigitsToRound > 0 Then
+			' If the number looks like "34.230" then trim to "34.23"
+			' If the number looks like "34.0000" then trim to "34"
+			intPeriodIndex = strValue.IndexOf("."c)
+			If intPeriodIndex >= 0 Then
+				strValue = strValue.Substring(0, intPeriodIndex) & strValue.Substring(intPeriodIndex).TrimEnd("0"c).TrimEnd("."c)
+			End If
+		End If
+
+		Return strValue
+
+	End Function
+
+	Private Sub PositionControls()
+
+		Const FrameSpacing As Integer = 8
+
+		If chkCircleC.Checked Then
+			' 3-circle mode
+			cmdOverlapABColor.Left = cmdOverlapBCColor.Left
+			cmdOverlapABColor.Top = cmdCircleAColor.Top
+
+			pnlColorButtons.Left = txtSizeOverlapAC.Left + txtSizeOverlapAC.Width + 8
+			pnlColorButtons.Width = cmdOverlapBCColor.Left + cmdOverlapBCColor.Width + 8
+
+			fraParameters.Width = pnlColorButtons.Left + pnlColorButtons.Width + 2
+		Else
+			' 2-circle mode
+			cmdOverlapABColor.Left = cmdCircleCColor.Left
+			cmdOverlapABColor.Top = cmdCircleCColor.Top
+
+			pnlColorButtons.Left = txtSizeB.Left + txtSizeB.Width + 12
+			pnlColorButtons.Width = cmdCircleAColor.Left + cmdCircleAColor.Width + 8
+
+			fraParameters.Width = pnlColorButtons.Left + pnlColorButtons.Width + 2
+		End If
+
+		fraTrasks.Left = fraParameters.Left + fraParameters.Width + FrameSpacing
+		fraMessageDisplayOptions.Left = fraTrasks.Left + fraTrasks.Width + FrameSpacing
+
+		fraSVGOptions.Left = fraMessageDisplayOptions.Left + fraMessageDisplayOptions.Width + FrameSpacing
+
+		fraImageAdjustmentControls.Top = fraThreeCircleRegionCounts.Top + fraThreeCircleRegionCounts.Height + 2
+
+	End Sub
+
+	Private Sub RefreshVennDiagrams(ByVal blnUpdateCountDistinct As Boolean)
+		RefreshVennDiagrams(blnUpdateCountDistinct, True)
+	End Sub
+
+	Private Sub RefreshVennDiagrams(ByVal blnUpdateCountDistinct As Boolean, ByVal blnWarnIfInvalid As Boolean)
+		Dim udtCircleDimensions As udtCircleDimensionsType
+
+		Try
+			' First check that each of the controls contains a number
+			If GetCircleDimensions(udtCircleDimensions, chkCircleC.Checked, blnWarnIfInvalid) Then
+
+				' Now make sure the dimensions are reasonable
+				If ValidDimensionsPresent(udtCircleDimensions, blnWarnIfInvalid) Then
+					If chkCircleC.Checked Then
+						With vdgThreeCircles.VennDiagram
+							.CircleASize = udtCircleDimensions.CircleA
+							.CircleBSize = udtCircleDimensions.CircleB
+							.CircleCSize = udtCircleDimensions.CircleC
+							.OverlapABSize = udtCircleDimensions.OverlapAB
+							.OverlapBCSize = udtCircleDimensions.OverlapBC
+							.OverlapACSize = udtCircleDimensions.OverlapAC
+						End With
+					Else
+						With vdgTwoCircles.VennDiagram
+							.CircleASize = udtCircleDimensions.CircleA
+							.CircleBSize = udtCircleDimensions.CircleB
+							.OverlapSize = udtCircleDimensions.OverlapAB
+						End With
+					End If
+
+					If mMessageQueueCount > 0 OrElse (mMessageQueueCount = 0 AndAlso txtStatus.TextLength > 0) Then
+						If chkHideMessagesOnSuccessfulUpdate.Checked Then
+							' Truncate to only display the most recent message and to hide it in 1 second
+							mMessageQueueCount = 1
+							mMessageQueue(0).DisplayTime = System.DateTime.UtcNow.Subtract(New System.TimeSpan(0, 0, DEFAULT_SECONDS_TO_DISPLAY_EACH_MESSAGE - 1))
+						End If
+					End If
+
+					StoreCurrentDimensions(udtCircleDimensions)
+				Else
+					RestorePreviousDimensions(mCircleDimensionsSaved, True)
+				End If
+
+				If blnUpdateCountDistinct Then
+					UpdateCountDistinct()
+				End If
+
+			End If
+
+		Catch ex As Exception
+			System.Windows.Forms.MessageBox.Show("Error refreshing Venn diagrams:" & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+		End Try
+	End Sub
+
+	Private Sub ResetImageAdjustmentValues()
+		tbarImgRotation.Value = 0
+		tbarImgZoom.Value = 100
+		tbarImgXOffset.Value = 0
+		tbarImgYOffset.Value = 0
+	End Sub
+
+	Private Sub ResetValues(ByVal blnResetSettings As Boolean)
+		Me.txtSizeA.Text = DEFAULT_DATA_CIRCLE_A.ToString
+		Me.txtSizeB.Text = DEFAULT_DATA_CIRCLE_B.ToString
+		Me.txtSizeC.Text = DEFAULT_DATA_CIRCLE_C.ToString
+		Me.txtSizeOverlapAB.Text = DEFAULT_DATA_OVERLAP_AB.ToString
+		Me.txtSizeOverlapBC.Text = DEFAULT_DATA_OVERLAP_BC.ToString
+		Me.txtSizeOverlapAC.Text = DEFAULT_DATA_OVERLAP_AC.ToString
+
+		vdgTwoCircles.VennDiagram.CircleAColor = vdgTwoCircles.VennDiagram.DefaultColorCircleA
+		vdgTwoCircles.VennDiagram.CircleBColor = vdgTwoCircles.VennDiagram.DefaultColorCircleB
+		vdgTwoCircles.VennDiagram.OverlapABColor = vdgTwoCircles.VennDiagram.DefaultColorOverlapAB
+
+		vdgTwoCircles.VennDiagram.BackColor = Color.White
+
+		vdgThreeCircles.VennDiagram.CircleAColor = vdgThreeCircles.VennDiagram.DefaultColorCircleA
+		vdgThreeCircles.VennDiagram.CircleBColor = vdgThreeCircles.VennDiagram.DefaultColorCircleB
+		vdgThreeCircles.VennDiagram.CircleCColor = vdgThreeCircles.VennDiagram.DefaultColorCircleC
+
+		vdgThreeCircles.VennDiagram.OverlapABColor = vdgThreeCircles.VennDiagram.DefaultColorOverlapAB
+		vdgThreeCircles.VennDiagram.OverlapBCColor = vdgThreeCircles.VennDiagram.DefaultColorOverlapBC
+		vdgThreeCircles.VennDiagram.OverlapACColor = vdgThreeCircles.VennDiagram.DefaultColorOverlapAC
+		vdgThreeCircles.VennDiagram.OverlapABCColor = vdgThreeCircles.VennDiagram.DefaultColorOverlapABC
+
+		vdgThreeCircles.VennDiagram.BackColor = Color.White
+
+		If blnResetSettings Then
+			AutoSizeWindow()
+
+			Me.MessageDisplayTime = DEFAULT_SECONDS_TO_DISPLAY_EACH_MESSAGE
+			Me.DuplicateMessageIgnoreWindow = DEFAULT_DUPLICATE_IGNORE_WINDOW_SECONDS
+			chkHideMessagesOnSuccessfulUpdate.Checked = False
+			chkFillCirclesWithColor.Checked = True
+
+			ResetImageAdjustmentValues()
+		End If
+
+		RefreshVennDiagrams(True, True)
+		UpdateThreeCircleDistinctCounts()
+
+	End Sub
+
+	Private Sub RestorePreviousDimensions(ByVal udtCircleDimensions As udtCircleDimensionsType, ByVal blnInformUser As Boolean)
+		If blnInformUser Then
+			System.Windows.Forms.MessageBox.Show("Invalid overlap values; restoring the previous, valid values.", "Invalid Numbers", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+		End If
+
+		With udtCircleDimensions
+			Me.txtSizeA.Text = NumToString(.CircleA, 1)
+			Me.txtSizeB.Text = NumToString(.CircleB, 1)
+			Me.txtSizeC.Text = NumToString(.CircleC, 1)
+			Me.txtSizeOverlapAB.Text = NumToString(.OverlapAB, 1)
+			Me.txtSizeOverlapBC.Text = NumToString(.OverlapBC, 1)
+			Me.txtSizeOverlapAC.Text = NumToString(.OverlapAC, 1)
+		End With
+
+	End Sub
+
+	Private Sub SaveDefaults()
+		Dim objOutFile As System.IO.StreamWriter
+
+		Dim objXmlFile As New XmlSettingsFileAccessor
+
+		Try
+			If Not System.IO.File.Exists(mIniFilePath) Then
+				' Need to create a new, blank XML file
+
+				Try
+					objOutFile = System.IO.File.CreateText(mIniFilePath)
+					objOutFile.WriteLine("<?xml version=""1.0"" encoding=""utf-8""?>")
+					objOutFile.WriteLine(" <sections>")
+					objOutFile.WriteLine(" <section name=""" & XML_SECTION_OPTIONS & """>")
+					objOutFile.WriteLine("  <item key=""CircleADia"" value=""50"" />")
+					objOutFile.WriteLine(" </section>")
+					objOutFile.WriteLine("</sections>")
+					objOutFile.Close()
+
+					System.Threading.Thread.Sleep(100)
+
+				Catch ex As Exception
+					System.Windows.Forms.MessageBox.Show("Error creating new Default XML file at " & mIniFilePath & ControlChars.NewLine & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+					Return
+				End Try
+			End If
+
+			With objXmlFile
+				' Pass True to .LoadSettings() to turn on case sensitive matching
+				.LoadSettings(mIniFilePath, True)
+
+				Try
+					If ValidDimensionsPresent(False) Then
+						.SetParam(XML_SECTION_OPTIONS, "CircleADia", txtSizeA.Text)
+						.SetParam(XML_SECTION_OPTIONS, "CircleBDia", txtSizeB.Text)
+						.SetParam(XML_SECTION_OPTIONS, "CircleCDia", txtSizeC.Text)
+						.SetParam(XML_SECTION_OPTIONS, "Overlap", txtSizeOverlapAB.Text)
+						.SetParam(XML_SECTION_OPTIONS, "OverlapBC", txtSizeOverlapBC.Text)
+						.SetParam(XML_SECTION_OPTIONS, "OverlapAC", txtSizeOverlapAC.Text)
+					End If
+					.SetParam(XML_SECTION_OPTIONS, "CircleAColor", ColorToString(vdgTwoCircles.VennDiagram.CircleAColor))
+					.SetParam(XML_SECTION_OPTIONS, "CircleBColor", ColorToString(vdgTwoCircles.VennDiagram.CircleBColor))
+					.SetParam(XML_SECTION_OPTIONS, "CircleCColor", ColorToString(vdgThreeCircles.VennDiagram.CircleCColor))
+					.SetParam(XML_SECTION_OPTIONS, "OverlapColor", ColorToString(vdgTwoCircles.VennDiagram.OverlapColor))
+					.SetParam(XML_SECTION_OPTIONS, "OverlapBCColor", ColorToString(vdgThreeCircles.VennDiagram.OverlapBCColor))
+					.SetParam(XML_SECTION_OPTIONS, "OverlapACColor", ColorToString(vdgThreeCircles.VennDiagram.OverlapACColor))
+					.SetParam(XML_SECTION_OPTIONS, "OverlapABCColor", ColorToString(vdgThreeCircles.VennDiagram.OverlapABCColor))
+					.SetParam(XML_SECTION_OPTIONS, "FillCirclesWithColor", chkFillCirclesWithColor.Checked)
+
+					.SetParam(XML_SECTION_OPTIONS, "EnterCircleTotals", optTotal.Checked)
+
+					.SetParam(XML_SECTION_OPTIONS, "ThreeCircleMode", chkCircleC.Checked)
+
+					.SetParam(XML_SECTION_OPTIONS, "MessageDisplayTime.", Me.MessageDisplayTime)
+					.SetParam(XML_SECTION_OPTIONS, "DuplicateMessageIgnoreWindow", Me.DuplicateMessageIgnoreWindow)
+					.SetParam(XML_SECTION_OPTIONS, "HideMessagesOnSuccessfulUpdate", chkHideMessagesOnSuccessfulUpdate.Checked)
+
+					.SetParam(XML_SECTION_OPTIONS, "RegionCountMode", cboRegionCountMode.SelectedIndex)
+					.SetParam(XML_SECTION_OPTIONS, "RegionCountValue", txtRegionCountValue.Text)
+
+
+					.SetParam(XML_SECTION_OPTIONS, "BackgroundColor", ColorToString(vdgTwoCircles.VennDiagram.BackColor))
+					.SetParam(XML_SECTION_OPTIONS, "WindowWidth", Me.Width.ToString)
+					.SetParam(XML_SECTION_OPTIONS, "WindowHeight", Me.Height.ToString)
+
+					.SaveSettings()
+				Catch ex As Exception
+					System.Windows.Forms.MessageBox.Show("Error storing parameter in settings file: " & mIniFilePath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+				End Try
+			End With
+
+		Catch ex As Exception
+			System.Windows.Forms.MessageBox.Show("Error saving Defaults to " & mIniFilePath & ControlChars.NewLine & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+		End Try
+	End Sub
 
     Private Sub SaveGraphicToDisk(ByVal blnForceSVG As Boolean)
         If chkCircleC.Checked Then
