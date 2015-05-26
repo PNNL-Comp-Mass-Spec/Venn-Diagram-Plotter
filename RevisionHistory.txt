@@ -1,5 +1,8 @@
 Venn Diagram Plotter Change Log
 
+Version 1.5.5624; May 26, 2015
+	- Change times shown in warning messages to be local time, not UTC
+
 Version 1.5.5228; April 25, 2014
 	- Added clsProcessFilesOrFoldersBase
 

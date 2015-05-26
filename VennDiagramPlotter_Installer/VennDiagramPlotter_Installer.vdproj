@@ -76,7 +76,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E2F0978B156E87636797F0B1D811C156"
+        "OwnerKey" = "8:_96370C94BA5E0A1B005D81FF4382AB95"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -88,7 +88,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_96370C94BA5E0A1B005D81FF4382AB95"
+        "OwnerKey" = "8:_E2F0978B156E87636797F0B1D811C156"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -249,11 +249,6 @@
             "AssemblyAsmDisplayName" = "8:stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
                 "ScatterAssemblies"
                 {
-                    "_96370C94BA5E0A1B005D81FF4382AB95"
-                    {
-                    "Name" = "8:stdole.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:stdole.dll"
             "TargetName" = "8:"
@@ -300,11 +295,6 @@
             "AssemblyAsmDisplayName" = "8:ControlPrinter, Version=1.1.5228.29097, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_D507832FD6FEC807D2610EE08F41DCC0"
-                    {
-                    "Name" = "8:ControlPrinter.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:ControlPrinter.dll"
             "TargetName" = "8:"
@@ -331,11 +321,6 @@
             "AssemblyAsmDisplayName" = "8:VennDiagrams, Version=1.4.5228.29097, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_E2F0978B156E87636797F0B1D811C156"
-                    {
-                    "Name" = "8:VennDiagrams.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:VennDiagrams.dll"
             "TargetName" = "8:"
@@ -442,15 +427,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:VennDiagramPlotter"
-        "ProductCode" = "8:{92B43CC9-34DA-4F78-A3A4-3B031D6AB4D2}"
-        "PackageCode" = "8:{44777DA7-1968-403F-A855-A4B6177447C5}"
+        "ProductCode" = "8:{5C08E2B0-0457-431F-9A4D-73A716F9619D}"
+        "PackageCode" = "8:{0C653256-4DCE-4ACA-B653-6327228EB0CA}"
         "UpgradeCode" = "8:{658E9429-43A4-404C-BEF3-45AACB8B3130}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.5.1"
+        "ProductVersion" = "8:1.5.2"
         "Manufacturer" = "8:Pacific Northwest National Lab"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
