@@ -1196,7 +1196,7 @@ Public Class DisplayForm
     Private Const DEFAULT_WINDOW_WIDTH_TWO_CIRCLE As Integer = 750
     Private Const DEFAULT_WINDOW_WIDTH_THREE_CIRCLE As Integer = 940
 
-    Private Const PROGRAM_DATE As String = "May 26, 2015"
+    Private Const PROGRAM_DATE As String = "June 2, 2020"
 #End Region
 
 #Region "Structures and Enums"
