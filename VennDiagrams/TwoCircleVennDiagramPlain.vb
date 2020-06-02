@@ -17,7 +17,6 @@ Public Class TwoCircleVennDiagramPlain
     Inherits System.Windows.Forms.UserControl
     Implements ControlPrinter.IPrintableControlContainer
 
-
 #Region " Windows Form Designer generated code "
 
     Public Sub New()
@@ -84,7 +83,7 @@ Public Class TwoCircleVennDiagramPlain
 
 #End Region
 
-    Public ReadOnly Property VennDiagram() As TwoCircleVennDiagram
+    Public ReadOnly Property VennDiagram As TwoCircleVennDiagram
         Get
             Return vdgVennDiagram
         End Get

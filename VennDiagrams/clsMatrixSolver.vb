@@ -145,9 +145,8 @@ Public Class clsMatrixSolver
 
     End Function
 
-
     Protected Function MultiplyMatrices(ByRef dblMatrix1(,) As Double, ByRef dblMatrix2() As Double, ByRef dblResults() As Double,
-                                        ByVal intRowCount1 As Integer, ByVal intColCount1 As Integer) As Boolean
+                                        intRowCount1 As Integer, intColCount1 As Integer) As Boolean
         ' This function assumes dblMatrix2 is a matrix with many rows, but just 1 column (and is represented by an array)
         ' Thus, dblResults is returned as a 1D array
 
@@ -178,8 +177,8 @@ Public Class clsMatrixSolver
     End Function
 
     Protected Function MultiplyMatrices(ByRef dblMatrix1(,) As Double, ByRef dblMatrix2(,) As Double, ByRef dblResults(,) As Double,
-                                        ByVal intRowCount1 As Integer, ByVal intColCount1 As Integer,
-                                        ByVal intRowCount2 As Integer, ByVal intColCount2 As Integer) As Boolean
+                                        intRowCount1 As Integer, intColCount1 As Integer,
+                                        intRowCount2 As Integer, intColCount2 As Integer) As Boolean
         ' If dblMatrix1 has extra columns or dblMatrix2 has extra rows, then the extra information is ignored
 
         Dim x As Integer, y As Integer, z As Integer
@@ -214,8 +213,8 @@ Public Class clsMatrixSolver
 
     End Function
 
-    Protected Function GetTestMatrix(ByVal intRowCount As Integer, ByVal intColCount As Integer, ByVal blnUseFixed As Boolean, ByRef dblConstants() As Double) As Double(,)
-        Const MAX_INTEGER As Integer = 10
+    Protected Function GetTestMatrix(intRowCount As Integer, intColCount As Integer, blnUseFixed As Boolean, ByRef dblConstants() As Double) As Double(,)
+        Const MAX_INTEGER = 10
 
         Dim objRand As New Random
 
@@ -261,11 +260,10 @@ Public Class clsMatrixSolver
         Dim dblConstants() As Double = Nothing
         Dim dblXValues() As Double = Nothing
 
-        Dim blnSuccess As Boolean
         Dim strMessage As String = String.Empty
 
-        Dim intRowCount As Integer = 6
-        Dim intColCount As Integer = 6
+        Dim intRowCount = 6
+        Dim intColCount = 6
 
         coefficientMatrix = GetTestMatrix(intRowCount, intColCount, True, dblConstants)
 
@@ -287,7 +285,7 @@ Public Class clsMatrixSolver
         '
         ' Note that This function uses the dimensions of dblAugmentedMatrix to determine the number of rows and columns
 
-        Const TINY As Double = 0.00001
+        Const TINY = 0.00001
         Dim intRowCount As Integer
         Dim intColCount As Integer
         Dim dblTemp As Double
@@ -365,7 +363,7 @@ Public Class clsMatrixSolver
         'PrintArray(dblAugmentedMatrix)
 
         ' See if we have a solution.
-        If dblAugmentedMatrix(intRowCount - 1, intColCount - 1) = 0 Then
+        If Math.Abs(dblAugmentedMatrix(intRowCount - 1, intColCount - 1)) < Single.Epsilon Then
             ' We have no solution.
             strMessage = "No solution"
         Else

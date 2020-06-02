@@ -1,6 +1,7 @@
 Option Strict On
 
 Imports System.Drawing
+Imports System.Text
 
 ' -------------------------------------------------------------------------------
 ' Written by Matthew Monroe the Department of Energy (PNNL, Richland, WA)
@@ -59,14 +60,14 @@ Public MustInherit Class VennDiagramBaseClass
 
 #Region "Events"
 
-    'Raised when smoothingmode, FillFactor, or colors are changed
-    Public Event DrawingChange(ByVal sender As VennDiagramBaseClass)
+    'Raised when smoothing mode, FillFactor, or colors are changed
+    Public Event DrawingChange(sender As VennDiagramBaseClass)
 
     'Never raised
-    Public Event LabelChange(ByVal sender As VennDiagramBaseClass)
+    Public Event LabelChange(sender As VennDiagramBaseClass)
 
     'Raised when size of circles or overlap is changed.
-    Public Event SizeChange(ByVal sender As VennDiagramBaseClass)
+    Public Event SizeChange(sender As VennDiagramBaseClass)
 
 #End Region
 
@@ -157,85 +158,85 @@ Public MustInherit Class VennDiagramBaseClass
 #End Region
 
 #Region "Properties "
-    Public Property CircleASize() As Double
+    Public Property CircleASize As Double
         Get
             Return m_circleA.Size
         End Get
-        Set(ByVal Value As Double)
+        Set
             m_circleA.Size = Value
             InvalidateComputeWorldCoordinates()
             RaiseEvent SizeChange(Me)
         End Set
     End Property
 
-    Public Property CircleBSize() As Double
+    Public Property CircleBSize As Double
         Get
             Return m_circleB.Size
         End Get
-        Set(ByVal Value As Double)
+        Set
             m_circleB.Size = Value
             InvalidateComputeWorldCoordinates()
             RaiseEvent SizeChange(Me)
         End Set
     End Property
 
-    Public ReadOnly Property CoordCircleA() As udtPointXYType
+    Public ReadOnly Property CoordCircleA As udtPointXYType
         Get
             Return m_CircleA_Loc
         End Get
     End Property
-    Public ReadOnly Property CoordCircleARadius() As Double
+    Public ReadOnly Property CoordCircleARadius As Double
         Get
             Return m_CircleA_Radius_Compute
         End Get
     End Property
 
-    Public ReadOnly Property CoordCircleB() As udtPointXYType
+    Public ReadOnly Property CoordCircleB As udtPointXYType
         Get
             Return m_CircleB_Loc
         End Get
     End Property
-    Public ReadOnly Property CoordCircleBRadius() As Double
+    Public ReadOnly Property CoordCircleBRadius As Double
         Get
             Return m_CircleB_Radius_Compute
         End Get
     End Property
 
-    Public ReadOnly Property DefaultColorOverlapAB() As System.Drawing.Color
+    Public ReadOnly Property DefaultColorOverlapAB As Color
         Get
-            Return System.Drawing.Color.FromArgb(192, 255, 192)
+            Return Color.FromArgb(192, 255, 192)
         End Get
     End Property
 
-    Public ReadOnly Property DefaultColorCircleA() As System.Drawing.Color
+    Public ReadOnly Property DefaultColorCircleA As Color
         Get
-            Return System.Drawing.Color.FromArgb(255, 192, 192)
+            Return Color.FromArgb(255, 192, 192)
         End Get
     End Property
 
-    Public ReadOnly Property DefaultColorCircleB() As System.Drawing.Color
+    Public ReadOnly Property DefaultColorCircleB As Color
         Get
-            Return System.Drawing.Color.FromArgb(192, 255, 255)
+            Return Color.FromArgb(192, 255, 255)
         End Get
     End Property
 
-    Public ReadOnly Property OverlapABAlpha() As Double
+    Public ReadOnly Property OverlapABAlpha As Double
         Get
             Return m_OverlapAB_alpha
         End Get
     End Property
 
-    Public ReadOnly Property OverlapABBeta() As Double
+    Public ReadOnly Property OverlapABBeta As Double
         Get
             Return m_OverlapAB_beta
         End Get
     End Property
 
-    Public Property OverlapABSize() As Double
+    Public Property OverlapABSize As Double
         Get
             Return m_overlapAB.Size
         End Get
-        Set(ByVal Value As Double)
+        Set
             m_overlapAB.Size = Value
             InvalidateComputeWorldCoordinates()
             RaiseEvent SizeChange(Me)
@@ -245,44 +246,44 @@ Public MustInherit Class VennDiagramBaseClass
     'Labels are not currently used.  They were intended to provide
     'the ability to label the diagram with intelligently placed labels
     'on the actual diagram
-    Public Property CircleALabel() As String()
+    Public Property CircleALabel As String()
         Get
             Return m_circleA.Label
         End Get
-        Set(ByVal Value() As String)
+        Set
             m_circleA.Label = Value
             InvalidateScreenCoordinates()
             RaiseEvent LabelChange(Me)
         End Set
     End Property
 
-    Public Property CircleBLabel() As String()
+    Public Property CircleBLabel As String()
         Get
             Return m_circleB.Label
         End Get
-        Set(ByVal Value() As String)
+        Set
             m_circleB.Label = Value
             InvalidateScreenCoordinates()
             RaiseEvent LabelChange(Me)
         End Set
     End Property
 
-    Public Property OverlapABLabel() As String()
+    Public Property OverlapABLabel As String()
         Get
             Return m_overlapAB.Label
         End Get
-        Set(ByVal Value() As String)
+        Set
             m_overlapAB.Label = Value
             InvalidateScreenCoordinates()
             RaiseEvent LabelChange(Me)
         End Set
     End Property
 
-    Public Property CircleAColor() As System.Drawing.Color
+    Public Property CircleAColor As Color
         Get
             Return m_circleA.Color
         End Get
-        Set(ByVal Value As System.Drawing.Color)
+        Set
             m_circleA.Color = Value
             'Me.UpdateOverlapColor()
             Me.Invalidate()
@@ -290,11 +291,11 @@ Public MustInherit Class VennDiagramBaseClass
         End Set
     End Property
 
-    Public Property CircleBColor() As Color
+    Public Property CircleBColor As Color
         Get
             Return m_circleB.Color
         End Get
-        Set(ByVal Value As Color)
+        Set
             m_circleB.Color = Value
             'Me.UpdateOverlapColor()
             Me.Invalidate()
@@ -302,24 +303,27 @@ Public MustInherit Class VennDiagramBaseClass
         End Set
     End Property
 
-    Public Property OverlapABColor() As Color
+    Public Property OverlapABColor As Color
         Get
             Return m_overlapAB.Color
         End Get
-        Set(ByVal Value As Color)
+        Set
             m_overlapAB.Color = Value
             Me.Invalidate()
             RaiseEvent DrawingChange(Me)
         End Set
     End Property
 
-    'Controls how close to the bounds of the control the colored part of the diagram will go.
-    'Diagram fills up this fraction of either the width or height of the control
-    Public Property FillFactor() As Double
+    ''' <summary>
+    ''' Controls how close to the bounds of the control the colored part of the diagram will go.
+    ''' Diagram fills up this fraction of either the width or height of the control
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property FillFactor As Double
         Get
             Return m_FillFactor
         End Get
-        Set(ByVal Value As Double)
+        Set
             If (Value < 0 Or Value > 2.0) Then
                 Throw New ArgumentException("Must be in range of 0 to 2")
             End If
@@ -334,22 +338,22 @@ Public MustInherit Class VennDiagramBaseClass
     'End Sub
 
     'The pen that is used for outlining around the circles and overlap region
-    Public Property OutlinePen() As Pen
+    Public Property OutlinePen As Pen
         Get
             Return m_outlinePen
         End Get
-        Set(ByVal Value As Pen)
+        Set
             m_outlinePen = Value
             Me.Invalidate()
             RaiseEvent DrawingChange(Me)
         End Set
     End Property
 
-    Public Property PaintSolidColorCircles() As Boolean
+    Public Property PaintSolidColorCircles As Boolean
         Get
             Return m_PaintSolidColorCircles
         End Get
-        Set(ByVal Value As Boolean)
+        Set
             If m_PaintSolidColorCircles <> Value Then
                 m_PaintSolidColorCircles = Value
                 Me.Invalidate()
@@ -358,12 +362,15 @@ Public MustInherit Class VennDiagramBaseClass
         End Set
     End Property
 
-    'When drawn, the control will change the smoothing mode of the graphics to this
-    Public Property SmoothingMode() As Drawing2D.SmoothingMode
+    ''' <summary>
+    ''' When drawn, the control will change the smoothing mode of the graphics to this
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property SmoothingMode As Drawing2D.SmoothingMode
         Get
             Return m_smoothingMode
         End Get
-        Set(ByVal Value As Drawing2D.SmoothingMode)
+        Set
             m_smoothingMode = Value
             Me.Invalidate()
             RaiseEvent DrawingChange(Me)
@@ -376,19 +383,22 @@ Public MustInherit Class VennDiagramBaseClass
     '    End Get
     'End Property
 
-    'Tells whether the sizes of the circles and overlap are consistent
-    Protected Property SizesReasonable() As Boolean
+    ''' <summary>
+    ''' Tells whether the sizes of the circles and overlap are consistent
+    ''' </summary>
+    ''' <returns></returns>
+    Protected Property SizesReasonable As Boolean
         Get
             Return m_sizesReasonable
         End Get
-        Set(ByVal Value As Boolean)
+        Set
             m_sizesReasonable = Value
         End Set
     End Property
 
 #End Region
 
-    Protected Shared Function AngleAFromThreeSides(ByVal a As Double, ByVal b As Double, ByVal c As Double) As Double
+    Protected Shared Function AngleAFromThreeSides(a As Double, b As Double, c As Double) As Double
         Dim dblAngleRadians As Double
 
         ' Given triangle with sides a, b, and c, compute the angle A, which is opposite from side a
@@ -409,20 +419,22 @@ Public MustInherit Class VennDiagramBaseClass
 
     End Function
 
-    Protected Shared Function AcosSafe(ByVal Xcos As Double) As Double
-        'pass in the cosine and receive the angle
-        'Xcos of 1, or greater, will cause an error in the Acos
-        'function.
-
-        If Xcos > 1 Or Xcos < -1 Then
+    ''' <summary>
+    ''' Pass in the cosine and receive the angle
+    ''' </summary>
+    ''' <param name="value"></param>
+    ''' <returns></returns>
+    ''' <remarks>value of 1, or greater, will cause an error in the Acos function</remarks>
+    Protected Shared Function AcosSafe(value As Double) As Double
+        If value > 1 Or value < -1 Then
             ' Invalid input; return an angle of 0
             Return 0
         Else
             ' Could manually compute ACos using:
-            ' ACos = Atn(-Xcos / Sqr(-Xcos * Xcos + 1)) + 2 * Atn(1)
+            ' ACos = Atn(-value / Sqr(-value * value + 1)) + 2 * Atn(1)
             '  or
             ' ACos = Pi / 2 - 2 * Atn(x / (1 + Sqr(Abs(1 - x * x))))
-            Return Math.Acos(Xcos)
+            Return Math.Acos(value)
         End If
     End Function
 
@@ -459,22 +471,25 @@ Public MustInherit Class VennDiagramBaseClass
     ''End Sub
 
 
-    'The first step in drawing a venn diagram, compute world coordinates with the
-    'following properties.
+    ''' <summary>
+    ''' The first step in drawing a venn diagram, compute world coordinates with the following properties.
+    ''' </summary>
     Public MustOverride Sub ComputeWorldCoordinates()
 
-    'The second part in computation.  Transforms the world coordinates that have been coordinated
-    'into screen coordinates that are then used to draw GDI+ shapes.
+    ''' <summary>
+    ''' The second part in computation.
+    ''' Transforms the world coordinates that have been coordinated into screen coordinates that are then used to draw GDI+ shapes.
+    ''' </summary>
     Protected MustOverride Sub ComputeScreenCoordinatesFromWorldCoordinates()
 
-    Protected Sub ComputeSVGArcCoordinates(ByVal udtCircleALoc As udtPointXYType,
-                                           ByVal udtCircleBLoc As udtPointXYType,
-                                           ByVal dblCircleARadius As Double,
-                                           ByVal dblCircleBRadius As Double,
-                                           ByVal dblAlpha As Double,
-                                           ByVal dblBeta As Double,
-                                           ByVal dblAlphaStartAddon As Double,
-                                           ByVal dblBetaStartAddon As Double,
+    Protected Sub ComputeSVGArcCoordinates(udtCircleALoc As udtPointXYType,
+                                           udtCircleBLoc As udtPointXYType,
+                                           dblCircleARadius As Double,
+                                           dblCircleBRadius As Double,
+                                           dblAlpha As Double,
+                                           dblBeta As Double,
+                                           dblAlphaStartAddon As Double,
+                                           dblBetaStartAddon As Double,
                                            ByRef udtArcDetails As udtSVGOverlapDetailsType)
 
         ' Center of Circle A is at point A
@@ -540,15 +555,15 @@ Public MustInherit Class VennDiagramBaseClass
 
     End Sub
 
-    Public Shared Function ConvertDegreesToRadians(ByVal degrees As Double) As Double
+    Public Shared Function ConvertDegreesToRadians(degrees As Double) As Double
         Return degrees * Math.PI / 180
     End Function
 
-    Public Shared Function ConvertRadiansToDegrees(ByVal radians As Double) As Double
+    Public Shared Function ConvertRadiansToDegrees(radians As Double) As Double
         Return radians * 180 / Math.PI
     End Function
 
-    Public Sub DrawOnGraphics(ByVal g As Graphics, ByVal drawBackground As Boolean) Implements ControlPrinter.IPrintableControl.DrawOnGraphics
+    Public Sub DrawOnGraphics(g As Graphics, drawBackground As Boolean) Implements ControlPrinter.IPrintableControl.DrawOnGraphics
         If (drawBackground) Then
             g.FillRectangle(New SolidBrush(Me.BackColor), New Rectangle(0, 0, Me.Width, Me.Height))
         End If
@@ -556,12 +571,12 @@ Public MustInherit Class VennDiagramBaseClass
     End Sub
 
     Protected Sub DrawOverlapRegion(ByRef objDrawingPath As System.Drawing.Drawing2D.GraphicsPath,
-                                    ByVal BoundingBoxA As RectangleF,
-                                    ByVal BoundingBoxB As RectangleF,
-                                    ByVal dblAlpha As Double,
-                                    ByVal dblBeta As Double,
-                                    ByVal dblAlphaStartAddon As Double,
-                                    ByVal dblBetaStartAddon As Double)
+                                    BoundingBoxA As RectangleF,
+                                    BoundingBoxB As RectangleF,
+                                    dblAlpha As Double,
+                                    dblBeta As Double,
+                                    dblAlphaStartAddon As Double,
+                                    dblBetaStartAddon As Double)
         objDrawingPath.Reset()
         objDrawingPath.AddArc(BoundingBoxA, CSng(-dblAlpha / 2 + dblAlphaStartAddon), CSng(dblAlpha))
         objDrawingPath.AddArc(BoundingBoxB, CSng(180 - dblBeta / 2 + dblBetaStartAddon), CSng(dblBeta))
@@ -574,13 +589,13 @@ Public MustInherit Class VennDiagramBaseClass
     ''' <param name="sngOpacity">Value between 0 and 1 representing transparency; 1 means fully opaque</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public MustOverride Function GetSVG(ByVal blnFillCircles As Boolean, ByVal sngOpacity As Single) As String
+    Public MustOverride Function GetSVG(blnFillCircles As Boolean, sngOpacity As Single) As String
 
-    Protected Function GetSVGCirclesAB(ByVal intStrokeWidthPixels As Integer,
-                                       ByVal blnFillCircles As Boolean,
-                                       ByVal sngOpacity As Single) As String
+    Protected Function GetSVGCirclesAB(intStrokeWidthPixels As Integer,
+                                       blnFillCircles As Boolean,
+                                       sngOpacity As Single) As String
 
-        Dim strSVG As New System.Text.StringBuilder
+        Dim strSVG As New StringBuilder
 
         strSVG.AppendLine(ControlChars.Tab & "<desc>Circle A</desc>")
         strSVG.AppendLine(GetSVGCircleText(m_CircleA_ScreenLoc, m_CircleA_ScreenRadius, blnFillCircles, CircleAColor, sngOpacity, intStrokeWidthPixels))
@@ -603,27 +618,27 @@ Public MustInherit Class VennDiagramBaseClass
 
     End Function
 
-    Protected Function GetSVGCircleText(ByVal udtPoint As udtPointXYType, ByVal dblRadius As Double,
-                                        ByVal blnFillCircle As Boolean, ByVal cColor As System.Drawing.Color,
-                                        ByVal sngOpacity As Single, ByVal intStrokeWidthPixels As Integer) As String
+    Protected Function GetSVGCircleText(udtPoint As udtPointXYType, dblRadius As Double,
+                                        blnFillCircle As Boolean, cColor As Color,
+                                        sngOpacity As Single, intStrokeWidthPixels As Integer) As String
         Dim strSVG As String
 
         strSVG = ControlChars.Tab & ControlChars.Tab & "<circle cx=" & QuoteNumber(udtPoint.X, 2) & " cy=" & QuoteNumber(udtPoint.Y, 2) & " r=" & QuoteNumber(dblRadius, 2)
         If blnFillCircle Then
-            strSVG &= " fill=""" & System.Drawing.ColorTranslator.ToHtml(cColor) & """ fill-opacity=" & QuoteNumber(sngOpacity, 2)
+            strSVG &= " fill=""" & ColorTranslator.ToHtml(cColor) & """ fill-opacity=" & QuoteNumber(sngOpacity, 2)
         Else
             strSVG &= " fill=""none"" fill-opacity=" & QuoteNumber(sngOpacity, 2)
         End If
 
-        strSVG &= " stroke=""" & System.Drawing.ColorTranslator.ToHtml(System.Drawing.Color.Black) & """ stroke-width=" & QuoteNumber(intStrokeWidthPixels) & " stroke-opacity=" & QuoteNumber(1) & "/>"
+        strSVG &= " stroke=""" & ColorTranslator.ToHtml(Color.Black) & """ stroke-width=" & QuoteNumber(intStrokeWidthPixels) & " stroke-opacity=" & QuoteNumber(1) & "/>"
 
         Return strSVG
 
     End Function
 
     Protected Function GetSVGArcText(ByRef udtArcDetails As udtSVGOverlapDetailsType,
-                                     ByVal blnFillArc As Boolean, ByVal cColor As System.Drawing.Color,
-                                     ByVal sngOpacity As Single, ByVal intStrokeWidthPixels As Integer) As String
+                                     blnFillArc As Boolean, cColor As Color,
+                                     sngOpacity As Single, intStrokeWidthPixels As Integer) As String
 
         Dim strSVG As String
 
@@ -641,22 +656,22 @@ Public MustInherit Class VennDiagramBaseClass
         End With
 
         If blnFillArc Then
-            strSVG &= " fill=""" & System.Drawing.ColorTranslator.ToHtml(cColor) & """ fill-opacity=" & QuoteNumber(sngOpacity, 2)
+            strSVG &= " fill=""" & ColorTranslator.ToHtml(cColor) & """ fill-opacity=" & QuoteNumber(sngOpacity, 2)
         Else
             strSVG &= " fill=""none"" fill-opacity=" & QuoteNumber(sngOpacity, 2)
         End If
 
-        strSVG &= " stroke=""" & System.Drawing.ColorTranslator.ToHtml(System.Drawing.Color.Black) & """ stroke-width=" & QuoteNumber(intStrokeWidthPixels) & " stroke-opacity=" & QuoteNumber(1) & "/>"
+        strSVG &= " stroke=""" & ColorTranslator.ToHtml(Color.Black) & """ stroke-width=" & QuoteNumber(intStrokeWidthPixels) & " stroke-opacity=" & QuoteNumber(1) & "/>"
 
         Return strSVG
 
     End Function
 
-    Protected Function GetSVGArcText(ByVal udtStartPoint As udtPointXYType, ByVal udtEndPoint As udtPointXYType,
-                                     ByVal dblRadius As Double,
-                                     ByVal intRotation As Single, ByVal intLargeArcFlag As Byte, ByVal intSweepFlag As Byte,
-                                     ByVal blnFillArc As Boolean, ByVal cColor As System.Drawing.Color,
-                                     ByVal sngOpacity As Single, ByVal intStrokeWidthPixels As Integer) As String
+    Protected Function GetSVGArcText(udtStartPoint As udtPointXYType, udtEndPoint As udtPointXYType,
+                                     dblRadius As Double,
+                                     intRotation As Single, intLargeArcFlag As Byte, intSweepFlag As Byte,
+                                     blnFillArc As Boolean, cColor As Color,
+                                     sngOpacity As Single, intStrokeWidthPixels As Integer) As String
         Dim strSVG As String
 
         ' Construct the path text
@@ -668,12 +683,12 @@ Public MustInherit Class VennDiagramBaseClass
         strSVG = ControlChars.Tab & "<path d=""M " & udtStartPoint.X.ToString("0.000000") & " " & udtStartPoint.Y.ToString("0.000000") & " A " & dblRadius.ToString("0.000000") & " " & dblRadius.ToString("0.000000") & " " & intRotation.ToString("0.000") & " " & intLargeArcFlag & " " & intSweepFlag & " " & udtEndPoint.X.ToString("0.000000") & " " & udtEndPoint.Y.ToString("0.000000") & """"
 
         If blnFillArc Then
-            strSVG &= " fill=""" & System.Drawing.ColorTranslator.ToHtml(cColor) & """ fill-opacity=" & QuoteNumber(sngOpacity, 2)
+            strSVG &= " fill=""" & ColorTranslator.ToHtml(cColor) & """ fill-opacity=" & QuoteNumber(sngOpacity, 2)
         Else
             strSVG &= " fill=""none"" fill-opacity=" & QuoteNumber(sngOpacity, 2)
         End If
 
-        strSVG &= " stroke=""" & System.Drawing.ColorTranslator.ToHtml(System.Drawing.Color.Black) & """ stroke-width=" & QuoteNumber(intStrokeWidthPixels) & " stroke-opacity=" & QuoteNumber(1) & "/>"
+        strSVG &= " stroke=""" & ColorTranslator.ToHtml(Color.Black) & """ stroke-width=" & QuoteNumber(intStrokeWidthPixels) & " stroke-opacity=" & QuoteNumber(1) & "/>"
 
         Return strSVG
 
@@ -687,22 +702,26 @@ Public MustInherit Class VennDiagramBaseClass
         Me.SetStyle(ControlStyles.SupportsTransparentBackColor, True)
     End Sub
 
-    'Forces screen coordinates to be recomputed from compute world coordinates
-    'for example, when the control is resized
+    ''' <summary>
+    ''' Forces screen coordinates to be recomputed from compute world coordinates,
+    ''' for example, when the control is resized
+    ''' </summary>
     Protected Sub InvalidateScreenCoordinates()
         m_ScreenCoordinatesValid = False
         Me.Invalidate()
     End Sub
 
-    'Forces world coordinates to be recomputed
-    'for example, when one of the region sizes is changed
+    ''' <summary>
+    ''' Forces world coordinates to be recomputed,
+    ''' for example, when one of the region sizes is changed
+    ''' </summary>
     Protected Sub InvalidateComputeWorldCoordinates()
         m_ScreenCoordinatesValid = False
         m_ComputeWorldCoordinatesValid = False
         Me.Invalidate()
     End Sub
 
-    Protected Overrides Sub OnResize(ByVal args As EventArgs)
+    Protected Overrides Sub OnResize(args As EventArgs)
         MyBase.OnResize(args)
         'Console.WriteLine("Resize")
         If m_ComputeWorldCoordinatesValid Then
@@ -711,7 +730,7 @@ Public MustInherit Class VennDiagramBaseClass
         Me.Invalidate()
     End Sub
 
-    Protected Sub PaintVennDiagramInfo(ByVal info As VennDiagramAreaInfo, ByVal graphics As Graphics)
+    Protected Sub PaintVennDiagramInfo(info As VennDiagramAreaInfo, graphics As Graphics)
         Dim b As Brush = New SolidBrush(info.Color)
 
         If Me.PaintSolidColorCircles Then
@@ -722,11 +741,11 @@ Public MustInherit Class VennDiagramBaseClass
 
     End Sub
 
-    Protected Function QuoteNumber(ByVal intNumber As Integer) As String
+    Protected Function QuoteNumber(intNumber As Integer) As String
         Return """" & intNumber.ToString & """"
     End Function
 
-    Protected Function QuoteNumber(ByVal dblNumber As Double, ByVal intDigitsOfPrecision As Integer) As String
+    Protected Function QuoteNumber(dblNumber As Double, intDigitsOfPrecision As Integer) As String
         Static strFormatCode As String
         Static intFormatCodeDigits As Integer
 
@@ -759,57 +778,25 @@ Public MustInherit Class VennDiagramBaseClass
 End Class
 
 Public Class VennDiagramAreaInfo
-    Private m_size As Double = 1.0
-    Private m_label As String() = New String() {}
-    Private m_path As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
-    Private m_color As System.Drawing.Color = System.Drawing.Color.Blue
-
     'Would be more powerful if it was a Brush instead of a merely a color, allowing, for example
     'hatching or gradients, but then the TwoCircleVennDiagramPresenter would not be able to
     'synchronize label colors with what venn diagram was drawing
-    Friend Property Color() As Color
-        Get
-            Return m_color
-        End Get
-        Set(ByVal Value As Color)
-            m_color = Value
-        End Set
-    End Property
+
+    Friend Property Color As Color = Color.Blue
 
     'Labels are not currently used
-    Friend Property Label() As String()
-        Get
-            Return m_label
-        End Get
-        Set(ByVal Value() As String)
-            m_label = Value
-        End Set
-    End Property
+    Friend Property Label As String() = New String() {}
 
-    Friend Property Size() As Double
-        Get
-            Return m_size
-        End Get
-        Set(ByVal Value As Double)
-            m_size = Value
-        End Set
-    End Property
+    Friend Property Size As Double = 1.0
 
-    Friend Property DrawingPath() As System.Drawing.Drawing2D.GraphicsPath
-        Get
-            Return m_path
-        End Get
-        Set(ByVal Value As System.Drawing.Drawing2D.GraphicsPath)
-            m_path = Value
-        End Set
-    End Property
+    Friend Property DrawingPath As System.Drawing.Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
 
     Public Sub New()
-        Me.New(System.Drawing.Color.Blue)
+        Me.New(Color.Blue)
     End Sub
 
-    Public Sub New(ByVal FillColor As System.Drawing.Color)
-        m_color = FillColor
+    Public Sub New(FillColor As Color)
+        Color = FillColor
     End Sub
 
 End Class

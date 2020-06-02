@@ -17,7 +17,7 @@ Option Strict On
 Imports System.Drawing
 
 Public Interface IPrintableControl
-    Sub DrawOnGraphics(ByVal g As Graphics, ByVal drawBackground As Boolean)
+    Sub DrawOnGraphics(g As Graphics, drawBackground As Boolean)
 End Interface
 
 'This interface tags controls that are merely containers for other controls, and are drawn

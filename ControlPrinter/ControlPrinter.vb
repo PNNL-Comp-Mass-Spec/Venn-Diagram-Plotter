@@ -10,7 +10,7 @@ Imports System.Drawing
 '   IPrintableControl
 '   Panel
 '   Label (Ignores vertical part of .TextAlign property, but does handle horizontal part) - Now handles both.
-'   GroupBox (Slightly differing label alignment, also unknown (and probably undesirable behavoir)
+'   GroupBox (Slightly differing label alignment, also unknown (and probably undesirable behavior)
 '       when used with long labels.  This could be corrected with proper use of the StringFormat
 '       class and the Graphics.MeasureString methods.)
 '   Button (Coloring of border is not 100% the same, due to limits of ControlPaint class, which always uses
@@ -25,7 +25,7 @@ Imports System.Drawing
 
 'The basic idea for this class was found at http://www.c-sharpcorner.com/Code/2003/March/FormPrinting.asp
 
-'The behavoir of this class when overlapping controls are encountered is not always consistent with
+'The behavior of this class when overlapping controls are encountered is not always consistent with
 'the onscreen display.  So don't overlap controls (controls that contain others, such as group boxes
 'and panels are ok).
 
@@ -49,10 +49,10 @@ Imports System.Drawing
 
 Public Class ControlPrinter
     'Control is drawn at 0, 0 to width, height
-    Public Shared Sub DrawControl(ByVal c As Control, ByVal g As Graphics, ByVal drawBackground As Boolean)
+    Public Shared Sub DrawControl(c As Control, g As Graphics, drawBackground As Boolean)
         'Console.WriteLine("Printing control: " & c.GetType().ToString & " """ & c.Text & """")
-        Dim controlBounds As Rectangle = New Rectangle(0, 0, c.Width, c.Height)
-        Dim controlBoundsF As RectangleF = New RectangleF(0, 0, c.Width, c.Height)
+        Dim controlBounds = New Rectangle(0, 0, c.Width, c.Height)
+        Dim controlBoundsF = New RectangleF(0, 0, c.Width, c.Height)
         Dim container As Drawing2D.GraphicsContainer = g.BeginContainer()
 
         'set the current clipping so that even we attempt to draw something outside the
@@ -69,10 +69,10 @@ Public Class ControlPrinter
             DirectCast(c, IPrintableControl).DrawOnGraphics(g, drawBackground)
 
         ElseIf (TypeOf c Is Button) Then
-            Dim b As Button = DirectCast(c, Button)
-            Dim format As StringFormat = New StringFormat
+            Dim b = DirectCast(c, Button)
+            Dim format = New StringFormat
             Dim oldClip As Region = g.Clip
-            Dim innerButtonBounds As RectangleF = New RectangleF(2, 2, b.Width - 4, b.Height - 4)
+            Dim innerButtonBounds = New RectangleF(2, 2, b.Width - 4, b.Height - 4)
             Dim buttonContainer As Drawing2D.GraphicsContainer = g.BeginContainer
 
             'since ControlPaint always draws a gray button, set a clip that excludes the inner portion
@@ -96,9 +96,9 @@ Public Class ControlPrinter
             g.DrawString(b.Text, b.Font, New SolidBrush(GetFontColor(c)), innerButtonBounds, format)
 
         ElseIf (TypeOf c Is Label) Then
-            Dim l As Label = DirectCast(c, Label)
-            Dim format As StringFormat = New StringFormat
-            Dim fontcolor As Color = l.ForeColor
+            Dim l = DirectCast(c, Label)
+            Dim format = New StringFormat
+            Dim fontColor As Color = l.ForeColor
 
             'This differs from what buttons actually do, but I like the look better
             format.Trimming = StringTrimming.EllipsisWord
@@ -117,13 +117,13 @@ Public Class ControlPrinter
             g.DrawString(c.Text, c.Font, New SolidBrush(GetFontColor(c)), controlBoundsF, format)
 
         ElseIf (TypeOf c Is Panel) Then
-            Dim p As Panel = DirectCast(c, Panel)
+            Dim p = DirectCast(c, Panel)
             If (p.BorderStyle = BorderStyle.FixedSingle Or p.BorderStyle = BorderStyle.Fixed3D) Then
                 ControlPaint.DrawBorder(g, controlBounds, c.ForeColor, ButtonBorderStyle.Solid)
             End If
         ElseIf (TypeOf c Is GroupBox) Then
             Dim stringBounds As SizeF = g.MeasureString(c.Text, c.Font)
-            Dim stringClip As Rectangle = New Rectangle(5, 0, CInt(stringBounds.Width), CInt(stringBounds.Height))
+            Dim stringClip = New Rectangle(5, 0, CInt(stringBounds.Width), CInt(stringBounds.Height))
             Dim oldClip As Region = g.Clip
             Dim groupBoxContainer As Drawing2D.GraphicsContainer = g.BeginContainer()
 
@@ -145,21 +145,21 @@ Public Class ControlPrinter
             g.DrawString(c.Text, c.Font, New SolidBrush(GetFontColor(c)), 5, 0)
         End If
 
-        If (ControlPrinter.ControlHasPaintableChildren(c)) Then
-            ControlPrinter.DrawChildControls(c, g, drawBackground)
+        If (ControlHasPaintableChildren(c)) Then
+            DrawChildControls(c, g, drawBackground)
         End If
         'return to previous clip
         g.EndContainer(container)
     End Sub
 
-    Private Shared Function GetFontColor(ByVal c As Control) As Color
+    Private Shared Function GetFontColor(c As Control) As Color
         If (Not c.Enabled) Then
             Return Color.Gray
         End If
         Return c.ForeColor
     End Function
 
-    Private Shared Function ControlHasPaintableChildren(ByVal c As Control) As Boolean
+    Private Shared Function ControlHasPaintableChildren(c As Control) As Boolean
         Return TypeOf c Is IPrintableControlContainer Or TypeOf c Is Panel Or TypeOf c Is GroupBox
     End Function
 
@@ -203,7 +203,7 @@ Public Class ControlPrinter
 
     'These functions work with English and other left-to-right languages, they probably don't work
     'for right-to-left languages
-    Private Shared Function GetHorizontalStringAlignment(ByVal align As ContentAlignment) As StringAlignment
+    Private Shared Function GetHorizontalStringAlignment(align As ContentAlignment) As StringAlignment
         Select Case align
             Case ContentAlignment.BottomCenter
                 Return StringAlignment.Center
@@ -223,10 +223,12 @@ Public Class ControlPrinter
                 Return StringAlignment.Near
             Case ContentAlignment.TopRight
                 Return StringAlignment.Far
+            Case Else
+                Return StringAlignment.Near
         End Select
     End Function
 
-    Private Shared Function GetVerticalStringAlignment(ByVal align As ContentAlignment) As StringAlignment
+    Private Shared Function GetVerticalStringAlignment(align As ContentAlignment) As StringAlignment
         Select Case align
             Case ContentAlignment.BottomCenter
                 Return StringAlignment.Far
@@ -246,10 +248,12 @@ Public Class ControlPrinter
                 Return StringAlignment.Near
             Case ContentAlignment.TopRight
                 Return StringAlignment.Near
+            Case Else
+                Return StringAlignment.Near
         End Select
     End Function
 
-    Private Shared Sub DrawChildControls(ByVal c As Control, ByVal g As Graphics, ByVal drawBackground As Boolean)
+    Private Shared Sub DrawChildControls(c As Control, g As Graphics, drawBackground As Boolean)
         Dim childControl As Control
 
         For Each childControl In c.Controls
@@ -259,7 +263,7 @@ Public Class ControlPrinter
             'child control can be drawn at 0,0
             g.TranslateTransform(childControl.Left, childControl.Top)
 
-            ControlPrinter.DrawControl(childControl, g, drawBackground)
+            DrawControl(childControl, g, drawBackground)
 
             'translate origin back to upper-left of this control, by ending current container
             g.EndContainer(container)

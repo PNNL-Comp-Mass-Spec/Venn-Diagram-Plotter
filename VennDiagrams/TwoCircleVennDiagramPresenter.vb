@@ -78,7 +78,7 @@ Public Class TwoCircleVennDiagramPresenter
         Me.lblTitle.Name = "lblTitle"
         Me.lblTitle.Size = New System.Drawing.Size(600, 48)
         Me.lblTitle.TabIndex = 1
-        Me.lblTitle.Text = "Title goes here.  Title goes here.  Title goes here.  Title goes here.  Title goe" & _
+        Me.lblTitle.Text = "Title goes here.  Title goes here.  Title goes here.  Title goes here.  Title goe" &
         "s here.  Title goes here.  Title goes here.  "
         Me.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
@@ -147,31 +147,31 @@ Public Class TwoCircleVennDiagramPresenter
         Me.lblFooter.Name = "lblFooter"
         Me.lblFooter.Size = New System.Drawing.Size(600, 56)
         Me.lblFooter.TabIndex = 8
-        Me.lblFooter.Text = "Footer ttttttttttttttttttttttttttttttttttttttttttt Footer ttttttttttttttttttttttt" & _
-        "tttttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer t" & _
-        "tttttttttttttttttttttttttttttttttttttttttt Footer tttttttttttttttttttttttttttttt" & _
-        "ttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer tttttttt" & _
-        "ttttttttttttttttttttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttt" & _
-        "tttttt  Footer ttttttttttttttttttttttttttttttttttttttttttt Footer tttttttttttttt" & _
-        "ttttttttttttttttttttttttttttt  Footer tttttttttttttttttttttttttttttttttttttttttt" & _
-        "tFooter ttttttttttttttttttttttttttttttttttttttttttt Footer ttttttttttttttttttttt" & _
-        "tttttttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer" & _
-        " ttttttttttttttttttttttttttttttttttttttttttt Footer tttttttttttttttttttttttttttt" & _
-        "ttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer tttttt" & _
-        "ttttttttttttttttttttttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttt" & _
-        "tttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer ttttttttttttt" & _
-        "tttttttttttttttttttttttttttttt Footer tttttttttttttttttttttttttttttttttttttttttt" & _
-        "t Footer ttttttttttttttttttttttttttttttttttttttttttt Footer tttttttttttttttttttt" & _
-        "ttttttttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt v Foo" & _
-        "ter ttttttttttttttttttttttttttttttttttttttttttt Footer ttttttttttttttttttttttttt" & _
-        "tttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer ttt" & _
-        "tttttttttttttttttttttttttttttttttttttttt v Footer tttttttttttttttttttttttttttttt" & _
-        "ttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer tttttttt" & _
-        "ttttttttttttttttttttttttttttttttttt v Footer ttttttttttttttttttttttttttttttttttt" & _
-        "tttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer ttttttttttttt" & _
-        "tttttttttttttttttttttttttttttt Footer tttttttttttttttttttttttttttttttttttttttttt" & _
-        "t v Footer ttttttttttttttttttttttttttttttttttttttttttt Footer tttttttttttttttttt" & _
-        "ttttttttttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt v v" & _
+        Me.lblFooter.Text = "Footer ttttttttttttttttttttttttttttttttttttttttttt Footer ttttttttttttttttttttttt" &
+        "tttttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer t" &
+        "tttttttttttttttttttttttttttttttttttttttttt Footer tttttttttttttttttttttttttttttt" &
+        "ttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer tttttttt" &
+        "ttttttttttttttttttttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttt" &
+        "tttttt  Footer ttttttttttttttttttttttttttttttttttttttttttt Footer tttttttttttttt" &
+        "ttttttttttttttttttttttttttttt  Footer tttttttttttttttttttttttttttttttttttttttttt" &
+        "tFooter ttttttttttttttttttttttttttttttttttttttttttt Footer ttttttttttttttttttttt" &
+        "tttttttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer" &
+        " ttttttttttttttttttttttttttttttttttttttttttt Footer tttttttttttttttttttttttttttt" &
+        "ttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer tttttt" &
+        "ttttttttttttttttttttttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttt" &
+        "tttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer ttttttttttttt" &
+        "tttttttttttttttttttttttttttttt Footer tttttttttttttttttttttttttttttttttttttttttt" &
+        "t Footer ttttttttttttttttttttttttttttttttttttttttttt Footer tttttttttttttttttttt" &
+        "ttttttttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt v Foo" &
+        "ter ttttttttttttttttttttttttttttttttttttttttttt Footer ttttttttttttttttttttttttt" &
+        "tttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer ttt" &
+        "tttttttttttttttttttttttttttttttttttttttt v Footer tttttttttttttttttttttttttttttt" &
+        "ttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer tttttttt" &
+        "ttttttttttttttttttttttttttttttttttt v Footer ttttttttttttttttttttttttttttttttttt" &
+        "tttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer ttttttttttttt" &
+        "tttttttttttttttttttttttttttttt Footer tttttttttttttttttttttttttttttttttttttttttt" &
+        "t v Footer ttttttttttttttttttttttttttttttttttttttttttt Footer tttttttttttttttttt" &
+        "ttttttttttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt v v" &
         ""
         '
         'vdgVennDiagram
@@ -215,7 +215,7 @@ Public Class TwoCircleVennDiagramPresenter
 
 #End Region
 
-    'Public Sub DrawOnGraphics(ByVal g As Graphics, ByVal drawbackground As Boolean)
+    'Public Sub DrawOnGraphics(ByVal g As Graphics, ByVal drawBackground As Boolean)
     '    Dim control As Control
     '    Dim args As PaintEventArgs = New PaintEventArgs(g, New Rectangle(Integer.MinValue, Integer.MinValue, Integer.MaxValue, Integer.MaxValue))
     '    Me.BackColor = Color.PaleGoldenrod
@@ -224,7 +224,7 @@ Public Class TwoCircleVennDiagramPresenter
     '    For Each control In Me.Controls
     '        control.Invalidate()
     '    Next
-    '    'If (drawbackground) Then
+    '    'If (drawBackground) Then
     '    '    g.FillRectangle(New SolidBrush(Me.BackColor), New Rectangle(0, 0, Me.Width, Me.Height))
     '    'End If
     '    MyBase.OnPaint(args)
@@ -232,83 +232,94 @@ Public Class TwoCircleVennDiagramPresenter
     'End Sub
 
 #Region " Labeling Properties "
-    Public Property LegendCircleAText() As String
+
+    Public Property LegendCircleAText As String
         Get
-            Return Me.lblLegendCircleA.Text
+            Return lblLegendCircleA.Text
         End Get
-        Set(ByVal Value As String)
-            Me.lblLegendCircleA.Text = Value
+        Set
+            lblLegendCircleA.Text = Value
         End Set
     End Property
 
-    Public Property LegendOverlapText() As String
+    Public Property LegendOverlapText As String
         Get
-            Return Me.lblLegendOverlap.Text
+            Return lblLegendOverlap.Text
         End Get
-        Set(ByVal Value As String)
-            Me.lblLegendOverlap.Text = Value
+        Set
+            lblLegendOverlap.Text = Value
         End Set
     End Property
 
-    Public Property LegendCircleBText() As String
+    Public Property LegendCircleBText As String
         Get
-            Return Me.lblLegendCircleB.Text
+            Return lblLegendCircleB.Text
         End Get
-        Set(ByVal Value As String)
-            Me.lblLegendCircleB.Text = Value
+        Set
+            lblLegendCircleB.Text = Value
         End Set
     End Property
 
-    Public ReadOnly Property Title() As Label
+    Public ReadOnly Property Title As Label
         Get
             Return lblTitle
         End Get
     End Property
 
-    Public ReadOnly Property Footer() As Label
+    Public ReadOnly Property Footer As Label
         Get
-            Return Me.lblFooter
+            Return lblFooter
         End Get
     End Property
 
 #End Region
 
-    Public ReadOnly Property VennDiagram() As TwoCircleVennDiagram
+    Public ReadOnly Property VennDiagram As TwoCircleVennDiagram
         Get
             Return vdgVennDiagram
         End Get
     End Property
 
-    'controls the amount of spacing between legend labels
-    Public Property LegendSeparation() As Integer
+    ''' <summary>
+    ''' Controls the amount of spacing between legend labels
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property LegendSeparation As Integer
         Get
-            Return Me.m_LegendSeparation
+            Return m_LegendSeparation
         End Get
-        Set(ByVal Value As Integer)
-            Me.m_LegendSeparation = Value
+        Set
+            m_LegendSeparation = Value
         End Set
     End Property
 
-    'update colors in legend when colors in diagram change
-    Private Sub VennDiagram_ColorChange(ByVal sender As VennDiagrams.VennDiagramBaseClass) Handles vdgVennDiagram.DrawingChange
-        Me.lblLegendCircleA.BackColor = vdgVennDiagram.CircleAColor
-        Me.lblLegendCircleB.BackColor = vdgVennDiagram.CircleBColor
-        Me.lblLegendOverlap.BackColor = vdgVennDiagram.OverlapABColor
+    ''' <summary>
+    ''' Update colors in legend when colors in diagram change
+    ''' </summary>
+    ''' <param name="sender"></param>
+    Private Sub VennDiagram_ColorChange(sender As VennDiagrams.VennDiagramBaseClass) Handles vdgVennDiagram.DrawingChange
+        lblLegendCircleA.BackColor = vdgVennDiagram.CircleAColor
+        lblLegendCircleB.BackColor = vdgVennDiagram.CircleBColor
+        lblLegendOverlap.BackColor = vdgVennDiagram.OverlapABColor
     End Sub
 
-    Private Sub gbxLegend_Resize(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles gbxLegend.Resize
-        'redraw labels so they take up 1/3 of space each
-        'anchoring already causes them to be aligned correctly horizontally
+    ''' <summary>
+    ''' Redraw labels so they take up 1/3 of space each
+    ''' Anchoring already causes them to be aligned correctly horizontally
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub gbxLegend_Resize(sender As System.Object, e As System.EventArgs) Handles gbxLegend.Resize
         Dim totalHeight As Integer = gbxLegend.Height - 3 * LegendSeparation - m_LegendTopSeparation
         Dim individualHeight As Integer = CInt(totalHeight / 3)
 
-        Me.lblLegendCircleA.Top = Me.m_LegendTopSeperation
-        Me.lblLegendCircleA.Height = individualHeight
+        lblLegendCircleA.Top = m_LegendTopSeparation
+        lblLegendCircleA.Height = individualHeight
 
-        Me.lblLegendOverlap.Top = Me.m_LegendTopSeperation + 1 * (Me.LegendSeparation + individualHeight)
-        Me.lblLegendOverlap.Height = individualHeight
+        lblLegendOverlap.Top = m_LegendTopSeparation + 1 * (LegendSeparation + individualHeight)
+        lblLegendOverlap.Height = individualHeight
 
-        Me.lblLegendCircleB.Top = Me.m_LegendTopSeperation + 2 * (Me.LegendSeparation + individualHeight)
-        Me.lblLegendCircleB.Height = individualHeight
+        lblLegendCircleB.Top = m_LegendTopSeparation + 2 * (LegendSeparation + individualHeight)
+        lblLegendCircleB.Height = individualHeight
     End Sub
 End Class

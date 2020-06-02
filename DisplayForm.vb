@@ -1,5 +1,6 @@
 Option Strict On
 
+Imports System.Text
 Imports PRISM
 ' -------------------------------------------------------------------------------
 ' Written by Kyle Littlefield for the Department of Energy (PNNL, Richland, WA)
@@ -1187,7 +1188,7 @@ Public Class DisplayForm
     Private Const DEFAULT_DATA_OVERLAP_BC As Integer = 10
     Private Const DEFAULT_DATA_OVERLAP_AC As Integer = 15
 
-    Private Const MINIMUM_WINDOW_HEIGHT_TWO_CIRCLE As Integer = 450
+    ' Private Const MINIMUM_WINDOW_HEIGHT_TWO_CIRCLE As Integer = 450
 
     Private Const DEFAULT_WINDOW_HEIGHT_TWO_CIRCLE As Integer = 610
     Private Const DEFAULT_WINDOW_HEIGHT_THREE_CIRCLE As Integer = 610
@@ -1234,20 +1235,20 @@ Public Class DisplayForm
 #End Region
 
 #Region "Properties"
-    Protected Property MessageDisplayTime() As Integer
+    Protected Property MessageDisplayTime As Integer
         Get
             Return tbarMessageDisplayTimeSeconds.Value
         End Get
-        Set(ByVal Value As Integer)
+        Set
             SetTrackbarValue(tbarMessageDisplayTimeSeconds, Value)
         End Set
     End Property
 
-    Protected Property DuplicateMessageIgnoreWindow() As Integer
+    Protected Property DuplicateMessageIgnoreWindow As Integer
         Get
             Return tbarDuplicateMessageIgnoreWindowSeconds.Value
         End Get
-        Set(ByVal Value As Integer)
+        Set
             SetTrackbarValue(tbarDuplicateMessageIgnoreWindowSeconds, Value)
         End Set
     End Property
@@ -1272,9 +1273,9 @@ Public Class DisplayForm
     ''    vdgTwoCircles.Width = CInt(vdgTwoCircles.Width - vdgTwoCircles.Width * 0.1)
     ''End Sub
 
-    Private Sub AppendToStatusLog(ByVal strMessage As String)
+    Private Sub AppendToStatusLog(strMessage As String)
         Dim intIndex As Integer
-        Dim blnSkipMessage As Boolean = False
+        Dim blnSkipMessage = False
 
         If mMessageQueue Is Nothing Then
             ReDim mMessageQueue(9)
@@ -1289,7 +1290,7 @@ Public Class DisplayForm
         ' If it does; then don't re-add it
         For intIndex = 0 To mMessageQueueCount - 1
             If mMessageQueue(intIndex).Message = strMessage Then
-                If System.DateTime.Now.Subtract(mMessageQueue(intIndex).DisplayTime).TotalSeconds <= Me.DuplicateMessageIgnoreWindow Then
+                If Now.Subtract(mMessageQueue(intIndex).DisplayTime).TotalSeconds <= Me.DuplicateMessageIgnoreWindow Then
                     blnSkipMessage = True
                     Exit For
                 End If
@@ -1298,7 +1299,7 @@ Public Class DisplayForm
 
         If Not blnSkipMessage Then
             With mMessageQueue(mMessageQueueCount)
-                .DisplayTime = System.DateTime.Now
+                .DisplayTime = Now
                 .Message = String.Copy(strMessage)
                 mMessageQueueGlobalCount += 1
                 .MessageNumber = mMessageQueueGlobalCount
@@ -1345,12 +1346,12 @@ Public Class DisplayForm
     End Sub
 
     Private Sub CopyOverlapValues()
-        Dim sbOverlapData As System.Text.StringBuilder
+        Dim sbOverlapData As StringBuilder
 
         Dim strTab1x As String
 
         Try
-            sbOverlapData = New System.Text.StringBuilder
+            sbOverlapData = New StringBuilder
 
             strTab1x = ControlChars.Tab
 
@@ -1386,7 +1387,7 @@ Public Class DisplayForm
 
             Clipboard.SetText(sbOverlapData.ToString)
         Catch ex As Exception
-            System.Windows.Forms.MessageBox.Show("Error copying data to clipboard: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Error copying data to clipboard: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
     End Sub
@@ -1412,21 +1413,17 @@ Public Class DisplayForm
 
             Clipboard.SetDataObject(bitmap)
         Catch ex As Exception
-            System.Windows.Forms.MessageBox.Show("Error copying Venn diagram to clipboard: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Error copying Venn diagram to clipboard: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
-    Public Function ColorToString(ByVal c As Color) As String
+    Public Function ColorToString(c As Color) As String
 
         Dim s As String = c.ToString()
-        Dim tmpStr As String
 
         s = s.Split(New Char() {"["c, "]"c})(1)
 
         Dim strings() As String = s.Split(New Char() {"="c, ","c})
-        If strings(0) <> "" Then
-            tmpStr = strings(0)
-        End If
 
         If strings.GetLength(0) > 7 Then
             s = strings(1) + "," + strings(3) + "," + strings(5) + "," + strings(7)
@@ -1436,7 +1433,7 @@ Public Class DisplayForm
 
     End Function
 
-    Private Sub ComputeOptimalRegionCount(ByVal blnUpdateDisplayedDistinctCounts As Boolean)
+    Private Sub ComputeOptimalRegionCount(blnUpdateDisplayedDistinctCounts As Boolean)
         Dim eRegionCountMode As eRegionCountModeConstants
         Dim dblRegionCountValue As Double
 
@@ -1497,24 +1494,24 @@ Public Class DisplayForm
         End If
     End Sub
 
-    Private Sub DisplayDistinctRegionCount(ByVal dblValue As Double, ByVal objTextbox As TextBox, ByVal strRegionDescription As String)
+    Private Sub DisplayDistinctRegionCount(dblValue As Double, textBoxItem As Control, strRegionDescription As String)
         If dblValue >= 0 Then
-            objTextbox.Text = NumToString(dblValue, 1)
+            textBoxItem.Text = NumToString(dblValue, 1)
         Else
-            objTextbox.Text = String.Empty
+            textBoxItem.Text = String.Empty
             If Not strRegionDescription Is Nothing AndAlso strRegionDescription.Length > 0 Then
                 UpdateStatus("Computed a value of " & NumToString(dblValue, 1) & " for the points " & strRegionDescription & "; use 'Compute Optimal' to auto-determine valid values.")
             End If
         End If
     End Sub
 
-    Private Sub DisplayForm_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles MyBase.Resize
+    Private Sub DisplayForm_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
         vdgTwoCircles.VennDiagram.Anchor = vdgTwoCircles.Anchor
     End Sub
 
     Private Sub DisplayStatusLog()
-        Const MAX_CONTROL_HEIGHT As Integer = 96
-        Const BUFFER_DISTANCE As Integer = 60
+        Const MAX_CONTROL_HEIGHT = 96
+        Const BUFFER_DISTANCE = 60
 
         Dim strMessageList As String
         Dim intControlHeight As Integer
@@ -1535,9 +1532,9 @@ Public Class DisplayForm
             For intIndex = 0 To mMessageQueueCount - 1
                 If intIndex > 0 Then strMessageList &= ControlChars.NewLine
 
-                With mMessageQueue(intIndex)
-                    strMessageList &= "(" & (.MessageNumber).ToString & ") " & .DisplayTime.ToLongTimeString & ": " & .Message
-                End With
+                strMessageList &= "(" & mMessageQueue(intIndex).MessageNumber.ToString & ") " &
+                                  mMessageQueue(intIndex).DisplayTime.ToLongTimeString & ": " &
+                                  mMessageQueue(intIndex).Message
             Next intIndex
         Else
             strMessageList = String.Empty
@@ -1569,7 +1566,7 @@ Public Class DisplayForm
             blnEnableTotals = True
             If Not optTotal.Checked Then optTotal.Checked = True
 
-            ' Make sure form is at least DEFAULT_WINDOW_HEIGHT_THREE_CIRCLE units hight
+            ' Make sure form is at least DEFAULT_WINDOW_HEIGHT_THREE_CIRCLE units height
             If Me.Height < DEFAULT_WINDOW_HEIGHT_THREE_CIRCLE Then Me.Height = DEFAULT_WINDOW_HEIGHT_THREE_CIRCLE
         Else
             blnEnableTotals = optTotal.Checked
@@ -1617,7 +1614,7 @@ Public Class DisplayForm
 
     End Sub
 
-    Private Function GetCircleDimensions(ByRef udtCircleRegions As VennDiagrams.ThreeCircleVennDiagram.udtThreeCircleRegionsType, ByVal blnIncludeThreeCircleValues As Boolean, ByVal blnWarnIfInvalid As Boolean) As Boolean
+    Private Function GetCircleDimensions(ByRef udtCircleRegions As VennDiagrams.ThreeCircleVennDiagram.udtThreeCircleRegionsType, blnIncludeThreeCircleValues As Boolean, blnWarnIfInvalid As Boolean) As Boolean
         Dim udtCircleDimensions As udtCircleDimensionsType
         Dim blnSuccess As Boolean
 
@@ -1636,7 +1633,7 @@ Public Class DisplayForm
         Return blnSuccess
     End Function
 
-    Private Function GetCircleDimensions(ByRef udtCircleDimensions As udtCircleDimensionsType, ByVal blnIncludeThreeCircleValues As Boolean, ByVal blnWarnIfInvalid As Boolean) As Boolean
+    Private Function GetCircleDimensions(ByRef udtCircleDimensions As udtCircleDimensionsType, blnIncludeThreeCircleValues As Boolean, blnWarnIfInvalid As Boolean) As Boolean
         ' Returns True if the dimensions are valid; false if not
 
         Dim strMessage As String
@@ -1743,7 +1740,7 @@ Public Class DisplayForm
         With vdgTwoCircles
             With .VennDiagram
                 .SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
-                .BackColor = System.Drawing.Color.White
+                .BackColor = Color.White
             End With
             .Visible = True
         End With
@@ -1751,7 +1748,7 @@ Public Class DisplayForm
         With vdgThreeCircles
             With .VennDiagram
                 .SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
-                .BackColor = System.Drawing.Color.White
+                .BackColor = Color.White
             End With
             .Visible = False
             .Left = fraThreeCircleRegionCounts.Left + fraThreeCircleRegionCounts.Width + 12
@@ -1792,7 +1789,7 @@ Public Class DisplayForm
         AutoSizeWindow()
     End Sub
 
-    Public Shared Function IsNumber(ByVal strValue As String) As Boolean
+    Public Shared Function IsNumber(strValue As String) As Boolean
         Dim dblValue As Double
         Try
             Return Double.TryParse(strValue, dblValue)
@@ -1801,10 +1798,10 @@ Public Class DisplayForm
         End Try
     End Function
 
-    Private Function IsNumber(ByVal objTextbox As TextBox) As Boolean
+    Private Function IsNumber(textBoxItem As TextBoxBase) As Boolean
         Try
-            If objTextbox.TextLength > 0 Then
-                Return IsNumber(objTextbox.Text)
+            If textBoxItem.TextLength > 0 Then
+                Return IsNumber(textBoxItem.Text)
             Else
                 Return False
             End If
@@ -1820,7 +1817,7 @@ Public Class DisplayForm
         Dim valueNotPresent As Boolean
 
         Try
-            If Not System.IO.File.Exists(mIniFilePath) Then
+            If Not IO.File.Exists(mIniFilePath) Then
                 SaveDefaults()
             End If
 
@@ -1915,17 +1912,17 @@ Public Class DisplayForm
                 End With
 
             Catch ex As Exception
-                System.Windows.Forms.MessageBox.Show("Invalid parameter in settings file: " & mIniFilePath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                MessageBox.Show("Invalid parameter in settings file: " & mIniFilePath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End Try
 
             RefreshVennDiagrams(True)
 
         Catch ex As Exception
-            System.Windows.Forms.MessageBox.Show("Error loading Defaults from " & mIniFilePath & ControlChars.NewLine & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Error loading Defaults from " & mIniFilePath & ControlChars.NewLine & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
-    Protected Function LoadDefaultColorVal(ByVal objXmlFile As XmlSettingsFileAccessor, ByVal strSection As String, ByVal strKeyName As String, ByVal objColorIfMissing As System.Drawing.Color) As System.Drawing.Color
+    Protected Function LoadDefaultColorVal(objXmlFile As XmlSettingsFileAccessor, strSection As String, strKeyName As String, objColorIfMissing As Color) As Color
         Try
             Return StringToColor(objXmlFile.GetParam(strSection, strKeyName, ColorToString(objColorIfMissing)))
         Catch ex As Exception
@@ -1933,7 +1930,7 @@ Public Class DisplayForm
         End Try
     End Function
 
-    Protected Function NumToString(ByVal dblValue As Double, ByVal intDigitsToRound As Integer) As String
+    Protected Function NumToString(dblValue As Double, intDigitsToRound As Integer) As String
         Dim strValue As String
         Dim intPeriodIndex As Integer
 
@@ -1955,7 +1952,7 @@ Public Class DisplayForm
 
     Private Sub PositionControls()
 
-        Const FrameSpacing As Integer = 8
+        Const FrameSpacing = 8
 
         If chkCircleC.Checked Then
             ' 3-circle mode
@@ -1986,11 +1983,11 @@ Public Class DisplayForm
 
     End Sub
 
-    Private Sub RefreshVennDiagrams(ByVal blnUpdateCountDistinct As Boolean)
+    Private Sub RefreshVennDiagrams(blnUpdateCountDistinct As Boolean)
         RefreshVennDiagrams(blnUpdateCountDistinct, True)
     End Sub
 
-    Private Sub RefreshVennDiagrams(ByVal blnUpdateCountDistinct As Boolean, ByVal blnWarnIfInvalid As Boolean)
+    Private Sub RefreshVennDiagrams(blnUpdateCountDistinct As Boolean, blnWarnIfInvalid As Boolean)
         Dim udtCircleDimensions As udtCircleDimensionsType
 
         Try
@@ -2020,7 +2017,7 @@ Public Class DisplayForm
                         If chkHideMessagesOnSuccessfulUpdate.Checked Then
                             ' Truncate to only display the most recent message and to hide it in 1 second
                             mMessageQueueCount = 1
-                            mMessageQueue(0).DisplayTime = System.DateTime.Now.Subtract(New System.TimeSpan(0, 0, DEFAULT_SECONDS_TO_DISPLAY_EACH_MESSAGE - 1))
+                            mMessageQueue(0).DisplayTime = Now.Subtract(New TimeSpan(0, 0, DEFAULT_SECONDS_TO_DISPLAY_EACH_MESSAGE - 1))
                         End If
                     End If
 
@@ -2036,7 +2033,7 @@ Public Class DisplayForm
             End If
 
         Catch ex As Exception
-            System.Windows.Forms.MessageBox.Show("Error refreshing Venn diagrams:" & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Error refreshing Venn diagrams:" & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
@@ -2047,7 +2044,7 @@ Public Class DisplayForm
         tbarImgYOffset.Value = 0
     End Sub
 
-    Private Sub ResetValues(ByVal blnResetSettings As Boolean)
+    Private Sub ResetValues(blnResetSettings As Boolean)
         Me.txtSizeA.Text = DEFAULT_DATA_CIRCLE_A.ToString
         Me.txtSizeB.Text = DEFAULT_DATA_CIRCLE_B.ToString
         Me.txtSizeC.Text = DEFAULT_DATA_CIRCLE_C.ToString
@@ -2088,9 +2085,9 @@ Public Class DisplayForm
 
     End Sub
 
-    Private Sub RestorePreviousDimensions(ByVal udtCircleDimensions As udtCircleDimensionsType, ByVal blnInformUser As Boolean)
+    Private Sub RestorePreviousDimensions(udtCircleDimensions As udtCircleDimensionsType, blnInformUser As Boolean)
         If blnInformUser Then
-            System.Windows.Forms.MessageBox.Show("Invalid overlap values; restoring the previous, valid values.", "Invalid Numbers", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            MessageBox.Show("Invalid overlap values; restoring the previous, valid values.", "Invalid Numbers", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         End If
 
         With udtCircleDimensions
@@ -2105,16 +2102,16 @@ Public Class DisplayForm
     End Sub
 
     Private Sub SaveDefaults()
-        Dim objOutFile As System.IO.StreamWriter
+        Dim objOutFile As IO.StreamWriter
 
         Dim objXmlFile As New XmlSettingsFileAccessor
 
         Try
-            If Not System.IO.File.Exists(mIniFilePath) Then
+            If Not IO.File.Exists(mIniFilePath) Then
                 ' Need to create a new, blank XML file
 
                 Try
-                    objOutFile = System.IO.File.CreateText(mIniFilePath)
+                    objOutFile = IO.File.CreateText(mIniFilePath)
                     objOutFile.WriteLine("<?xml version=""1.0"" encoding=""utf-8""?>")
                     objOutFile.WriteLine(" <sections>")
                     objOutFile.WriteLine(" <section name=""" & XML_SECTION_OPTIONS & """>")
@@ -2123,10 +2120,10 @@ Public Class DisplayForm
                     objOutFile.WriteLine("</sections>")
                     objOutFile.Close()
 
-                    System.Threading.Thread.Sleep(100)
+                    Threading.Thread.Sleep(100)
 
                 Catch ex As Exception
-                    System.Windows.Forms.MessageBox.Show("Error creating new Default XML file at " & mIniFilePath & ControlChars.NewLine & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                    MessageBox.Show("Error creating new Default XML file at " & mIniFilePath & ControlChars.NewLine & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                     Return
                 End Try
             End If
@@ -2171,16 +2168,16 @@ Public Class DisplayForm
 
                     .SaveSettings()
                 Catch ex As Exception
-                    System.Windows.Forms.MessageBox.Show("Error storing parameter in settings file: " & mIniFilePath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                    MessageBox.Show("Error storing parameter in settings file: " & mIniFilePath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                 End Try
             End With
 
         Catch ex As Exception
-            System.Windows.Forms.MessageBox.Show("Error saving Defaults to " & mIniFilePath & ControlChars.NewLine & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            MessageBox.Show("Error saving Defaults to " & mIniFilePath & ControlChars.NewLine & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         End Try
     End Sub
 
-    Private Sub SaveGraphicToDisk(ByVal blnForceSVG As Boolean)
+    Private Sub SaveGraphicToDisk(blnForceSVG As Boolean)
         If chkCircleC.Checked Then
             SaveGraphicToDisk(blnForceSVG, vdgThreeCircles.VennDiagram)
         Else
@@ -2188,12 +2185,12 @@ Public Class DisplayForm
         End If
     End Sub
 
-    Private Sub SaveGraphicToDisk(ByVal blnForceSVG As Boolean, ByVal objVennDiagrams As VennDiagrams.VennDiagramBaseClass)
+    Private Sub SaveGraphicToDisk(blnForceSVG As Boolean, objVennDiagrams As Control)
         Dim outputFilepath As String = String.Empty
         Dim ext As String
 
         Try
-            Dim bitmap As Bitmap = New Bitmap(objVennDiagrams.Width, objVennDiagrams.Height)
+            Dim bitmap = New Bitmap(objVennDiagrams.Width, objVennDiagrams.Height)
             Dim g As Graphics = Graphics.FromImage(bitmap)
 
             dlgSave.Filter = "bmp files (*.bmp)|*.bmp|png files (*.png)|*.png|SVG files (*.svg)|*.svg"
@@ -2206,32 +2203,32 @@ Public Class DisplayForm
 
                 ControlPrinter.ControlPrinter.DrawControl(objVennDiagrams, g, True)
 
-                ext = System.IO.Path.GetExtension(outputFilepath)
+                ext = IO.Path.GetExtension(outputFilepath)
                 Select Case ext.ToLower
                     Case ".bmp"
-                        bitmap.Save(outputFilepath, System.Drawing.Imaging.ImageFormat.Bmp)
+                        bitmap.Save(outputFilepath, Imaging.ImageFormat.Bmp)
                     Case ".png"
-                        bitmap.Save(outputFilepath, System.Drawing.Imaging.ImageFormat.Png)
+                        bitmap.Save(outputFilepath, Imaging.ImageFormat.Png)
                     Case ".svg"
                         SaveSVGFile(outputFilepath)
                     Case Else
-                        System.Windows.Forms.MessageBox.Show("Unsupported file extension: " & ext, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                        MessageBox.Show("Unsupported file extension: " & ext, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                 End Select
 
             End If
         Catch ex As Exception
-            System.Windows.Forms.MessageBox.Show("Error saving Venn diagram to file " & outputFilepath & ":" & ControlChars.NewLine & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            MessageBox.Show("Error saving Venn diagram to file " & outputFilepath & ":" & ControlChars.NewLine & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         End Try
 
     End Sub
 
-    Private Sub SaveSVGFile(ByVal outputFilepath As String)
+    Private Sub SaveSVGFile(outputFilepath As String)
 
-        Dim swFile As System.IO.StreamWriter
+        Dim swFile As IO.StreamWriter
         Dim sngOpacity As Single
 
         Try
-            swFile = New System.IO.StreamWriter(New System.IO.FileStream(outputFilepath, IO.FileMode.Create, IO.FileAccess.Write, IO.FileShare.Read))
+            swFile = New IO.StreamWriter(New IO.FileStream(outputFilepath, IO.FileMode.Create, IO.FileAccess.Write, IO.FileShare.Read))
 
             If txtSVGOpacity.TextLength = 0 Then
                 sngOpacity = 1
@@ -2242,7 +2239,7 @@ Public Class DisplayForm
                 End If
 
                 If sngOpacity < 0 Or sngOpacity > 1 Then
-                    System.Windows.Forms.MessageBox.Show("Opacity value should be between 0 (transparent) and 1 (opaque); will assume 1", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    MessageBox.Show("Opacity value should be between 0 (transparent) and 1 (opaque); will assume 1", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                     sngOpacity = 1
                 End If
             End If
@@ -2258,7 +2255,7 @@ Public Class DisplayForm
             swFile.Close()
 
         Catch ex As Exception
-            System.Windows.Forms.MessageBox.Show("Error saving Venn diagram to SVG file " & outputFilepath & ":" & ControlChars.NewLine & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            MessageBox.Show("Error saving Venn diagram to SVG file " & outputFilepath & ":" & ControlChars.NewLine & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         End Try
 
     End Sub
@@ -2290,15 +2287,15 @@ Public Class DisplayForm
 
     End Sub
 
-    Private Sub SetTrackbarValue(ByRef objTrackbar As System.Windows.Forms.TrackBar, ByVal intValue As Integer)
+    Private Sub SetTrackBarValue(trackBarItem As TrackBar, intValue As Integer)
 
-        If intValue <= objTrackbar.Minimum Then
-            intValue = objTrackbar.Minimum
-        ElseIf intValue >= objTrackbar.Maximum Then
-            intValue = objTrackbar.Maximum
+        If intValue <= trackBarItem.Minimum Then
+            intValue = trackBarItem.Minimum
+        ElseIf intValue >= trackBarItem.Maximum Then
+            intValue = trackBarItem.Maximum
         End If
 
-        objTrackbar.Value = intValue
+        trackBarItem.Value = intValue
     End Sub
 
     Private Sub ShowAboutBox()
@@ -2308,7 +2305,7 @@ Public Class DisplayForm
         strMessage &= "Program originally written by Kyle Littlefield for the Department of Energy (PNNL, Richland, WA) in 2004" & ControlChars.NewLine
         strMessage &= "Three circle overlap added by Matthew Monroe (PNNL, Richland, WA) in 2007" & ControlChars.NewLine & ControlChars.NewLine
 
-        strMessage &= "This is version " & System.Windows.Forms.Application.ProductVersion & " (" & PROGRAM_DATE & ")" & ControlChars.NewLine & ControlChars.NewLine
+        strMessage &= "This is version " & Application.ProductVersion & " (" & PROGRAM_DATE & ")" & ControlChars.NewLine & ControlChars.NewLine
 
         strMessage &= "E-mail: matthew.monroe@pnnl.gov or matt@alchemistmatt.com" & ControlChars.NewLine
         strMessage &= "Website: http://omics.pnl.gov/ or http://www.sysbio.org/resources/staff/" & ControlChars.NewLine & ControlChars.NewLine
@@ -2325,27 +2322,27 @@ Public Class DisplayForm
         strMessage &= "SOFTWARE.  This notice including this sentence must appear on any copies of "
         strMessage &= "this computer software." & ControlChars.NewLine
 
-        Windows.Forms.MessageBox.Show(strMessage, "About", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        MessageBox.Show(strMessage, "About", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
     End Sub
 
-    Private Sub StoreCurrentDimensions(ByVal udtCircleDimensions As udtCircleDimensionsType)
+    Private Sub StoreCurrentDimensions(udtCircleDimensions As udtCircleDimensionsType)
         mCircleDimensionsSaved = udtCircleDimensions
     End Sub
 
-    Public Function StringToColor(ByVal s As String) As Color
+    Public Function StringToColor(s As String) As Color
 
-        Return CType(System.ComponentModel.TypeDescriptor.GetConverter(GetType(Color)).ConvertFromString(s), Color)
+        Return CType(ComponentModel.TypeDescriptor.GetConverter(GetType(Color)).ConvertFromString(s), Color)
 
     End Function
 
-    Private Function TextBoxToDbl(ByVal objTextbox As TextBox) As Double
-        Return TextBoxToDbl(objTextbox, 0)
+    Private Function TextBoxToDbl(textBoxItem As Control) As Double
+        Return TextBoxToDbl(textBoxItem, 0)
     End Function
 
-    Private Function TextBoxToDbl(ByVal objTextbox As TextBox, ByVal dblDefaultValue As Double) As Double
+    Private Function TextBoxToDbl(textBoxItem As Control, dblDefaultValue As Double) As Double
         Try
-            Return Double.Parse(objTextbox.Text)
+            Return Double.Parse(textBoxItem.Text)
         Catch ex As Exception
             Return dblDefaultValue
         End Try
@@ -2533,11 +2530,11 @@ Public Class DisplayForm
         End Try
     End Sub
 
-    Private Sub UpdateStatus(ByVal strMessage As String)
+    Private Sub UpdateStatus(strMessage As String)
         UpdateStatus(strMessage, True)
     End Sub
 
-    Private Sub UpdateStatus(ByVal strMessage As String, ByVal blnUseMessageQueue As Boolean)
+    Private Sub UpdateStatus(strMessage As String, blnUseMessageQueue As Boolean)
 
         If blnUseMessageQueue Then
             AppendToStatusLog(strMessage)
@@ -2554,7 +2551,7 @@ Public Class DisplayForm
         End If
     End Sub
 
-    Private Sub RefreshMessageListUsingQueue(ByVal sender As Object, ByVal e As System.EventArgs) Handles mStatusTimer.Tick
+    Private Sub RefreshMessageListUsingQueue(sender As Object, e As EventArgs) Handles mStatusTimer.Tick
 
         Dim intIndex As Integer
         Dim intFirstIndexToKeep As Integer
@@ -2565,7 +2562,7 @@ Public Class DisplayForm
 
             intFirstIndexToKeep = 0
             For intIndex = 0 To mMessageQueueCount - 1
-                dblElapsedTimeSeconds = System.DateTime.Now.Subtract(mMessageQueue(intIndex).DisplayTime).TotalSeconds
+                dblElapsedTimeSeconds = Now.Subtract(mMessageQueue(intIndex).DisplayTime).TotalSeconds
                 If dblElapsedTimeSeconds >= Me.MessageDisplayTime Then
                     intFirstIndexToKeep = intIndex + 1
                 End If
@@ -2591,7 +2588,7 @@ Public Class DisplayForm
         End If
     End Sub
 
-    Private Sub ValidateUpDownControlValue(ByRef objControl As System.Windows.Forms.NumericUpDown)
+    Private Sub ValidateUpDownControlValue(ByRef objControl As NumericUpDown)
         If objControl.Value < objControl.Minimum Then
             objControl.Value = objControl.Minimum
         ElseIf objControl.Value > objControl.Maximum Then
@@ -2603,7 +2600,7 @@ Public Class DisplayForm
         Return ValidDimensionsPresent(True)
     End Function
 
-    Private Function ValidDimensionsPresent(ByVal blnWarnIfInvalid As Boolean) As Boolean
+    Private Function ValidDimensionsPresent(blnWarnIfInvalid As Boolean) As Boolean
         Dim udtCircleDimensions As udtCircleDimensionsType
 
         If GetCircleDimensions(udtCircleDimensions, chkCircleC.Checked, False) Then
@@ -2614,7 +2611,7 @@ Public Class DisplayForm
 
     End Function
 
-    Private Function ValidDimensionsPresent(ByVal udtCircleDimensions As udtCircleDimensionsType, ByVal blnWarnIfInvalid As Boolean) As Boolean
+    Private Function ValidDimensionsPresent(udtCircleDimensions As udtCircleDimensionsType, blnWarnIfInvalid As Boolean) As Boolean
         Dim blnValidAB As Boolean
         Dim blnValidBC As Boolean
         Dim blnValidAC As Boolean
@@ -2682,7 +2679,7 @@ Public Class DisplayForm
 
 #Region "Button Handlers"
 
-    Private Sub cmdBackgroundColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdBackgroundColor.Click
+    Private Sub cmdBackgroundColor_Click(sender As Object, e As EventArgs) Handles cmdBackgroundColor.Click
         dlgColor.Color = Me.BackColor
         If dlgColor.ShowDialog() = DialogResult.OK Then
             vdgTwoCircles.VennDiagram.BackColor = dlgColor.Color
@@ -2691,11 +2688,11 @@ Public Class DisplayForm
         End If
     End Sub
 
-    Private Sub cmdCopyToClipboard_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCopyToClipboard.Click
+    Private Sub cmdCopyToClipboard_Click(sender As Object, e As EventArgs) Handles cmdCopyToClipboard.Click
         CopyVennToClipboard()
     End Sub
 
-    Private Sub cmdCircleAColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCircleAColor.Click
+    Private Sub cmdCircleAColor_Click(sender As Object, e As EventArgs) Handles cmdCircleAColor.Click
         dlgColor.Color = vdgTwoCircles.VennDiagram.CircleAColor
         If dlgColor.ShowDialog() = DialogResult.OK Then
             vdgTwoCircles.VennDiagram.CircleAColor = dlgColor.Color
@@ -2704,7 +2701,7 @@ Public Class DisplayForm
         End If
     End Sub
 
-    Private Sub cmdCircleBColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCircleBColor.Click
+    Private Sub cmdCircleBColor_Click(sender As Object, e As EventArgs) Handles cmdCircleBColor.Click
         dlgColor.Color = vdgTwoCircles.VennDiagram.CircleBColor
         If dlgColor.ShowDialog() = DialogResult.OK Then
             vdgTwoCircles.VennDiagram.CircleBColor = dlgColor.Color
@@ -2713,7 +2710,7 @@ Public Class DisplayForm
         End If
     End Sub
 
-    Private Sub cmdCircleCColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCircleCColor.Click
+    Private Sub cmdCircleCColor_Click(sender As Object, e As EventArgs) Handles cmdCircleCColor.Click
         dlgColor.Color = vdgThreeCircles.VennDiagram.CircleCColor
         If dlgColor.ShowDialog() = DialogResult.OK Then
             vdgThreeCircles.VennDiagram.CircleCColor = dlgColor.Color
@@ -2721,11 +2718,11 @@ Public Class DisplayForm
         End If
     End Sub
 
-    Private Sub cmdRegionCountComputeOptimal_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdRegionCountComputeOptimal.Click
+    Private Sub cmdRegionCountComputeOptimal_Click(sender As Object, e As EventArgs) Handles cmdRegionCountComputeOptimal.Click
         ComputeOptimalRegionCount(True)
     End Sub
 
-    Private Sub cmdOverlapABColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOverlapABColor.Click
+    Private Sub cmdOverlapABColor_Click(sender As Object, e As EventArgs) Handles cmdOverlapABColor.Click
         dlgColor.Color = vdgTwoCircles.VennDiagram.OverlapColor
         If dlgColor.ShowDialog() = DialogResult.OK Then
             vdgTwoCircles.VennDiagram.OverlapColor = dlgColor.Color
@@ -2734,7 +2731,7 @@ Public Class DisplayForm
         End If
     End Sub
 
-    Private Sub cmdOverlapBCColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOverlapBCColor.Click
+    Private Sub cmdOverlapBCColor_Click(sender As Object, e As EventArgs) Handles cmdOverlapBCColor.Click
         dlgColor.Color = vdgThreeCircles.VennDiagram.OverlapBCColor
         If dlgColor.ShowDialog() = DialogResult.OK Then
             vdgThreeCircles.VennDiagram.OverlapBCColor = dlgColor.Color
@@ -2742,7 +2739,7 @@ Public Class DisplayForm
         End If
     End Sub
 
-    Private Sub cmdOverlapACColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOverlapACColor.Click
+    Private Sub cmdOverlapACColor_Click(sender As Object, e As EventArgs) Handles cmdOverlapACColor.Click
         dlgColor.Color = vdgThreeCircles.VennDiagram.OverlapACColor
         If dlgColor.ShowDialog() = DialogResult.OK Then
             vdgThreeCircles.VennDiagram.OverlapACColor = dlgColor.Color
@@ -2750,7 +2747,7 @@ Public Class DisplayForm
         End If
     End Sub
 
-    Private Sub cmdOverlapABCColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOverlapABCColor.Click
+    Private Sub cmdOverlapABCColor_Click(sender As Object, e As EventArgs) Handles cmdOverlapABCColor.Click
         dlgColor.Color = vdgThreeCircles.VennDiagram.OverlapABCColor
         If dlgColor.ShowDialog() = DialogResult.OK Then
             vdgThreeCircles.VennDiagram.OverlapABCColor = dlgColor.Color
@@ -2758,56 +2755,56 @@ Public Class DisplayForm
         End If
     End Sub
 
-    Private Sub cmdRefresh_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdRefresh.Click
+    Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click
         RefreshVennDiagrams(True)
     End Sub
 
-    Private Sub cmdImgAdjustmentReset_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdImgAdjustmentReset.Click
+    Private Sub cmdImgAdjustmentReset_Click(sender As Object, e As EventArgs) Handles cmdImgAdjustmentReset.Click
         ResetImageAdjustmentValues()
         RefreshVennDiagrams(False)
     End Sub
 
-    Private Sub cmdSaveToDisk_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSaveToDisk.Click
+    Private Sub cmdSaveToDisk_Click(sender As Object, e As EventArgs) Handles cmdSaveToDisk.Click
         SaveGraphicToDisk(False)
     End Sub
 
-    Private Sub cmdSaveSVG_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSaveSVG.Click
+    Private Sub cmdSaveSVG_Click(sender As Object, e As EventArgs) Handles cmdSaveSVG.Click
         RefreshVennDiagrams(False)
         SaveGraphicToDisk(True)
     End Sub
 
-    Private Sub cmdUpdateRegionCounts_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdUpdateRegionCounts.Click
+    Private Sub cmdUpdateRegionCounts_Click(sender As Object, e As EventArgs) Handles cmdUpdateRegionCounts.Click
         UpdateThreeCircleDistinctCounts()
     End Sub
 
 #End Region
 
 #Region "Combobox And Trackbar Handlers"
-    Private Sub cboRegionCountMode_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cboRegionCountMode.SelectedIndexChanged
+    Private Sub cboRegionCountMode_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboRegionCountMode.SelectedIndexChanged
         AutoUpdateRegionCountValue()
     End Sub
 
-    Private Sub tbarMessageDisplayTimeSeconds_ValueChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles tbarMessageDisplayTimeSeconds.ValueChanged
+    Private Sub tbarMessageDisplayTimeSeconds_ValueChanged(sender As Object, e As EventArgs) Handles tbarMessageDisplayTimeSeconds.ValueChanged
         lblMessageDisplayTimeSeconds.Text = tbarMessageDisplayTimeSeconds.Value.ToString & " sec."
     End Sub
 
-    Private Sub tbarDuplicateMessageIgnoreWindowSeconds_ValueChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles tbarDuplicateMessageIgnoreWindowSeconds.ValueChanged
+    Private Sub tbarDuplicateMessageIgnoreWindowSeconds_ValueChanged(sender As Object, e As EventArgs) Handles tbarDuplicateMessageIgnoreWindowSeconds.ValueChanged
         lblMessageDuplicateIgnoreWindow.Text = tbarDuplicateMessageIgnoreWindowSeconds.Value.ToString & " sec."
     End Sub
 
-    Private Sub tbarImgXOffset_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tbarImgXOffset.ValueChanged
+    Private Sub tbarImgXOffset_ValueChanged(sender As Object, e As EventArgs) Handles tbarImgXOffset.ValueChanged
         UpdateImagePositionValues()
     End Sub
 
-    Private Sub tbarImgYOffset_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tbarImgYOffset.ValueChanged
+    Private Sub tbarImgYOffset_ValueChanged(sender As Object, e As EventArgs) Handles tbarImgYOffset.ValueChanged
         UpdateImagePositionValues()
     End Sub
 
-    Private Sub tbarImgRotation_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tbarImgRotation.ValueChanged
+    Private Sub tbarImgRotation_ValueChanged(sender As Object, e As EventArgs) Handles tbarImgRotation.ValueChanged
         UpdateImagePositionValues()
     End Sub
 
-    Private Sub tbarImgZoom_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tbarImgZoom.ValueChanged
+    Private Sub tbarImgZoom_ValueChanged(sender As Object, e As EventArgs) Handles tbarImgZoom.ValueChanged
         UpdateImagePositionValues()
     End Sub
 
@@ -2815,14 +2812,14 @@ Public Class DisplayForm
 
 #Region "Checkbox and Option Button Handlers"
 
-    Private Sub chkCircleC_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkCircleC.CheckedChanged
+    Private Sub chkCircleC_CheckedChanged(sender As Object, e As EventArgs) Handles chkCircleC.CheckedChanged
         EnableDisableControls()
         If chkCircleC.Checked Then UpdateThreeCircleDistinctCounts()
         AutoSizeWindow()
         RefreshVennDiagrams(False)
     End Sub
 
-    Private Sub chkFillCirclesWithColor_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkFillCirclesWithColor.Click
+    Private Sub chkFillCirclesWithColor_CheckedChanged(sender As Object, e As EventArgs) Handles chkFillCirclesWithColor.Click
         If Not vdgTwoCircles Is Nothing Then
             vdgTwoCircles.VennDiagram.PaintSolidColorCircles = chkFillCirclesWithColor.Checked
         End If
@@ -2832,17 +2829,17 @@ Public Class DisplayForm
         RefreshVennDiagrams(False)
     End Sub
 
-    Private Sub chkHideMessagesOnSuccessfulUpdate_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkHideMessagesOnSuccessfulUpdate.CheckedChanged
+    Private Sub chkHideMessagesOnSuccessfulUpdate_CheckedChanged(sender As Object, e As EventArgs) Handles chkHideMessagesOnSuccessfulUpdate.CheckedChanged
         If chkHideMessagesOnSuccessfulUpdate.Checked Then
             ClearMessages()
         End If
     End Sub
 
-    Private Sub optTotal_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles optTotal.CheckedChanged
+    Private Sub optTotal_CheckedChanged(sender As Object, e As EventArgs) Handles optTotal.CheckedChanged
         EnableDisableControls()
     End Sub
 
-    Private Sub optCountDistinct_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles optCountDistinct.CheckedChanged
+    Private Sub optCountDistinct_CheckedChanged(sender As Object, e As EventArgs) Handles optCountDistinct.CheckedChanged
         EnableDisableControls()
     End Sub
 
@@ -2850,78 +2847,78 @@ Public Class DisplayForm
 
 #Region "Menu Handlers"
 
-    Private Sub mnuEditCopy_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuEditCopy.Click
+    Private Sub mnuEditCopy_Click(sender As Object, e As EventArgs) Handles mnuEditCopy.Click
         CopyVennToClipboard()
     End Sub
 
-    Private Sub mnuEditCopyOverlapValues_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuEditCopyOverlapValues.Click
+    Private Sub mnuEditCopyOverlapValues_Click(sender As Object, e As EventArgs) Handles mnuEditCopyOverlapValues.Click
         CopyOverlapValues()
     End Sub
 
-    Private Sub mnuEditRefreshPlot_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuEditRefreshPlot.Click
+    Private Sub mnuEditRefreshPlot_Click(sender As Object, e As EventArgs) Handles mnuEditRefreshPlot.Click
         RefreshVennDiagrams(False)
     End Sub
 
-    Private Sub mnuEditResetValues_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuEditResetValues.Click
+    Private Sub mnuEditResetValues_Click(sender As Object, e As EventArgs) Handles mnuEditResetValues.Click
         ResetValues(False)
     End Sub
 
-    Private Sub mnuExit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuExit.Click
+    Private Sub mnuExit_Click(sender As Object, e As EventArgs) Handles mnuExit.Click
         Me.Close()
     End Sub
 
-    Private Sub mnuHelpAbout_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuHelpAbout.Click
+    Private Sub mnuHelpAbout_Click(sender As Object, e As EventArgs) Handles mnuHelpAbout.Click
         ShowAboutBox()
     End Sub
 
-    Private Sub mnuLoadDefaults_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuLoadDefaults.Click
+    Private Sub mnuLoadDefaults_Click(sender As Object, e As EventArgs) Handles mnuLoadDefaults.Click
         LoadDefaults()
     End Sub
 
-    Private Sub mnuReset_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuReset.Click
+    Private Sub mnuReset_Click(sender As Object, e As EventArgs) Handles mnuReset.Click
         ResetValues(True)
     End Sub
 
-    Private Sub mnuSaveFile_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuSaveFile.Click
+    Private Sub mnuSaveFile_Click(sender As Object, e As EventArgs) Handles mnuSaveFile.Click
         SaveGraphicToDisk(False)
     End Sub
 
-    Private Sub mnuSaveDefaults_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuSaveDefaults.Click
+    Private Sub mnuSaveDefaults_Click(sender As Object, e As EventArgs) Handles mnuSaveDefaults.Click
         SaveDefaults()
     End Sub
 #End Region
 
 #Region "Textbox Handlers"
-    Private Sub txtDistinctA_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtDistinctA.LostFocus
+    Private Sub txtDistinctA_LostFocus(sender As Object, e As EventArgs) Handles txtDistinctA.LostFocus
         UpdateSizeTotalA()
         If chkCircleC.Checked Then UpdateThreeCircleDistinctCounts()
         If ValidDimensionsPresent() Then RefreshVennDiagrams(False)
     End Sub
 
-    Private Sub txtDistinctB_LostFocus(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtDistinctB.LostFocus
+    Private Sub txtDistinctB_LostFocus(sender As Object, e As EventArgs) Handles txtDistinctB.LostFocus
         UpdateSizeTotalB()
         If chkCircleC.Checked Then UpdateThreeCircleDistinctCounts()
         If ValidDimensionsPresent() Then RefreshVennDiagrams(False)
     End Sub
 
-    Private Sub txtSizeA_LostFocus(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtSizeA.LostFocus
+    Private Sub txtSizeA_LostFocus(sender As Object, e As EventArgs) Handles txtSizeA.LostFocus
         UpdateCountDistinctA()
         If chkCircleC.Checked Then UpdateThreeCircleDistinctCounts()
         If ValidDimensionsPresent() Then RefreshVennDiagrams(False)
     End Sub
 
-    Private Sub txtSizeB_LostFocus(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtSizeB.LostFocus
+    Private Sub txtSizeB_LostFocus(sender As Object, e As EventArgs) Handles txtSizeB.LostFocus
         UpdateCountDistinctB()
         If chkCircleC.Checked Then UpdateThreeCircleDistinctCounts()
         If ValidDimensionsPresent() Then RefreshVennDiagrams(False)
     End Sub
 
-    Private Sub txtSizeC_LostFocus(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtSizeC.LostFocus
+    Private Sub txtSizeC_LostFocus(sender As Object, e As EventArgs) Handles txtSizeC.LostFocus
         UpdateThreeCircleDistinctCounts()
         If ValidDimensionsPresent() Then RefreshVennDiagrams(False)
     End Sub
 
-    Private Sub txtSizeOverlap_LostFocus(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtSizeOverlapAB.LostFocus
+    Private Sub txtSizeOverlap_LostFocus(sender As Object, e As EventArgs) Handles txtSizeOverlapAB.LostFocus
         If optCountDistinct.Checked Then
             UpdateSizeTotals()
         Else
@@ -2932,7 +2929,7 @@ Public Class DisplayForm
         If ValidDimensionsPresent() Then RefreshVennDiagrams(False)
     End Sub
 
-    Private Sub txtSizeOverlapBC_LostFocus(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtSizeOverlapBC.LostFocus
+    Private Sub txtSizeOverlapBC_LostFocus(sender As Object, e As EventArgs) Handles txtSizeOverlapBC.LostFocus
         If optCountDistinct.Checked Then
             UpdateSizeTotals()
         Else
@@ -2943,7 +2940,7 @@ Public Class DisplayForm
         If ValidDimensionsPresent() Then RefreshVennDiagrams(False)
     End Sub
 
-    Private Sub txtSizeOverlapAC_LostFocus(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtSizeOverlapAC.LostFocus
+    Private Sub txtSizeOverlapAC_LostFocus(sender As Object, e As EventArgs) Handles txtSizeOverlapAC.LostFocus
         If optCountDistinct.Checked Then
             UpdateSizeTotals()
         Else

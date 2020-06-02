@@ -1,6 +1,7 @@
 Option Strict On
 
 Imports System.Drawing
+Imports System.Text
 
 ' -------------------------------------------------------------------------------
 ' Written by Matthew Monroe for the Department of Energy (PNNL, Richland, WA)
@@ -57,14 +58,14 @@ Public Class ThreeCircleVennDiagram
 #End Region
 
 #Region "Events"
-    'Raised when smoothingmode, FillFactor, or colors are changed
-    Public Event DrawingChangeCircleC(ByVal sender As ThreeCircleVennDiagram)
+    'Raised when smoothing mode, FillFactor, or colors are changed
+    Public Event DrawingChangeCircleC(sender As ThreeCircleVennDiagram)
 
     'Never raised
-    Public Event LabelChangeCircleC(ByVal sender As ThreeCircleVennDiagram)
+    Public Event LabelChangeCircleC(sender As ThreeCircleVennDiagram)
 
     'Raised when size of circles or overlap is changed.
-    Public Event SizeChangeCircleC(ByVal sender As ThreeCircleVennDiagram)
+    Public Event SizeChangeCircleC(sender As ThreeCircleVennDiagram)
 #End Region
 
 #Region "Structures"
@@ -122,57 +123,57 @@ Public Class ThreeCircleVennDiagram
 #End Region
 
 #Region "Properties "
-    Public Property CircleCSize() As Double
+    Public Property CircleCSize As Double
         Get
             Return Me.m_circleC.Size
         End Get
-        Set(ByVal Value As Double)
+        Set
             Me.m_circleC.Size = Value
             Me.InvalidateComputeWorldCoordinates()
             RaiseEvent SizeChangeCircleC(Me)
         End Set
     End Property
 
-    Public ReadOnly Property DefaultColorCircleC() As System.Drawing.Color
+    Public ReadOnly Property DefaultColorCircleC As Color
         Get
-            Return System.Drawing.Color.FromArgb(255, 255, 192)
+            Return Color.FromArgb(255, 255, 192)
         End Get
     End Property
 
-    Public ReadOnly Property DefaultColorOverlapBC() As System.Drawing.Color
+    Public ReadOnly Property DefaultColorOverlapBC As Color
         Get
-            Return System.Drawing.Color.FromArgb(192, 192, 0)
+            Return Color.FromArgb(192, 192, 0)
         End Get
     End Property
 
-    Public ReadOnly Property DefaultColorOverlapAC() As System.Drawing.Color
+    Public ReadOnly Property DefaultColorOverlapAC As Color
         Get
-            Return System.Drawing.Color.FromArgb(128, 128, 255)
+            Return Color.FromArgb(128, 128, 255)
         End Get
     End Property
 
-    Public ReadOnly Property DefaultColorOverlapABC() As System.Drawing.Color
+    Public ReadOnly Property DefaultColorOverlapABC As Color
         Get
-            Return System.Drawing.Color.FromArgb(192, 192, 192)
+            Return Color.FromArgb(192, 192, 192)
         End Get
     End Property
 
-    Public Property OverlapBCSize() As Double
+    Public Property OverlapBCSize As Double
         Get
             Return Me.m_overlapBC.Size
         End Get
-        Set(ByVal Value As Double)
+        Set
             Me.m_overlapBC.Size = Value
             Me.InvalidateComputeWorldCoordinates()
             RaiseEvent SizeChangeCircleC(Me)
         End Set
     End Property
 
-    Public Property OverlapACSize() As Double
+    Public Property OverlapACSize As Double
         Get
             Return Me.m_overlapAC.Size
         End Get
-        Set(ByVal Value As Double)
+        Set
             Me.m_overlapAC.Size = Value
             Me.InvalidateComputeWorldCoordinates()
             RaiseEvent SizeChangeCircleC(Me)
@@ -182,44 +183,44 @@ Public Class ThreeCircleVennDiagram
     'Labels are not currently used.  They were intended to provide
     'the ability to label the diagram with intelligently placed labels
     'on the actual diagram
-    Public Property CircleCLabel() As String()
+    Public Property CircleCLabel As String()
         Get
             Return Me.m_circleC.Label
         End Get
-        Set(ByVal Value() As String)
+        Set
             Me.m_circleC.Label = Value
             Me.InvalidateScreenCoordinates()
             RaiseEvent LabelChangeCircleC(Me)
         End Set
     End Property
 
-    Public Property OverlapBCLabel() As String()
+    Public Property OverlapBCLabel As String()
         Get
             Return Me.m_overlapBC.Label
         End Get
-        Set(ByVal Value() As String)
+        Set
             Me.m_overlapBC.Label = Value
             Me.InvalidateScreenCoordinates()
             RaiseEvent LabelChangeCircleC(Me)
         End Set
     End Property
 
-    Public Property OverlapACLabel() As String()
+    Public Property OverlapACLabel As String()
         Get
             Return Me.m_overlapAC.Label
         End Get
-        Set(ByVal Value() As String)
+        Set
             Me.m_overlapAC.Label = Value
             Me.InvalidateScreenCoordinates()
             RaiseEvent LabelChangeCircleC(Me)
         End Set
     End Property
 
-    Public Property CircleCColor() As Color
+    Public Property CircleCColor As Color
         Get
             Return Me.m_circleC.Color
         End Get
-        Set(ByVal Value As Color)
+        Set
             Me.m_circleC.Color = Value
             'Me.UpdateOverlapColor()
             Me.Invalidate()
@@ -227,44 +228,44 @@ Public Class ThreeCircleVennDiagram
         End Set
     End Property
 
-    Public Property OverlapBCColor() As Color
+    Public Property OverlapBCColor As Color
         Get
             Return Me.m_overlapBC.Color
         End Get
-        Set(ByVal Value As Color)
+        Set
             Me.m_overlapBC.Color = Value
             Me.Invalidate()
             RaiseEvent DrawingChangeCircleC(Me)
         End Set
     End Property
 
-    Public Property OverlapACColor() As Color
+    Public Property OverlapACColor As Color
         Get
             Return Me.m_overlapAC.Color
         End Get
-        Set(ByVal Value As Color)
+        Set
             Me.m_overlapAC.Color = Value
             Me.Invalidate()
             RaiseEvent DrawingChangeCircleC(Me)
         End Set
     End Property
 
-    Public Property OverlapABCColor() As Color
+    Public Property OverlapABCColor As Color
         Get
             Return Me.m_overlapABC.Color
         End Get
-        Set(ByVal Value As Color)
+        Set
             Me.m_overlapABC.Color = Value
             Me.Invalidate()
             RaiseEvent DrawingChangeCircleC(Me)
         End Set
     End Property
 
-    Public Property Rotation() As Integer
+    Public Property Rotation As Integer
         Get
             Return m_Rotation
         End Get
-        Set(ByVal Value As Integer)
+        Set
             Do While Value < 0
                 Value += 360
             Loop
@@ -277,29 +278,29 @@ Public Class ThreeCircleVennDiagram
         End Set
     End Property
 
-    Public Property XOffset() As Integer
+    Public Property XOffset As Integer
         Get
             Return m_XOffset
         End Get
-        Set(ByVal Value As Integer)
+        Set
             m_XOffset = Value
         End Set
     End Property
 
-    Public Property YOffset() As Integer
+    Public Property YOffset As Integer
         Get
             Return m_YOffset
         End Get
-        Set(ByVal Value As Integer)
+        Set
             m_YOffset = Value
         End Set
     End Property
 
-    Public Property ZoomPct() As Integer
+    Public Property ZoomPct As Integer
         Get
             Return m_ZoomPct
         End Get
-        Set(ByVal Value As Integer)
+        Set
             If Value < 1 Then Value = 1
             If Value > 200 Then Value = 200
             m_ZoomPct = Value
@@ -307,7 +308,7 @@ Public Class ThreeCircleVennDiagram
     End Property
 #End Region
 
-    Protected Shared Function ComputeRotationAngle(ByVal udtPointA As udtPointXYType, ByVal udtPointB As udtPointXYType) As Double
+    Protected Shared Function ComputeRotationAngle(udtPointA As udtPointXYType, udtPointB As udtPointXYType) As Double
         Dim dblDeltaX As Double
         Dim dblDeltaY As Double
         Dim dblAngleDegrees As Double
@@ -315,7 +316,7 @@ Public Class ThreeCircleVennDiagram
         dblDeltaX = udtPointB.X - udtPointA.X
         dblDeltaY = udtPointB.Y - udtPointA.Y
 
-        If dblDeltaX = 0 Then
+        If Math.Abs(dblDeltaX) < Single.Epsilon Then
             If dblDeltaY > 0 Then
                 dblAngleDegrees = 90
             Else
@@ -347,7 +348,6 @@ Public Class ThreeCircleVennDiagram
         Dim x As Integer, y As Integer
         Dim udtPointA As udtPointXYType
         Dim udtPointB As udtPointXYType
-        Dim dblAngle As Double
 
         udtPointA.X = 0
         udtPointA.Y = 0
@@ -357,12 +357,12 @@ Public Class ThreeCircleVennDiagram
                 udtPointB.X = x
                 udtPointB.Y = y
 
-                dblAngle = ComputeRotationAngle(udtPointA, udtPointB)
+                Dim dblAngle = ComputeRotationAngle(udtPointA, udtPointB)
             Next y
         Next x
     End Sub
 
-    Public Function ComputeThreeCircleAreasGivenOverlapABC(ByVal dblUserSuppliedABC As Double) As Boolean
+    Public Function ComputeThreeCircleAreasGivenOverlapABC(dblUserSuppliedABC As Double) As Boolean
         Dim udtCircleRegions As udtThreeCircleRegionsType
 
         With udtCircleRegions
@@ -377,9 +377,9 @@ Public Class ThreeCircleVennDiagram
         Return ComputeThreeCircleAreasGivenOverlapABC(udtCircleRegions, dblUserSuppliedABC)
     End Function
 
-    Public Shared Function ComputeThreeCircleAreasGivenOverlapABC(ByRef udtCircleRegions As udtThreeCircleRegionsType, ByVal dblUserSuppliedABC As Double) As Boolean
+    Public Shared Function ComputeThreeCircleAreasGivenOverlapABC(ByRef udtCircleRegions As udtThreeCircleRegionsType, dblUserSuppliedABC As Double) As Boolean
 
-        Const DIM_COUNT As Integer = 6
+        Const DIM_COUNT = 6
 
         ' If the user provides a value for ABC, then the following equations can be used
         ' Ax+      ABx+    ACx = A-ABC
@@ -390,21 +390,21 @@ Public Class ThreeCircleVennDiagram
         '                  ACx = AC-ABC
         '
         ' The following coefficients correspond to these equations (array is DIM_COUNT rows and DIM_COUNT columns:
-        Dim dblCoefMatrix(,) As Double = {{1, 0, 0, 1, 0, 1},
-                                          {0, 1, 0, 1, 1, 0},
-                                          {0, 0, 1, 0, 1, 1},
-                                          {0, 0, 0, 1, 0, 0},
-                                          {0, 0, 0, 0, 1, 0},
-                                          {0, 0, 0, 0, 0, 1}}
+        Dim coefficientMatrix(,) As Double = {{1, 0, 0, 1, 0, 1},
+                                              {0, 1, 0, 1, 1, 0},
+                                              {0, 0, 1, 0, 1, 1},
+                                              {0, 0, 0, 1, 0, 0},
+                                              {0, 0, 0, 0, 1, 0},
+                                              {0, 0, 0, 0, 0, 1}}
 
         ' dblXValues is initialized by objMatrixSolver.SolveEquations
         ' Will be of length DIM_COUNT
         Dim dblXValues() As Double = Nothing
         Dim objMatrixSolver As New clsMatrixSolver
 
-        ' dblPotentialXValues() will have DIM_COUNT+1 rows and intPotentialXValsCount columns;
+        ' dblPotentialXValues() will have DIM_COUNT+1 rows and potentialXValuesCount columns;
         '  it holds the potential XValues, plus the ABC value used to compute the X Values
-        Dim intPotentialXValsCount As Integer
+        Dim potentialXValuesCount As Integer
         Dim dblPotentialXValues(,) As Double
 
         Dim strMessage As String = String.Empty
@@ -431,7 +431,7 @@ Public Class ThreeCircleVennDiagram
         End If
 
         ' Initially reserve space for 10 sets of results
-        intPotentialXValsCount = 0
+        potentialXValuesCount = 0
         ReDim dblPotentialXValues(DIM_COUNT, 9)
 
         For intABCIteration = intMinimumABC To intMaximumABC
@@ -451,7 +451,7 @@ Public Class ThreeCircleVennDiagram
                 dblConstants(5) = .OverlapAC - dblCurrentABC
             End With
 
-            blnSuccess = objMatrixSolver.SolveEquations(dblCoefMatrix, dblConstants, dblXValues, strMessage)
+            blnSuccess = objMatrixSolver.SolveEquations(coefficientMatrix, dblConstants, dblXValues, strMessage)
 
             If blnSuccess Then
                 'objMatrixSolver.PrintArray(dblConstants)
@@ -459,7 +459,7 @@ Public Class ThreeCircleVennDiagram
 
                 '' Optionally check the results
                 ''Dim dblResults() As Double
-                ''objMatrixSolver.MultiplyMatrices(dblCoefMatrix, dblXValues, dblResults)
+                ''objMatrixSolver.MultiplyMatrices(coefficientMatrix, dblXValues, dblResults)
                 ''dblResidual = 0
                 ''For x = 0 To DIM_COUNT - 1
                 ''    dblResidual += Math.Abs(dblConstants(x) - dblResults(x))
@@ -481,18 +481,18 @@ Public Class ThreeCircleVennDiagram
                     blnSuccess = True
                     Exit For
                 Else
-                    ComputeThreeCircleAreasStoreIfAllPositive(dblXValues, intPotentialXValsCount, dblPotentialXValues, DIM_COUNT, dblCurrentABC)
+                    ComputeThreeCircleAreasStoreIfAllPositive(dblXValues, potentialXValuesCount, dblPotentialXValues, DIM_COUNT, dblCurrentABC)
                 End If
             End If
 
         Next intABCIteration
 
         If Not blnUseUserSuppliedABC Then
-            If intPotentialXValsCount > 0 Then
+            If potentialXValuesCount > 0 Then
                 ' Find the ABC value that gave the value for Ax, Bx, Cx, ABx, BCx, & ACx
                 ' with the smallest residual from the average of each of those values
 
-                intBestIndex = ComputeThreeCircleAreasFindSmallestResidual(intPotentialXValsCount, dblPotentialXValues, DIM_COUNT)
+                intBestIndex = ComputeThreeCircleAreasFindSmallestResidual(potentialXValuesCount, dblPotentialXValues, DIM_COUNT)
 
                 ' Populate dblXValues with the values located at intBestIndex
                 For x = 0 To DIM_COUNT - 1
@@ -531,7 +531,7 @@ Public Class ThreeCircleVennDiagram
 
     End Function
 
-    Public Function ComputeThreeCircleAreasGivenTotalUniqueCount(ByVal dblUserSuppliedTotalUniqueCount As Double) As Boolean
+    Public Function ComputeThreeCircleAreasGivenTotalUniqueCount(dblUserSuppliedTotalUniqueCount As Double) As Boolean
         Dim udtCircleRegions As udtThreeCircleRegionsType
 
         With udtCircleRegions
@@ -546,8 +546,8 @@ Public Class ThreeCircleVennDiagram
         Return ComputeThreeCircleAreasGivenTotalUniqueCount(udtCircleRegions, dblUserSuppliedTotalUniqueCount)
     End Function
 
-    Public Shared Function ComputeThreeCircleAreasGivenTotalUniqueCount(ByRef udtCircleRegions As udtThreeCircleRegionsType, ByVal dblUserSuppliedTotalUniqueCount As Double) As Boolean
-        Const DIM_COUNT As Integer = 7
+    Public Shared Function ComputeThreeCircleAreasGivenTotalUniqueCount(ByRef udtCircleRegions As udtThreeCircleRegionsType, dblUserSuppliedTotalUniqueCount As Double) As Boolean
+        Const DIM_COUNT = 7
 
         ' If the user provides a value for N (the total distinct items present across all collections), then the following equations can be used
         ' Ax+      ABx+    ACx+ABC = A
@@ -559,13 +559,13 @@ Public Class ThreeCircleVennDiagram
         ' Ax+Bx+Cx+ABx+BCx+ACx+ABC = N
         '
         ' The following coefficients correspond to these equations (array is DIM_COUNT rows and DIM_COUNT columns:
-        Dim dblCoefMatrix(,) As Double = {{1, 0, 0, 1, 0, 1, 1},
-                                          {0, 1, 0, 1, 1, 0, 1},
-                                          {0, 0, 1, 0, 1, 1, 1},
-                                          {0, 0, 0, 1, 0, 0, 1},
-                                          {0, 0, 0, 0, 1, 0, 1},
-                                          {0, 0, 0, 0, 0, 1, 1},
-                                          {1, 1, 1, 1, 1, 1, 1}}
+        Dim coefficientMatrix(,) As Double = {{1, 0, 0, 1, 0, 1, 1},
+                                              {0, 1, 0, 1, 1, 0, 1},
+                                              {0, 0, 1, 0, 1, 1, 1},
+                                              {0, 0, 0, 1, 0, 0, 1},
+                                              {0, 0, 0, 0, 1, 0, 1},
+                                              {0, 0, 0, 0, 0, 1, 1},
+                                              {1, 1, 1, 1, 1, 1, 1}}
 
         ' dblXValues is initialized by objMatrixSolver.SolveEquations
         ' Will be of length DIM_COUNT
@@ -573,9 +573,9 @@ Public Class ThreeCircleVennDiagram
         Dim objMatrixSolver As New clsMatrixSolver
 
 
-        ' dblPotentialXValues() will have DIM_COUNT+1 rows and intPotentialXValsCount columns;
+        ' dblPotentialXValues() will have DIM_COUNT+1 rows and potentialXValuesCount columns;
         '  it holds the potential XValues, plus the TotalUniqueCount value used to compute the X Values
-        Dim intPotentialXValsCount As Integer
+        Dim potentialXValuesCount As Integer
         Dim dblPotentialXValues(,) As Double
 
         Dim strMessage As String = String.Empty
@@ -592,7 +592,7 @@ Public Class ThreeCircleVennDiagram
         Dim intBestIndex As Integer
 
 
-        If dblUserSuppliedTotalUniqueCount = 0 Then
+        If Math.Abs(dblUserSuppliedTotalUniqueCount) < Single.Epsilon Then
             intMinimumTotalUniqueCount = CInt(Math.Floor(Math.Min(Math.Min(udtCircleRegions.CircleA, udtCircleRegions.CircleB), udtCircleRegions.CircleC)))
             intMaximumTotalUniqueCount = CInt(Math.Ceiling(udtCircleRegions.CircleA + udtCircleRegions.CircleB + udtCircleRegions.CircleC))
             blnUseUserSuppliedTotalUniqueCount = False
@@ -603,7 +603,7 @@ Public Class ThreeCircleVennDiagram
         End If
 
         ' Initially reserve space for 10 sets of results
-        intPotentialXValsCount = 0
+        potentialXValuesCount = 0
         ReDim dblPotentialXValues(DIM_COUNT, 9)
 
         ' Populate everything in dblConstants except for dblConstants(6)
@@ -626,7 +626,7 @@ Public Class ThreeCircleVennDiagram
 
             dblConstants(6) = dblCurrentTotalUniqueCount
 
-            blnSuccess = objMatrixSolver.SolveEquations(dblCoefMatrix, dblConstants, dblXValues, strMessage)
+            blnSuccess = objMatrixSolver.SolveEquations(coefficientMatrix, dblConstants, dblXValues, strMessage)
 
             If blnSuccess Then
                 ''objMatrixSolver.PrintArray(dblConstants)
@@ -635,7 +635,7 @@ Public Class ThreeCircleVennDiagram
                 '' Optionally check the results
                 ''Dim dblResults() As Double
                 ''Dim dblResidual As Double
-                ''objMatrixSolver.MultiplyMatrices(dblCoefMatrix, dblXValues, dblResults)
+                ''objMatrixSolver.MultiplyMatrices(coefficientMatrix, dblXValues, dblResults)
                 ''dblResidual = 0
                 ''For x = 0 To DIM_COUNT - 1
                 ''    dblResidual += Math.Abs(dblConstants(x) - dblResults(x))
@@ -658,18 +658,18 @@ Public Class ThreeCircleVennDiagram
                     blnSuccess = True
                     Exit For
                 Else
-                    ComputeThreeCircleAreasStoreIfAllPositive(dblXValues, intPotentialXValsCount, dblPotentialXValues, DIM_COUNT, dblCurrentTotalUniqueCount)
+                    ComputeThreeCircleAreasStoreIfAllPositive(dblXValues, potentialXValuesCount, dblPotentialXValues, DIM_COUNT, dblCurrentTotalUniqueCount)
                 End If
             End If
 
         Next intTotalUniqueCountIteration
 
         If Not blnUseUserSuppliedTotalUniqueCount Then
-            If intPotentialXValsCount > 0 Then
+            If potentialXValuesCount > 0 Then
                 ' Find the TotalUniqueCount value that gave the value for Ax, Bx, Cx, ABx, BCx, ACx, and ABC
                 ' with the smallest residual from the average of each of those values
 
-                intBestIndex = ComputeThreeCircleAreasFindSmallestResidual(intPotentialXValsCount, dblPotentialXValues, DIM_COUNT)
+                intBestIndex = ComputeThreeCircleAreasFindSmallestResidual(potentialXValuesCount, dblPotentialXValues, DIM_COUNT)
 
                 ' Populate dblXValues with the values located at intBestIndex
                 For x = 0 To DIM_COUNT - 1
@@ -703,7 +703,7 @@ Public Class ThreeCircleVennDiagram
 
     End Function
 
-    Private Shared Sub ComputeThreeCircleAreasStoreIfAllPositive(ByRef dblXValues() As Double, ByRef intPotentialXValsCount As Integer, ByRef dblPotentialXValues(,) As Double, ByVal DIM_COUNT As Integer, ByVal dblCurrentIterationValue As Double)
+    Private Shared Sub ComputeThreeCircleAreasStoreIfAllPositive(ByRef dblXValues() As Double, ByRef potentialXValuesCount As Integer, ByRef dblPotentialXValues(,) As Double, DIM_COUNT As Integer, dblCurrentIterationValue As Double)
         Dim blnAllPositive As Boolean
         Dim x As Integer
 
@@ -718,21 +718,21 @@ Public Class ThreeCircleVennDiagram
 
         If blnAllPositive Then
             ' Add results to array of possible values
-            If intPotentialXValsCount >= UBound(dblPotentialXValues, 2) Then
-                ReDim Preserve dblPotentialXValues(DIM_COUNT, intPotentialXValsCount * 2 - 1)
+            If potentialXValuesCount >= UBound(dblPotentialXValues, 2) Then
+                ReDim Preserve dblPotentialXValues(DIM_COUNT, potentialXValuesCount * 2 - 1)
             End If
 
             For x = 0 To DIM_COUNT - 1
-                dblPotentialXValues(x, intPotentialXValsCount) = dblXValues(x)
+                dblPotentialXValues(x, potentialXValuesCount) = dblXValues(x)
             Next x
-            dblPotentialXValues(DIM_COUNT, intPotentialXValsCount) = dblCurrentIterationValue
+            dblPotentialXValues(DIM_COUNT, potentialXValuesCount) = dblCurrentIterationValue
 
-            intPotentialXValsCount += 1
+            potentialXValuesCount += 1
         End If
 
     End Sub
 
-    Private Shared Function ComputeThreeCircleAreasFindSmallestResidual(ByVal intPotentialXValsCount As Integer, ByRef dblPotentialXValues(,) As Double, ByVal DIM_COUNT As Integer) As Integer
+    Private Shared Function ComputeThreeCircleAreasFindSmallestResidual(potentialXValuesCount As Integer, ByRef dblPotentialXValues(,) As Double, DIM_COUNT As Integer) As Integer
         Dim dblAverages(DIM_COUNT - 1) As Double
         Dim dblSumResidualSquared() As Double
         Dim dblSum As Double
@@ -740,19 +740,19 @@ Public Class ThreeCircleVennDiagram
         Dim x As Integer, y As Integer
         Dim intBestIndex As Integer
 
-        ReDim dblSumResidualSquared(intPotentialXValsCount - 1)
+        ReDim dblSumResidualSquared(potentialXValuesCount - 1)
 
         ' Process each region
         For x = 0 To DIM_COUNT - 1
             ' Compute the average
             dblSum = 0
-            For y = 0 To intPotentialXValsCount - 1
+            For y = 0 To potentialXValuesCount - 1
                 dblSum += dblPotentialXValues(x, y)
             Next y
-            dblAverages(x) = dblSum / intPotentialXValsCount
+            dblAverages(x) = dblSum / potentialXValuesCount
         Next x
 
-        For y = 0 To intPotentialXValsCount - 1
+        For y = 0 To potentialXValuesCount - 1
             ' Compute the sum of the squares of the residual values (observed minus average) for this potential X value
             dblSumResidualSquared(y) = 0
             For x = 0 To DIM_COUNT - 1
@@ -763,7 +763,7 @@ Public Class ThreeCircleVennDiagram
 
         ' Find the smallest value in dblSumResidualSquared(x)
         intBestIndex = 0
-        For y = 1 To intPotentialXValsCount - 1
+        For y = 1 To potentialXValuesCount - 1
             If dblSumResidualSquared(y) < dblSumResidualSquared(intBestIndex) Then
                 intBestIndex = y
             End If
@@ -884,9 +884,9 @@ Public Class ThreeCircleVennDiagram
 
 
         'Rectangles around circleA and circleB
-        Dim circleABoundingBox As RectangleF = New RectangleF(CSng(circleALeft), CSng(circleATop), CSng(circleAWidth), CSng(circleAWidth))
-        Dim circleBBoundingBox As RectangleF = New RectangleF(CSng(circleBLeft), CSng(circleBTop), CSng(circleBWidth), CSng(circleBWidth))
-        Dim circleCBoundingBox As RectangleF = New RectangleF(CSng(circleCLeft), CSng(circleCTop), CSng(circleCWidth), CSng(circleCWidth))
+        Dim circleABoundingBox = New RectangleF(CSng(circleALeft), CSng(circleATop), CSng(circleAWidth), CSng(circleAWidth))
+        Dim circleBBoundingBox = New RectangleF(CSng(circleBLeft), CSng(circleBTop), CSng(circleBWidth), CSng(circleBWidth))
+        Dim circleCBoundingBox = New RectangleF(CSng(circleCLeft), CSng(circleCTop), CSng(circleCWidth), CSng(circleCWidth))
 
         'Console.WriteLine("Computing Screen Coordinates")
 
@@ -909,7 +909,7 @@ Public Class ThreeCircleVennDiagram
         Me.m_ScreenCoordinatesValid = True
     End Sub
 
-    Private Sub ComputeScreenOverlapCoordinates(ByVal circleABoundingBox As RectangleF, ByVal circleBBoundingBox As RectangleF, ByVal circleCBoundingBox As RectangleF, ByVal blnContinueOnError As Boolean)
+    Private Sub ComputeScreenOverlapCoordinates(circleABoundingBox As RectangleF, circleBBoundingBox As RectangleF, circleCBoundingBox As RectangleF, blnContinueOnError As Boolean)
         Dim sngAngleStart As Single
         Dim sngAngleStartB As Single
         Dim sngSweep As Single
@@ -989,9 +989,9 @@ Public Class ThreeCircleVennDiagram
         ' determine the location of circle C by triangulating the three circles
 
         Dim dblAngleA As Double
-        Dim dblSidea As Double
-        Dim dblSideb As Double
-        Dim dblSidec As Double
+        Dim dblSideA As Double
+        Dim dblSideB As Double
+        Dim dblSideC As Double
 
         Dim dblBCScalingFactor As Double
         Dim dblACScalingFactor As Double
@@ -1118,16 +1118,16 @@ Public Class ThreeCircleVennDiagram
         '            SideAB = side_c
 
         ' Define the sides to the triangle, as illustrated above
-        dblSidea = Math.Abs(dblBCScalingFactor * (mCirclesBC.CoordCircleB.X - mCirclesBC.CoordCircleA.X))
-        dblSideb = Math.Abs(dblACScalingFactor * (mCirclesAC.CoordCircleB.X - mCirclesAC.CoordCircleA.X))
-        dblSidec = Math.Abs(mCirclesAB.CoordCircleB.X - mCirclesAB.CoordCircleA.X)
+        dblSideA = Math.Abs(dblBCScalingFactor * (mCirclesBC.CoordCircleB.X - mCirclesBC.CoordCircleA.X))
+        dblSideB = Math.Abs(dblACScalingFactor * (mCirclesAC.CoordCircleB.X - mCirclesAC.CoordCircleA.X))
+        dblSideC = Math.Abs(mCirclesAB.CoordCircleB.X - mCirclesAB.CoordCircleA.X)
 
         ' Compute Angle A, which is between SideAC and SideAB (the angle will be in radians)
-        dblAngleA = AngleAFromThreeSides(dblSidea, dblSideb, dblSidec)
+        dblAngleA = AngleAFromThreeSides(dblSideA, dblSideB, dblSideC)
 
         ' Compute the x and y coordinates for circle C; store in m_CircleC_Loc
-        m_CircleC_Loc.X = dblSideb * Math.Cos(dblAngleA)
-        m_CircleC_Loc.Y = dblSideb * Math.Sin(dblAngleA)
+        m_CircleC_Loc.X = dblSideB * Math.Cos(dblAngleA)
+        m_CircleC_Loc.Y = dblSideB * Math.Sin(dblAngleA)
 
 
         ' Compute the overlap angle adjustment value for the BC and AC overlaps
@@ -1149,11 +1149,11 @@ Public Class ThreeCircleVennDiagram
 
     End Sub
 
-    Protected Overloads Sub DrawOverlapRegion(ByRef objDrawingPath As System.Drawing.Drawing2D.GraphicsPath, ByVal BoundingBoxA As RectangleF, ByVal BoundingBoxB As RectangleF, ByRef objVennDiagram As TwoCircleVennDiagram, ByVal udtArcAngleAdjust As udtArcAngleAdjustmentType)
+    Protected Overloads Sub DrawOverlapRegion(ByRef objDrawingPath As Drawing2D.GraphicsPath, BoundingBoxA As RectangleF, BoundingBoxB As RectangleF, ByRef objVennDiagram As TwoCircleVennDiagram, udtArcAngleAdjust As udtArcAngleAdjustmentType)
         DrawOverlapRegion(objDrawingPath, BoundingBoxA, BoundingBoxB, objVennDiagram.OverlapABAlpha, objVennDiagram.OverlapABBeta, udtArcAngleAdjust.AlphaAdd, udtArcAngleAdjust.BetaAdd)
     End Sub
 
-    Protected Sub ExpandWorldBounds(ByRef udtWorldBounds As udtBoundingRegionType, ByVal udtCompareBounds As udtBoundingRegionType)
+    Protected Sub ExpandWorldBounds(ByRef udtWorldBounds As udtBoundingRegionType, udtCompareBounds As udtBoundingRegionType)
 
         ' Update udtUpperLeft if necessary
         If udtCompareBounds.UpperLeft.X < udtWorldBounds.UpperLeft.X Then udtWorldBounds.UpperLeft.X = udtCompareBounds.UpperLeft.X
@@ -1165,7 +1165,7 @@ Public Class ThreeCircleVennDiagram
 
     End Sub
 
-    Protected Sub GetCircleBounds(ByVal udtCircleLoc As udtPointXYType, ByVal dblRadius As Double, ByRef udtBounds As udtBoundingRegionType)
+    Protected Sub GetCircleBounds(udtCircleLoc As udtPointXYType, dblRadius As Double, ByRef udtBounds As udtBoundingRegionType)
 
         udtBounds.UpperLeft.X = udtCircleLoc.X - dblRadius
         udtBounds.UpperLeft.Y = udtCircleLoc.Y - dblRadius
@@ -1182,13 +1182,13 @@ Public Class ThreeCircleVennDiagram
     ''' <param name="sngOpacity">Value between 0 and 1 representing transparency; 1 means fully opaque</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Overrides Function GetSVG(ByVal blnFillCircles As Boolean, ByVal sngOpacity As Single) As String
-        Dim strSVG As System.Text.StringBuilder
-        Dim intStrokeWidthPixels As Integer = 1
+    Public Overrides Function GetSVG(blnFillCircles As Boolean, sngOpacity As Single) As String
+        Dim strSVG As StringBuilder
+        Dim intStrokeWidthPixels = 1
 
 
         ' Create the SVG text
-        strSVG = New System.Text.StringBuilder
+        strSVG = New StringBuilder
 
         strSVG.AppendLine("<?xml version=""1.0"" standalone=""no""?>")
         strSVG.AppendLine("<!DOCTYPE svg PUBLIC ""-//W3C//DTD SVG 1.1//EN"" ""http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"">")
@@ -1223,7 +1223,7 @@ Public Class ThreeCircleVennDiagram
         m_ZoomPct = 100
     End Sub
 
-    Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
+    Protected Overrides Sub OnPaint(e As PaintEventArgs)
 
         Dim g As Graphics = e.Graphics
         Dim sngScalingFactor As Single
@@ -1239,10 +1239,10 @@ Public Class ThreeCircleVennDiagram
         sngXOffsetFactor = m_XOffset / 100.0F
         sngYOffsetFactor = m_YOffset / 100.0F
 
-        If sngScalingFactor > 0 AndAlso sngScalingFactor <> 1 Then
+        If sngScalingFactor > 0 AndAlso Math.Abs(sngScalingFactor - 1) > Single.Epsilon Then
             g.TranslateTransform(Me.Width * ((1 - sngScalingFactor) / 2 + sngXOffsetFactor), Me.Height * ((1 - sngScalingFactor) / 2 + sngYOffsetFactor))
             g.ScaleTransform(sngScalingFactor, sngScalingFactor)
-        ElseIf sngXOffsetFactor <> 0 Or sngYOffsetFactor <> 0 Then
+        ElseIf Math.Abs(sngXOffsetFactor) > Single.Epsilon Or Math.Abs(sngYOffsetFactor) > Single.Epsilon Then
             g.TranslateTransform(Me.Width * sngXOffsetFactor, Me.Height * sngYOffsetFactor)
         End If
 
@@ -1285,11 +1285,11 @@ Public Class ThreeCircleVennDiagram
         MyBase.OnPaint(e)
     End Sub
 
-    Protected Shared Sub RotatePoints(ByRef udtLoc As udtPointXYType, ByVal dblAngleDegrees As Double)
+    Protected Shared Sub RotatePoints(ByRef udtLoc As udtPointXYType, dblAngleDegrees As Double)
         RotatePoints(udtLoc.X, udtLoc.Y, dblAngleDegrees)
     End Sub
 
-    Public Shared Sub RotatePoints(ByRef dblX As Double, ByRef dblY As Double, ByVal dblAngleDegrees As Double)
+    Public Shared Sub RotatePoints(ByRef dblX As Double, ByRef dblY As Double, dblAngleDegrees As Double)
         Dim dblXNew As Double
         Dim dblYNew As Double
         Dim dblAngleRadians As Double

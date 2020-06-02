@@ -83,7 +83,7 @@ Public Class ThreeCircleVennDiagramPresenter
         Me.lblTitle.Name = "lblTitle"
         Me.lblTitle.Size = New System.Drawing.Size(600, 48)
         Me.lblTitle.TabIndex = 1
-        Me.lblTitle.Text = "Title goes here.  Title goes here.  Title goes here.  Title goes here.  Title goe" & _
+        Me.lblTitle.Text = "Title goes here.  Title goes here.  Title goes here.  Title goes here.  Title goe" &
         "s here.  Title goes here.  Title goes here.  "
         Me.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
@@ -185,31 +185,31 @@ Public Class ThreeCircleVennDiagramPresenter
         Me.lblFooter.Name = "lblFooter"
         Me.lblFooter.Size = New System.Drawing.Size(600, 56)
         Me.lblFooter.TabIndex = 8
-        Me.lblFooter.Text = "Footer ttttttttttttttttttttttttttttttttttttttttttt Footer ttttttttttttttttttttttt" & _
-        "tttttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer t" & _
-        "tttttttttttttttttttttttttttttttttttttttttt Footer tttttttttttttttttttttttttttttt" & _
-        "ttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer tttttttt" & _
-        "ttttttttttttttttttttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttt" & _
-        "tttttt  Footer ttttttttttttttttttttttttttttttttttttttttttt Footer tttttttttttttt" & _
-        "ttttttttttttttttttttttttttttt  Footer tttttttttttttttttttttttttttttttttttttttttt" & _
-        "tFooter ttttttttttttttttttttttttttttttttttttttttttt Footer ttttttttttttttttttttt" & _
-        "tttttttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer" & _
-        " ttttttttttttttttttttttttttttttttttttttttttt Footer tttttttttttttttttttttttttttt" & _
-        "ttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer tttttt" & _
-        "ttttttttttttttttttttttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttt" & _
-        "tttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer ttttttttttttt" & _
-        "tttttttttttttttttttttttttttttt Footer tttttttttttttttttttttttttttttttttttttttttt" & _
-        "t Footer ttttttttttttttttttttttttttttttttttttttttttt Footer tttttttttttttttttttt" & _
-        "ttttttttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt v Foo" & _
-        "ter ttttttttttttttttttttttttttttttttttttttttttt Footer ttttttttttttttttttttttttt" & _
-        "tttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer ttt" & _
-        "tttttttttttttttttttttttttttttttttttttttt v Footer tttttttttttttttttttttttttttttt" & _
-        "ttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer tttttttt" & _
-        "ttttttttttttttttttttttttttttttttttt v Footer ttttttttttttttttttttttttttttttttttt" & _
-        "tttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer ttttttttttttt" & _
-        "tttttttttttttttttttttttttttttt Footer tttttttttttttttttttttttttttttttttttttttttt" & _
-        "t v Footer ttttttttttttttttttttttttttttttttttttttttttt Footer tttttttttttttttttt" & _
-        "ttttttttttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt v v" & _
+        Me.lblFooter.Text = "Footer ttttttttttttttttttttttttttttttttttttttttttt Footer ttttttttttttttttttttttt" &
+        "tttttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer t" &
+        "tttttttttttttttttttttttttttttttttttttttttt Footer tttttttttttttttttttttttttttttt" &
+        "ttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer tttttttt" &
+        "ttttttttttttttttttttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttt" &
+        "tttttt  Footer ttttttttttttttttttttttttttttttttttttttttttt Footer tttttttttttttt" &
+        "ttttttttttttttttttttttttttttt  Footer tttttttttttttttttttttttttttttttttttttttttt" &
+        "tFooter ttttttttttttttttttttttttttttttttttttttttttt Footer ttttttttttttttttttttt" &
+        "tttttttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer" &
+        " ttttttttttttttttttttttttttttttttttttttttttt Footer tttttttttttttttttttttttttttt" &
+        "ttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer tttttt" &
+        "ttttttttttttttttttttttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttt" &
+        "tttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer ttttttttttttt" &
+        "tttttttttttttttttttttttttttttt Footer tttttttttttttttttttttttttttttttttttttttttt" &
+        "t Footer ttttttttttttttttttttttttttttttttttttttttttt Footer tttttttttttttttttttt" &
+        "ttttttttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt v Foo" &
+        "ter ttttttttttttttttttttttttttttttttttttttttttt Footer ttttttttttttttttttttttttt" &
+        "tttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer ttt" &
+        "tttttttttttttttttttttttttttttttttttttttt v Footer tttttttttttttttttttttttttttttt" &
+        "ttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer tttttttt" &
+        "ttttttttttttttttttttttttttttttttttt v Footer ttttttttttttttttttttttttttttttttttt" &
+        "tttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt Footer ttttttttttttt" &
+        "tttttttttttttttttttttttttttttt Footer tttttttttttttttttttttttttttttttttttttttttt" &
+        "t v Footer ttttttttttttttttttttttttttttttttttttttttttt Footer tttttttttttttttttt" &
+        "ttttttttttttttttttttttttt Footer ttttttttttttttttttttttttttttttttttttttttttt v v" &
         ""
         '
         'vdgVennDiagram
@@ -277,123 +277,134 @@ Public Class ThreeCircleVennDiagramPresenter
     'End Sub
 
 #Region " Labeling Properties "
-    Public Property LegendCircleAText() As String
+
+    Public Property LegendCircleAText As String
         Get
-            Return Me.lblLegendCircleA.Text
+            Return lblLegendCircleA.Text
         End Get
-        Set(ByVal Value As String)
-            Me.lblLegendCircleA.Text = Value
+        Set
+            lblLegendCircleA.Text = Value
         End Set
     End Property
 
-    Public Property LegendCircleBText() As String
+    Public Property LegendCircleBText As String
         Get
-            Return Me.lblLegendCircleB.Text
+            Return lblLegendCircleB.Text
         End Get
-        Set(ByVal Value As String)
-            Me.lblLegendCircleB.Text = Value
+        Set
+            lblLegendCircleB.Text = Value
         End Set
     End Property
 
-    Public Property LegendCirclecText() As String
+    Public Property LegendCirclecText As String
         Get
-            Return Me.lblLegendCircleC.Text
+            Return lblLegendCircleC.Text
         End Get
-        Set(ByVal Value As String)
-            Me.lblLegendCircleC.Text = Value
+        Set
+            lblLegendCircleC.Text = Value
         End Set
     End Property
 
-    Public Property LegendOverlapABText() As String
+    Public Property LegendOverlapABText As String
         Get
-            Return Me.lblLegendOverlapAB.Text
+            Return lblLegendOverlapAB.Text
         End Get
-        Set(ByVal Value As String)
-            Me.lblLegendOverlapAB.Text = Value
+        Set
+            lblLegendOverlapAB.Text = Value
         End Set
     End Property
 
-    Public Property LegendOverlapBCText() As String
+    Public Property LegendOverlapBCText As String
         Get
-            Return Me.lblLegendOverlapBC.Text
+            Return lblLegendOverlapBC.Text
         End Get
-        Set(ByVal Value As String)
-            Me.lblLegendOverlapAB.Text = Value
+        Set
+            lblLegendOverlapAB.Text = Value
         End Set
     End Property
 
-    Public Property LegendOverlapACText() As String
+    Public Property LegendOverlapACText As String
         Get
-            Return Me.lblLegendOverlapAC.Text
+            Return lblLegendOverlapAC.Text
         End Get
-        Set(ByVal Value As String)
-            Me.lblLegendOverlapAB.Text = Value
+        Set
+            lblLegendOverlapAB.Text = Value
         End Set
     End Property
 
-    Public ReadOnly Property Title() As Label
+    Public ReadOnly Property Title As Label
         Get
             Return lblTitle
         End Get
     End Property
 
-    Public ReadOnly Property Footer() As Label
+    Public ReadOnly Property Footer As Label
         Get
-            Return Me.lblFooter
+            Return lblFooter
         End Get
     End Property
 
-#End Region
-
-    Public ReadOnly Property VennDiagram() As ThreeCircleVennDiagram
+    Public ReadOnly Property VennDiagram As ThreeCircleVennDiagram
         Get
             Return vdgVennDiagram
         End Get
     End Property
 
-    'controls the amount of spacing between legend labels
-    Public Property LegendSeparation() As Integer
+    ''' <summary>
+    ''' Controls the amount of spacing between legend labels
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property LegendSeparation As Integer
         Get
-            Return Me.m_LegendSeparation
+            Return m_LegendSeparation
         End Get
-        Set(ByVal Value As Integer)
-            Me.m_LegendSeparation = Value
+        Set
+            m_LegendSeparation = Value
         End Set
     End Property
 
-    'update colors in legend when colors in diagram change
-    Private Sub VennDiagram_ColorChange(ByVal sender As VennDiagrams.VennDiagramBaseClass) Handles vdgVennDiagram.DrawingChange
-        Me.lblLegendCircleA.BackColor = vdgVennDiagram.CircleAColor
-        Me.lblLegendCircleB.BackColor = vdgVennDiagram.CircleBColor
-        Me.lblLegendCircleC.BackColor = vdgVennDiagram.CircleCColor
-        Me.lblLegendOverlapAB.BackColor = vdgVennDiagram.OverlapABColor
-        Me.lblLegendOverlapBC.BackColor = vdgVennDiagram.OverlapBCColor
-        Me.lblLegendOverlapAC.BackColor = vdgVennDiagram.OverlapACColor
+#End Region
+
+    ''' <summary>
+    ''' Update colors in legend when colors in diagram change
+    ''' </summary>
+    ''' <param name="sender"></param>
+    Private Sub VennDiagram_ColorChange(sender As VennDiagrams.VennDiagramBaseClass) Handles vdgVennDiagram.DrawingChange
+        lblLegendCircleA.BackColor = vdgVennDiagram.CircleAColor
+        lblLegendCircleB.BackColor = vdgVennDiagram.CircleBColor
+        lblLegendCircleC.BackColor = vdgVennDiagram.CircleCColor
+        lblLegendOverlapAB.BackColor = vdgVennDiagram.OverlapABColor
+        lblLegendOverlapBC.BackColor = vdgVennDiagram.OverlapBCColor
+        lblLegendOverlapAC.BackColor = vdgVennDiagram.OverlapACColor
     End Sub
 
-    Private Sub gbxLegend_Resize(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles gbxLegend.Resize
-        'redraw labels so they take up 1/6 of space each
-        'anchoring already causes them to be aligned correctly horizontally
-        Dim totalHeight As Integer = Me.gbxLegend.Height - 6 * Me.LegendSeparation - Me.m_LegendTopSeparation
-        Dim individualHeight As Integer = CInt(totalHeight / 6)
+    ''' <summary>
+    ''' Redraw labels so they take up 1/6 of space each
+    ''' Anchoring already causes them to be aligned correctly horizontally
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub gbxLegend_Resize(sender As Object, e As EventArgs) Handles gbxLegend.Resize
+        Dim totalHeight As Integer = gbxLegend.Height - 6 * LegendSeparation - m_LegendTopSeparation
+        Dim individualHeight = CInt(totalHeight / 6)
 
-        Me.lblLegendCircleA.Top = Me.m_LegendTopSeparation
-        Me.lblLegendCircleA.Height = individualHeight
+        lblLegendCircleA.Top = m_LegendTopSeparation
+        lblLegendCircleA.Height = individualHeight
 
-        Me.lblLegendOverlapAB.Top = Me.m_LegendTopSeparation + 1 * (Me.LegendSeparation + individualHeight)
-        Me.lblLegendOverlapAB.Height = individualHeight
+        lblLegendOverlapAB.Top = m_LegendTopSeparation + 1 * (LegendSeparation + individualHeight)
+        lblLegendOverlapAB.Height = individualHeight
 
-        Me.lblLegendCircleB.Top = Me.m_LegendTopSeparation + 2 * (Me.LegendSeparation + individualHeight)
-        Me.lblLegendCircleB.Height = individualHeight
+        lblLegendCircleB.Top = m_LegendTopSeparation + 2 * (LegendSeparation + individualHeight)
+        lblLegendCircleB.Height = individualHeight
 
-        Me.lblLegendOverlapBC.Top = Me.m_LegendTopSeparation + 3 * (Me.LegendSeparation + individualHeight)
-        Me.lblLegendOverlapBC.Height = individualHeight
+        lblLegendOverlapBC.Top = m_LegendTopSeparation + 3 * (LegendSeparation + individualHeight)
+        lblLegendOverlapBC.Height = individualHeight
 
-        Me.lblLegendCircleC.Top = Me.m_LegendTopSeparation + 4 * (Me.LegendSeparation + individualHeight)
-        Me.lblLegendCircleC.Height = individualHeight
+        lblLegendCircleC.Top = m_LegendTopSeparation + 4 * (LegendSeparation + individualHeight)
+        lblLegendCircleC.Height = individualHeight
 
-        Me.lblLegendOverlapAC.Top = Me.m_LegendTopSeparation + 5 * (Me.LegendSeparation + individualHeight)
-        Me.lblLegendOverlapAC.Height = individualHeight
+        lblLegendOverlapAC.Top = m_LegendTopSeparation + 5 * (LegendSeparation + individualHeight)
+        lblLegendOverlapAC.Height = individualHeight
 
     End Sub
 End Class

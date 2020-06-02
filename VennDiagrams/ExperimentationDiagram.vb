@@ -16,7 +16,6 @@ Option Strict On
 Public Class ExperimentationDiagram
     Inherits System.Windows.Forms.UserControl
 
-
 #Region " Component Designer generated code "
 
     Public Sub New(ByVal Container As System.ComponentModel.IContainer)
@@ -59,9 +58,9 @@ Public Class ExperimentationDiagram
 #End Region
 
 
-    Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
+    Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim g As Graphics = e.Graphics
-        Dim r As Rectangle = New Rectangle(Me.Left, Me.Top, Me.Width, Me.Height)
+        Dim r = New Rectangle(Me.Left, Me.Top, Me.Width, Me.Height)
         Dim b As Brush = New Drawing2D.LinearGradientBrush(r, Color.WhiteSmoke, Color.Violet, 0, False)
 
         MyBase.OnPaint(e)
@@ -69,22 +68,13 @@ Public Class ExperimentationDiagram
         'g.Clear(Color.White)
         'Console.WriteLine(r)
         'Console.WriteLine("Bounds " & g.ClipBounds.ToString)
-        'g.DrawLine(System.Drawing.Pens.BlanchedAlmond, r.Left, r.Top, r.Right, r.Bottom)
+        'g.DrawLine(Pens.BlanchedAlmond, r.Left, r.Top, r.Right, r.Bottom)
         g.FillRectangle(b, New Rectangle(Me.Left + 10, Me.Top + 10, Me.Width - 20, Me.Height - 20))
         If (LineOn) Then
-            g.DrawLine(System.Drawing.Pens.Plum, r.Left, r.Bottom, r.Right, r.Top)
+            g.DrawLine(Pens.Plum, r.Left, r.Bottom, r.Right, r.Top)
         End If
 
     End Sub
 
-    Private m_lineOn As Boolean = True
-
-    Public Property LineOn() As Boolean
-        Get
-            Return m_lineOn
-        End Get
-        Set(ByVal Value As Boolean)
-            m_lineOn = Value
-        End Set
-    End Property
+    Public Property LineOn As Boolean = True
 End Class

@@ -1,6 +1,7 @@
 Option Strict On
 
 Imports System.Drawing
+Imports System.Text
 
 ' -------------------------------------------------------------------------------
 ' Written by Kyle Littlefield for the Department of Energy (PNNL, Richland, WA)
@@ -58,35 +59,35 @@ Public Class TwoCircleVennDiagram
 #End Region
 
 #Region "Properties "
-    Public Property OverlapColor() As Color
+    Public Property OverlapColor As Color
         Get
             Return Me.OverlapABColor
         End Get
-        Set(ByVal Value As Color)
+        Set
             Me.OverlapABColor = Value
         End Set
     End Property
 
-    Public Property OverlapSize() As Double
+    Public Property OverlapSize As Double
         Get
             Return Me.OverlapABSize
         End Get
-        Set(ByVal Value As Double)
+        Set
             Me.OverlapABSize = Value
         End Set
     End Property
 
-    Public Property OverlapLabel() As String()
+    Public Property OverlapLabel As String()
         Get
             Return Me.OverlapABLabel
         End Get
-        Set(ByVal Value() As String)
+        Set
             Me.OverlapABLabel = Value
         End Set
     End Property
 #End Region
 
-    Protected Function AreaOfArc(ByVal dblRadius As Double, ByVal dblSweepAngle As Double) As Double
+    Protected Function AreaOfArc(dblRadius As Double, dblSweepAngle As Double) As Double
         Return (1 / 2 * dblRadius ^ 2) * (dblSweepAngle - Math.Sin(dblSweepAngle))
     End Function
 
@@ -145,8 +146,8 @@ Public Class TwoCircleVennDiagram
 
 
         'Rectangles around circleA and circleB
-        Dim circleABoundingBox As RectangleF = New RectangleF(CSng(circleALeft), CSng(circleATop), CSng(circleAWidth), CSng(circleAWidth))
-        Dim circleBBoundingBox As RectangleF = New RectangleF(CSng(circleBLeft), CSng(circleBTop), CSng(circleBWidth), CSng(circleBWidth))
+        Dim circleABoundingBox = New RectangleF(CSng(circleALeft), CSng(circleATop), CSng(circleAWidth), CSng(circleAWidth))
+        Dim circleBBoundingBox = New RectangleF(CSng(circleBLeft), CSng(circleBTop), CSng(circleBWidth), CSng(circleBWidth))
 
         'Console.WriteLine("Computing Screen Coordinates")
 
@@ -194,7 +195,7 @@ Public Class TwoCircleVennDiagram
 
         'Number of tries to get a close enough center.  If it exceeds 1000, then give up
         'and throw an exception
-        Dim tries As Integer = 0
+        Dim tries = 0
 
         Me.m_ComputeWorldCoordinatesValid = False
 
@@ -234,11 +235,7 @@ Public Class TwoCircleVennDiagram
         Do
             Dim overlapDifference As Double
             Dim alpha As Double
-            ''Dim alphanum As Double
-            ''Dim alphadenom As Double
             Dim beta As Double
-            ''Dim betanum As Double
-            ''Dim betadenom As Double
 
             'Calculated area of overlap
             Dim overlap As Double
@@ -272,7 +269,7 @@ Public Class TwoCircleVennDiagram
             End If
 
             tries = tries + 1
-            If tries > VennDiagramBaseClass.MAX_COMPUTE_TRIES Then
+            If tries > MAX_COMPUTE_TRIES Then
                 'This should only happen in the case that the user
                 'specifies an overlap that is bigger than one or both of the base sets.
                 'can also happen when size of component is very small (like 1 * 1 pixels)
@@ -308,12 +305,12 @@ Public Class TwoCircleVennDiagram
     ''' <param name="sngOpacity">Value between 0 and 1 representing transparency; 1 means fully opaque</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Overrides Function GetSVG(ByVal blnFillCircles As Boolean, ByVal sngOpacity As Single) As String
-        Dim strSVG As System.Text.StringBuilder
-        Dim intStrokeWidthPixels As Integer = 1
+    Public Overrides Function GetSVG(blnFillCircles As Boolean, sngOpacity As Single) As String
+        Dim strSVG As StringBuilder
+        Dim intStrokeWidthPixels = 1
 
         ' Create the SVG text
-        strSVG = New System.Text.StringBuilder
+        strSVG = New StringBuilder
 
         strSVG.AppendLine("<?xml version=""1.0"" standalone=""no""?>")
         strSVG.AppendLine("<!DOCTYPE svg PUBLIC ""-//W3C//DTD SVG 1.1//EN"" ""http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"">")
@@ -339,7 +336,7 @@ Public Class TwoCircleVennDiagram
 
     End Function
 
-    Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
+    Protected Overrides Sub OnPaint(e As PaintEventArgs)
         'Me.m_overlapAB.Color = Color.WhiteSmoke
         'handles basic control properties, background
         'If Not (Me.m_ComputeWorldCoordinatesValid) Then
