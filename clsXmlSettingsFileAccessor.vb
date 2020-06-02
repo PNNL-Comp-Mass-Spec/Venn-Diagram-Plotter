@@ -68,7 +68,7 @@ Public Class XmlSettingsFileAccessor
 
         m_XMLFilePath = XmlSettingsFilePath
 
-        ' Note: Always set IsCaseSensitive = True for XMLFileReader's constructor since this class handles 
+        ' Note: Always set IsCaseSensitive = True for XMLFileReader's constructor since this class handles
         '       case sensitivity mapping internally
         m_XMLFileAccessor = New XMLFileReader(m_XMLFilePath, True)
         If m_XMLFileAccessor Is Nothing Then
@@ -85,7 +85,7 @@ Public Class XmlSettingsFileAccessor
     Public Function ManualParseXmlOrIniFile(ByVal strFilePath As String) As Boolean
         m_XMLFilePath = strFilePath
 
-        ' Note: Always set IsCaseSensitive = True for XMLFileReader's constructor since this class handles 
+        ' Note: Always set IsCaseSensitive = True for XMLFileReader's constructor since this class handles
         '       case sensitivity mapping internally
         m_XMLFileAccessor = New XMLFileReader(String.Empty, True)
 
@@ -149,7 +149,7 @@ Public Class XmlSettingsFileAccessor
 
         ' Lookup the correct capitalization for sectionName (only truly important if mCaseSensitive = False)
         sectionNameInFile = GetCachedSectionName(sectionName)
-		If String.IsNullOrWhiteSpace(sectionNameInFile) Then Return False
+        If String.IsNullOrWhiteSpace(sectionNameInFile) Then Return False
 
         Try
             ' Grab the keys for sectionName
@@ -224,7 +224,7 @@ Public Class XmlSettingsFileAccessor
 
         ' Lookup the correct capitalization for sectionName (only truly important if mCaseSensitive = False)
         sectionNameInFile = GetCachedSectionName(sectionName)
-		If String.IsNullOrWhiteSpace(sectionNameInFile) Then Return String.Empty
+        If String.IsNullOrWhiteSpace(sectionNameInFile) Then Return String.Empty
 
         If mCachedSection.SectionName = sectionNameInFile Then
             blnSuccess = True
@@ -346,7 +346,7 @@ Public Class XmlSettingsFileAccessor
     Public Function GetParam(ByVal sectionName As String, ByVal keyName As String, ByVal valueIfMissing As Short, Optional ByRef valueNotPresent As Boolean = False) As Short
         Dim strResult As String
         Dim blnNotFound As Boolean = False
-		Dim intValue As Short
+        Dim intValue As Short
 
         strResult = Me.GetParam(sectionName, keyName, valueIfMissing.ToString, blnNotFound)
         If strResult Is Nothing OrElse blnNotFound Then
@@ -355,8 +355,8 @@ Public Class XmlSettingsFileAccessor
         Else
             valueNotPresent = False
             Try
-				If Short.TryParse(strResult, intValue) Then
-					Return intValue
+                If Short.TryParse(strResult, intValue) Then
+                    Return intValue
                 ElseIf strResult.ToLower = "true" Then
                     Return -1
                 ElseIf strResult.ToLower = "false" Then
@@ -384,7 +384,7 @@ Public Class XmlSettingsFileAccessor
     Public Function GetParam(ByVal sectionName As String, ByVal keyName As String, ByVal valueIfMissing As Integer, Optional ByRef valueNotPresent As Boolean = False) As Integer
         Dim strResult As String
         Dim blnNotFound As Boolean = False
-		Dim intValue As Integer
+        Dim intValue As Integer
 
         strResult = Me.GetParam(sectionName, keyName, valueIfMissing.ToString, blnNotFound)
         If strResult Is Nothing OrElse blnNotFound Then
@@ -393,8 +393,8 @@ Public Class XmlSettingsFileAccessor
         Else
             valueNotPresent = False
             Try
-				If Integer.TryParse(strResult, intValue) Then
-					Return intValue
+                If Integer.TryParse(strResult, intValue) Then
+                    Return intValue
                 ElseIf strResult.ToLower = "true" Then
                     Return -1
                 ElseIf strResult.ToLower = "false" Then
@@ -419,10 +419,10 @@ Public Class XmlSettingsFileAccessor
     ''' <param name="valueIfMissing">Value to return if "sectionName" or "keyName" is missing.</param>
     ''' <param name="valueNotPresent">Set to True if "sectionName" or "keyName" is missing.  Returned ByRef.</param>
     ''' <return>The function returns the name of the "value" attribute as a Long.  If "value" is "true" returns -1.  If "value" is "false" returns 0.</return>
-	Public Function GetParam(ByVal sectionName As String, ByVal keyName As String, ByVal valueIfMissing As Long, Optional ByRef valueNotPresent As Boolean = False) As Int64
+    Public Function GetParam(ByVal sectionName As String, ByVal keyName As String, ByVal valueIfMissing As Long, Optional ByRef valueNotPresent As Boolean = False) As Int64
         Dim strResult As String
         Dim blnNotFound As Boolean = False
-		Dim intValue As Int64
+        Dim intValue As Int64
 
         strResult = Me.GetParam(sectionName, keyName, valueIfMissing.ToString, blnNotFound)
         If strResult Is Nothing OrElse blnNotFound Then
@@ -431,8 +431,8 @@ Public Class XmlSettingsFileAccessor
         Else
             valueNotPresent = False
             Try
-				If Int64.TryParse(strResult, intValue) Then
-					Return intValue
+                If Int64.TryParse(strResult, intValue) Then
+                    Return intValue
                 ElseIf strResult.ToLower = "true" Then
                     Return -1
                 ElseIf strResult.ToLower = "false" Then
@@ -460,7 +460,7 @@ Public Class XmlSettingsFileAccessor
     Public Function GetParam(ByVal sectionName As String, ByVal keyName As String, ByVal valueIfMissing As Single, Optional ByRef valueNotPresent As Boolean = False) As Single
         Dim strResult As String
         Dim blnNotFound As Boolean = False
-		Dim sngValue As Single
+        Dim sngValue As Single
 
         strResult = Me.GetParam(sectionName, keyName, valueIfMissing.ToString, blnNotFound)
         If strResult Is Nothing OrElse blnNotFound Then
@@ -469,8 +469,8 @@ Public Class XmlSettingsFileAccessor
         Else
             valueNotPresent = False
             Try
-				If Single.TryParse(strResult, sngValue) Then
-					Return sngValue
+                If Single.TryParse(strResult, sngValue) Then
+                    Return sngValue
                 ElseIf strResult.ToLower = "true" Then
                     Return -1
                 ElseIf strResult.ToLower = "false" Then
@@ -498,7 +498,7 @@ Public Class XmlSettingsFileAccessor
     Public Function GetParam(ByVal sectionName As String, ByVal keyName As String, ByVal valueIfMissing As Double, Optional ByRef valueNotPresent As Boolean = False) As Double
         Dim strResult As String
         Dim blnNotFound As Boolean = False
-		Dim dblValue As Double
+        Dim dblValue As Double
 
         strResult = Me.GetParam(sectionName, keyName, valueIfMissing.ToString, blnNotFound)
         If strResult Is Nothing OrElse blnNotFound Then
@@ -507,8 +507,8 @@ Public Class XmlSettingsFileAccessor
         Else
             valueNotPresent = False
             Try
-				If Double.TryParse(strResult, dblValue) Then
-					Return dblValue
+                If Double.TryParse(strResult, dblValue) Then
+                    Return dblValue
                 ElseIf strResult.ToLower = "true" Then
                     Return -1
                 ElseIf strResult.ToLower = "false" Then
@@ -529,9 +529,9 @@ Public Class XmlSettingsFileAccessor
     ''' Legacy function name; calls SetXMLFilePath
     ''' </summary>
     Public Sub SetIniFilePath(ByVal XmlSettingsFilePath As String)
-    	SetXMLFilePath(XmlSettingsFilePath)
+        SetXMLFilePath(XmlSettingsFilePath)
     End Sub
-    
+
     ''' <summary>
     ''' The function sets the path to the Xml Settings File.
     ''' </summary>
@@ -723,7 +723,7 @@ Public Class XmlSettingsFileAccessor
                 m_initialized = True
 
             Catch
-                ' Exception occurred parsing XmlFilename 
+                ' Exception occurred parsing XmlFilename
                 ' Manually parse the file line-by-line
                 ManualParseXmlOrIniFile(strXmlFilename)
             End Try
@@ -744,11 +744,11 @@ Public Class XmlSettingsFileAccessor
         ''' <return>The function returns the name of ini file.</return>
         Public ReadOnly Property XmlFilename() As String
             Get
-				If Not Initialized Then
-					Return String.Empty
-				Else
-					Return (m_XmlFilename)
-				End If
+                If Not Initialized Then
+                    Return String.Empty
+                Else
+                    Return (m_XmlFilename)
+                End If
             End Get
         End Property
 
@@ -1096,10 +1096,10 @@ Public Class XmlSettingsFileAccessor
         Public ReadOnly Property AllSections() As System.Collections.Specialized.StringCollection
             Get
                 If Not Initialized Then
-					Return New Collections.Specialized.StringCollection()
-				Else
-					Return sections
-				End If
+                    Return New Collections.Specialized.StringCollection()
+                Else
+                    Return sections
+                End If
             End Get
         End Property
 
@@ -1126,7 +1126,7 @@ Public Class XmlSettingsFileAccessor
                             Case XMLItemTypeEnum.GetValues
                                 items.Add(N.Attributes.GetNamedItem("value").Value)
                             Case XMLItemTypeEnum.GetKeysAndValues
-                                items.Add(N.Attributes.GetNamedItem("key").Value & "=" & _
+                                items.Add(N.Attributes.GetNamedItem("key").Value & "=" &
                                 N.Attributes.GetNamedItem("value").Value)
                         End Select
                     Next
@@ -1292,26 +1292,26 @@ Public Class XmlSettingsFileAccessor
                     '     <item key="Setting1" value="ValueA" />
                     '   </section>
 
-					Using srInFile As System.IO.StreamReader = New System.IO.StreamReader(New System.IO.FileStream(fi.FullName, IO.FileMode.Open, IO.FileAccess.Read, IO.FileShare.ReadWrite))
+                    Using srInFile As System.IO.StreamReader = New System.IO.StreamReader(New System.IO.FileStream(fi.FullName, IO.FileMode.Open, IO.FileAccess.Read, IO.FileShare.ReadWrite))
 
-						Do While srInFile.Peek() > -1
-							s = srInFile.ReadLine()
+                        Do While srInFile.Peek() > -1
+                            s = srInFile.ReadLine()
 
-							' Try to manually parse this line
-							ParseLineManual(s, m_XmlDoc)
-						Loop
+                            ' Try to manually parse this line
+                            ParseLineManual(s, m_XmlDoc)
+                        Loop
 
-						m_XmlFilename = strFilePath
-						m_initialized = True
+                        m_XmlFilename = strFilePath
+                        m_initialized = True
 
-					End Using
+                    End Using
 
-				Else
-					' File doesn't exist; create a new, blank .XML file
-					m_XmlFilename = strFilePath
-					m_XmlDoc.Save(m_XmlFilename)
-					m_initialized = True
-				End If
+                Else
+                    ' File doesn't exist; create a new, blank .XML file
+                    m_XmlFilename = strFilePath
+                    m_XmlDoc.Save(m_XmlFilename)
+                    m_initialized = True
+                End If
 
                 Return True
 
@@ -1347,9 +1347,9 @@ Public Class XmlSettingsFileAccessor
             Dim parts() As String
 
             strLine = strLine.TrimStart()
-			If String.IsNullOrWhiteSpace(strLine) Then
-				Return True
-			End If
+            If String.IsNullOrWhiteSpace(strLine) Then
+                Return True
+            End If
 
             Select Case (strLine.Substring(0, 1))
                 Case "["
@@ -1401,39 +1401,39 @@ Public Class XmlSettingsFileAccessor
                             strValue = String.Empty
                         End If
 
-						If String.IsNullOrWhiteSpace(strKey) Then
-							Return False
+                        If String.IsNullOrWhiteSpace(strKey) Then
+                            Return False
 
-						Else
+                        Else
 
-							blnAddSetting = True
+                            blnAddSetting = True
 
-							Select Case strKey.ToLower().Trim()
+                            Select Case strKey.ToLower().Trim()
 
-								Case "<sections>", "</section>", "</sections>"
-									' Do not add a new key
-									If String.IsNullOrEmpty(strValue) Then
-										blnAddSetting = False
-									End If
+                                Case "<sections>", "</section>", "</sections>"
+                                    ' Do not add a new key
+                                    If String.IsNullOrEmpty(strValue) Then
+                                        blnAddSetting = False
+                                    End If
 
-							End Select
+                            End Select
 
-							If blnAddSetting Then
-								N = doc.CreateElement("item")
-								Natt = doc.CreateAttribute("key")
-								Natt.Value = SetNameCase(strKey)
-								N.Attributes.SetNamedItem(Natt)
+                            If blnAddSetting Then
+                                N = doc.CreateElement("item")
+                                Natt = doc.CreateAttribute("key")
+                                Natt.Value = SetNameCase(strKey)
+                                N.Attributes.SetNamedItem(Natt)
 
-								Natt = doc.CreateAttribute("value")
-								Natt.Value = strValue
-								N.Attributes.SetNamedItem(Natt)
+                                Natt = doc.CreateAttribute("value")
+                                Natt.Value = strValue
+                                N.Attributes.SetNamedItem(Natt)
 
-								GetLastSection().AppendChild(N)
+                                GetLastSection().AppendChild(N)
 
-							End If
+                            End If
 
-							Return True
-						End If
+                            Return True
+                        End If
 
                     End If
 
@@ -1441,8 +1441,8 @@ Public Class XmlSettingsFileAccessor
 
         End Function
 
-        Private Function ParseLineManualCheckTag(ByVal strLine As String, _
-                                                 ByVal strTagTofind As String, _
+        Private Function ParseLineManualCheckTag(ByVal strLine As String,
+                                                 ByVal strTagTofind As String,
                                                  ByRef strTagValue As String) As Boolean
 
             Dim intMatchIndex As Integer
@@ -1474,11 +1474,11 @@ Public Class XmlSettingsFileAccessor
         ''' <summary>It Sets or Gets the output file name.</summary>
         Public Property OutputFilename() As String
             Get
-				If Not Initialized Then
-					Return String.Empty
-				Else
-					Return m_SaveFilename
-				End If
+                If Not Initialized Then
+                    Return String.Empty
+                Else
+                    Return m_SaveFilename
+                End If
             End Get
             Set(ByVal Value As String)
                 Dim fi As System.IO.FileInfo
@@ -1523,11 +1523,11 @@ Public Class XmlSettingsFileAccessor
         ''' <summary>It gets the System.Xml.XmlDocument.</summary>
         Public ReadOnly Property XmlDoc() As System.Xml.XmlDocument
             Get
-				If Not Initialized Then
-					Return New System.Xml.XmlDocument
-				Else
-					Return m_XmlDoc
-				End If
+                If Not Initialized Then
+                    Return New System.Xml.XmlDocument
+                Else
+                    Return m_XmlDoc
+                End If
             End Get
         End Property
 
@@ -1535,21 +1535,21 @@ Public Class XmlSettingsFileAccessor
         ''' <return>It returns the XML document formatted as a string.</return>
         Public ReadOnly Property XML() As String
             Get
-				If Not Initialized Then
-					Return String.Empty
-				End If
+                If Not Initialized Then
+                    Return String.Empty
+                End If
 
-				Dim sb As System.Text.StringBuilder = New System.Text.StringBuilder
-				Using sw As System.IO.StringWriter = New System.IO.StringWriter(sb)
-					Using xw As System.Xml.XmlTextWriter = New System.Xml.XmlTextWriter(sw)
-						xw.Indentation = 3
-						xw.Formatting = System.Xml.Formatting.Indented
-						m_XmlDoc.WriteContentTo(xw)
-					End Using
-				End Using
+                Dim sb As System.Text.StringBuilder = New System.Text.StringBuilder
+                Using sw As System.IO.StringWriter = New System.IO.StringWriter(sb)
+                    Using xw As System.Xml.XmlTextWriter = New System.Xml.XmlTextWriter(sw)
+                        xw.Indentation = 3
+                        xw.Formatting = System.Xml.Formatting.Indented
+                        m_XmlDoc.WriteContentTo(xw)
+                    End Using
+                End Using
 
-				Return sb.ToString()
-			End Get
+                Return sb.ToString()
+            End Get
         End Property
 
     End Class

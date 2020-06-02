@@ -10,7 +10,7 @@ Option Strict On
 ' -------------------------------------------------------------------------------
 '
 ' Licensed under the Apache License, Version 2.0; you may not use this file except
-' in compliance with the License.  You may obtain a copy of the License at 
+' in compliance with the License.  You may obtain a copy of the License at
 ' http://www.apache.org/licenses/LICENSE-2.0
 '
 Public Class TwoCircleVennDiagramPlain
@@ -44,7 +44,7 @@ Public Class TwoCircleVennDiagramPlain
     Private components As System.ComponentModel.IContainer
 
     'NOTE: The following procedure is required by the Windows Form Designer
-    'It can be modified using the Windows Form Designer.  
+    'It can be modified using the Windows Form Designer.
     'Do not modify it using the code editor.
     Friend WithEvents vdgVennDiagram As VennDiagrams.TwoCircleVennDiagram
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()

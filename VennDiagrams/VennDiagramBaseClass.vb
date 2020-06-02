@@ -10,7 +10,7 @@ Imports System.Drawing
 ' -------------------------------------------------------------------------------
 '
 ' Licensed under the Apache License, Version 2.0; you may not use this file except
-' in compliance with the License.  You may obtain a copy of the License at 
+' in compliance with the License.  You may obtain a copy of the License at
 ' http://www.apache.org/licenses/LICENSE-2.0
 '
 
@@ -44,7 +44,7 @@ Public MustInherit Class VennDiagramBaseClass
     Private components As System.ComponentModel.IContainer
 
     'NOTE: The following procedure is required by the Windows Form Designer
-    'It can be modified using the Windows Form Designer.  
+    'It can be modified using the Windows Form Designer.
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         '
@@ -104,8 +104,8 @@ Public MustInherit Class VennDiagramBaseClass
             LocStart.Y = 0
             LocEnd.X = 0
             LocEnd.Y = 0
-            ArcA.clear()
-            ArcB.clear()
+            ArcA.Clear()
+            ArcB.Clear()
         End Sub
     End Structure
 
@@ -467,14 +467,14 @@ Public MustInherit Class VennDiagramBaseClass
     'into screen coordinates that are then used to draw GDI+ shapes.
     Protected MustOverride Sub ComputeScreenCoordinatesFromWorldCoordinates()
 
-    Protected Sub ComputeSVGArcCoordinates(ByVal udtCircleALoc As udtPointXYType, _
-                                           ByVal udtCircleBLoc As udtPointXYType, _
-                                           ByVal dblCircleARadius As Double, _
-                                           ByVal dblCircleBRadius As Double, _
-                                           ByVal dblAlpha As Double, _
-                                           ByVal dblBeta As Double, _
-                                           ByVal dblAlphaStartAddon As Double, _
-                                           ByVal dblBetaStartAddon As Double, _
+    Protected Sub ComputeSVGArcCoordinates(ByVal udtCircleALoc As udtPointXYType,
+                                           ByVal udtCircleBLoc As udtPointXYType,
+                                           ByVal dblCircleARadius As Double,
+                                           ByVal dblCircleBRadius As Double,
+                                           ByVal dblAlpha As Double,
+                                           ByVal dblBeta As Double,
+                                           ByVal dblAlphaStartAddon As Double,
+                                           ByVal dblBetaStartAddon As Double,
                                            ByRef udtArcDetails As udtSVGOverlapDetailsType)
 
         ' Center of Circle A is at point A
@@ -555,12 +555,12 @@ Public MustInherit Class VennDiagramBaseClass
         Me.OnPaint(New PaintEventArgs(g, New Rectangle(0, 0, 0, 0)))
     End Sub
 
-    Protected Sub DrawOverlapRegion(ByRef objDrawingPath As System.Drawing.Drawing2D.GraphicsPath, _
-                                    ByVal BoundingBoxA As RectangleF, _
-                                    ByVal BoundingBoxB As RectangleF, _
-                                    ByVal dblAlpha As Double, _
-                                    ByVal dblBeta As Double, _
-                                    ByVal dblAlphaStartAddon As Double, _
+    Protected Sub DrawOverlapRegion(ByRef objDrawingPath As System.Drawing.Drawing2D.GraphicsPath,
+                                    ByVal BoundingBoxA As RectangleF,
+                                    ByVal BoundingBoxB As RectangleF,
+                                    ByVal dblAlpha As Double,
+                                    ByVal dblBeta As Double,
+                                    ByVal dblAlphaStartAddon As Double,
                                     ByVal dblBetaStartAddon As Double)
         objDrawingPath.Reset()
         objDrawingPath.AddArc(BoundingBoxA, CSng(-dblAlpha / 2 + dblAlphaStartAddon), CSng(dblAlpha))
@@ -576,8 +576,8 @@ Public MustInherit Class VennDiagramBaseClass
     ''' <remarks></remarks>
     Public MustOverride Function GetSVG(ByVal blnFillCircles As Boolean, ByVal sngOpacity As Single) As String
 
-    Protected Function GetSVGCirclesAB(ByVal intStrokeWidthPixels As Integer, _
-                                       ByVal blnFillCircles As Boolean, _
+    Protected Function GetSVGCirclesAB(ByVal intStrokeWidthPixels As Integer,
+                                       ByVal blnFillCircles As Boolean,
                                        ByVal sngOpacity As Single) As String
 
         Dim strSVG As New System.Text.StringBuilder
@@ -603,8 +603,8 @@ Public MustInherit Class VennDiagramBaseClass
 
     End Function
 
-    Protected Function GetSVGCircleText(ByVal udtPoint As udtPointXYType, ByVal dblRadius As Double, _
-                                        ByVal blnFillCircle As Boolean, ByVal cColor As System.Drawing.Color, _
+    Protected Function GetSVGCircleText(ByVal udtPoint As udtPointXYType, ByVal dblRadius As Double,
+                                        ByVal blnFillCircle As Boolean, ByVal cColor As System.Drawing.Color,
                                         ByVal sngOpacity As Single, ByVal intStrokeWidthPixels As Integer) As String
         Dim strSVG As String
 
@@ -621,8 +621,8 @@ Public MustInherit Class VennDiagramBaseClass
 
     End Function
 
-    Protected Function GetSVGArcText(ByRef udtArcDetails As udtSVGOverlapDetailsType, _
-                                     ByVal blnFillArc As Boolean, ByVal cColor As System.Drawing.Color, _
+    Protected Function GetSVGArcText(ByRef udtArcDetails As udtSVGOverlapDetailsType,
+                                     ByVal blnFillArc As Boolean, ByVal cColor As System.Drawing.Color,
                                      ByVal sngOpacity As Single, ByVal intStrokeWidthPixels As Integer) As String
 
         Dim strSVG As String
@@ -652,10 +652,10 @@ Public MustInherit Class VennDiagramBaseClass
 
     End Function
 
-    Protected Function GetSVGArcText(ByVal udtStartPoint As udtPointXYType, ByVal udtEndPoint As udtPointXYType, _
-                                     ByVal dblRadius As Double, _
-                                     ByVal intRotation As Single, ByVal intLargeArcFlag As Byte, ByVal intSweepFlag As Byte, _
-                                     ByVal blnFillArc As Boolean, ByVal cColor As System.Drawing.Color, _
+    Protected Function GetSVGArcText(ByVal udtStartPoint As udtPointXYType, ByVal udtEndPoint As udtPointXYType,
+                                     ByVal dblRadius As Double,
+                                     ByVal intRotation As Single, ByVal intLargeArcFlag As Byte, ByVal intSweepFlag As Byte,
+                                     ByVal blnFillArc As Boolean, ByVal cColor As System.Drawing.Color,
                                      ByVal sngOpacity As Single, ByVal intStrokeWidthPixels As Integer) As String
         Dim strSVG As String
 
@@ -765,7 +765,7 @@ Public Class VennDiagramAreaInfo
     Private m_color As System.Drawing.Color = System.Drawing.Color.Blue
 
     'Would be more powerful if it was a Brush instead of a merely a color, allowing, for example
-    'hatching or gradients, but then the TwoCircleVennDiagramPresenter would not be able to 
+    'hatching or gradients, but then the TwoCircleVennDiagramPresenter would not be able to
     'synchronize label colors with what venn diagram was drawing
     Friend Property Color() As Color
         Get

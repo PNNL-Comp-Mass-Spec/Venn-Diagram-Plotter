@@ -4,29 +4,29 @@ Public Class clsMatrixSolver
     ' From http://www.vb-helper.com/howto_net_gaussian_elimination.html
 
     ' This class can be used to solve a system of equations using Gaussian Elimination
-    ' The system of equations is of the form: 
+    ' The system of equations is of the form:
     '     A1*x1 + B1*x2 + ... + N1*xn = c1
     '     A2*x1 + B2*x2 + ... + N2*xn = c2
     '     ...
     '     Am*x1 + Bm*x2 + ... + Nm*xn = cm = 0
     '
-    ' For example: 
+    ' For example:
     '     9 * x1 + 4 * x2 = 7
     '     4 * x1 + 3 * x2 = 8
     '
-    ' You can write these equations as a matrix multiplied by a vector of variables x1, x2, ..., xn, equals a vector of constants c1, c2, ..., cn. 
+    ' You can write these equations as a matrix multiplied by a vector of variables x1, x2, ..., xn, equals a vector of constants c1, c2, ..., cn.
     '          Matrix A        Matrix X   Matrix B
     '     | A1  B1  ...  N1 |   | x1 |     | c1 |
     '     | A2  B2  ...  N2 |   | x2 |     | c2 |
     '     |         ...     | * |... |  =  |... |
     '     | Am  Bm  ...  Nm |   | xm |     | cm |
     '
-    ' To use SolveEquations, provide MatrixA in dblCoefMatrix and MatrixB in dblConstants; 
+    ' To use SolveEquations, provide MatrixA in dblCoefMatrix and MatrixB in dblConstants;
     ' the solved values for the variables will be returned in dblXValues
 
     Public Function SolveEquations(ByRef dblCoefMatrix(,) As Double, ByRef dblConstants() As Double, ByRef dblXValues() As Double, ByRef strMessage As String) As Boolean
 
-        ' This function uses dblCoefMatrix and dblConstants to structure the data into an augmented matrix 
+        ' This function uses dblCoefMatrix and dblConstants to structure the data into an augmented matrix
         '  that includes the data matrix, the constants, and one extra column to hold the variables' final values
 
         Dim intRowCount As Integer
@@ -94,7 +94,7 @@ Public Class clsMatrixSolver
 
     Public Function MultiplyMatrices(ByRef dblMatrix1(,) As Double, ByRef dblArray() As Double, ByRef dblResults() As Double) As Boolean
         ' This function assumes dblArray is a matrix with many rows, but just 1 column (and is represented by an array)
-        ' Auto-determines the row and column count of dblMatrix1 using the rule that 
+        ' Auto-determines the row and column count of dblMatrix1 using the rule that
         ' the number of columns in the first matrix must equal the number of rows in the second matrix
         ' If dblMatrix1 or dblArray has extra rows or columns, then they're ignored
 
@@ -119,7 +119,7 @@ Public Class clsMatrixSolver
     End Function
 
     Public Function MultiplyMatrices(ByRef dblMatrix1(,) As Double, ByRef dblMatrix2(,) As Double, ByRef dblResults(,) As Double) As Boolean
-        ' Auto-determines the row and column count of dblMatrix1 using the rule that 
+        ' Auto-determines the row and column count of dblMatrix1 using the rule that
         ' the number of columns in the first matrix must equal the number of rows in the second matrix
         ' If dblMatrix1 or dblArray has extra rows or columns, then they're ignored
 
@@ -146,10 +146,10 @@ Public Class clsMatrixSolver
     End Function
 
 
-    Protected Function MultiplyMatrices(ByRef dblMatrix1(,) As Double, ByRef dblMatrix2() As Double, ByRef dblResults() As Double, _
+    Protected Function MultiplyMatrices(ByRef dblMatrix1(,) As Double, ByRef dblMatrix2() As Double, ByRef dblResults() As Double,
                                         ByVal intRowCount1 As Integer, ByVal intColCount1 As Integer) As Boolean
         ' This function assumes dblMatrix2 is a matrix with many rows, but just 1 column (and is represented by an array)
-        ' Thus, dblResults is returned as a 1D array 
+        ' Thus, dblResults is returned as a 1D array
 
         Dim x As Integer, y As Integer
         Dim dblTemp As Double
@@ -177,8 +177,8 @@ Public Class clsMatrixSolver
 
     End Function
 
-    Protected Function MultiplyMatrices(ByRef dblMatrix1(,) As Double, ByRef dblMatrix2(,) As Double, ByRef dblResults(,) As Double, _
-                                        ByVal intRowCount1 As Integer, ByVal intColCount1 As Integer, _
+    Protected Function MultiplyMatrices(ByRef dblMatrix1(,) As Double, ByRef dblMatrix2(,) As Double, ByRef dblResults(,) As Double,
+                                        ByVal intRowCount1 As Integer, ByVal intColCount1 As Integer,
                                         ByVal intRowCount2 As Integer, ByVal intColCount2 As Integer) As Boolean
         ' If dblMatrix1 has extra columns or dblMatrix2 has extra rows, then the extra information is ignored
 
@@ -226,11 +226,11 @@ Public Class clsMatrixSolver
         If intColCount < 2 Then intColCount = 2
 
         If blnUseFixed Then
-            Dim dblCoefMatrix(,) As Double = {{2, 2, 7, 0, 0, 0}, _
-                                          {2, 1, 2, 2, 2, 0}, _
-                                          {3, 4, 5, 7, 3, 0}, _
-                                          {6, 7, 1, 8, 9, 6}, _
-                                          {7, 5, 4, 9, 1, 5}, _
+            Dim dblCoefMatrix(,) As Double = {{2, 2, 7, 0, 0, 0},
+                                          {2, 1, 2, 2, 2, 0},
+                                          {3, 4, 5, 7, 3, 0},
+                                          {6, 7, 1, 8, 9, 6},
+                                          {7, 5, 4, 9, 1, 5},
                                           {1, 9, 5, 8, 1, 0}}
 
             ReDim dblConstants(UBound(dblCoefMatrix, 1))
@@ -258,11 +258,11 @@ Public Class clsMatrixSolver
 
     Public Sub TestSolver()
         Dim dblCoefMatrix(,) As Double
-		Dim dblConstants() As Double = Nothing
-		Dim dblXValues() As Double = Nothing
+        Dim dblConstants() As Double = Nothing
+        Dim dblXValues() As Double = Nothing
 
         Dim blnSuccess As Boolean
-		Dim strMessage As String = String.Empty
+        Dim strMessage As String = String.Empty
 
         Dim intRowCount As Integer = 6
         Dim intColCount As Integer = 6
@@ -275,7 +275,7 @@ Public Class clsMatrixSolver
 
     Protected Function SolveEquationsSingleMatrix(ByRef dblAugmentedMatrix(,) As Double, ByRef strMessage As String) As Boolean
 
-        ' To use this function, structure the data into an augmented matrix that includes the 
+        ' To use this function, structure the data into an augmented matrix that includes the
         ' original coefficients, the constants, and one extra column to hold the variables' final values
         '     | A1  B1  ...  N1  c1  x1 |
         '     | A2  B2  ...  N2  c2  x2 |

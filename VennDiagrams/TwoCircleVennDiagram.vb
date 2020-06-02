@@ -12,7 +12,7 @@ Imports System.Drawing
 ' -------------------------------------------------------------------------------
 '
 ' Licensed under the Apache License, Version 2.0; you may not use this file except
-' in compliance with the License.  You may obtain a copy of the License at 
+' in compliance with the License.  You may obtain a copy of the License at
 ' http://www.apache.org/licenses/LICENSE-2.0
 '
 
@@ -44,7 +44,7 @@ Public Class TwoCircleVennDiagram
     Private components As System.ComponentModel.IContainer
 
     'NOTE: The following procedure is required by the Windows Form Designer
-    'It can be modified using the Windows Form Designer.  
+    'It can be modified using the Windows Form Designer.
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         '
@@ -164,8 +164,8 @@ Public Class TwoCircleVennDiagram
 
             If CALCULATE_SVG_ARCS Then
                 ' Compute and store the details for drawing the arcs in an SVG file
-                ComputeSVGArcCoordinates(m_CircleA_ScreenLoc, m_CircleB_ScreenLoc, m_CircleA_ScreenRadius, m_CircleB_ScreenRadius, _
-                                         m_OverlapAB_alpha, m_OverlapAB_beta, 0, 0, _
+                ComputeSVGArcCoordinates(m_CircleA_ScreenLoc, m_CircleB_ScreenLoc, m_CircleA_ScreenRadius, m_CircleB_ScreenRadius,
+                                         m_OverlapAB_alpha, m_OverlapAB_beta, 0, 0,
                                          m_OverlapAB_ArcDetails)
 
             End If
@@ -192,7 +192,7 @@ Public Class TwoCircleVennDiagram
         'current x coordinate of circleB center
         Dim currentCenter As Double
 
-        'Number of tries to get a close enough center.  If it exceeds 1000, then give up 
+        'Number of tries to get a close enough center.  If it exceeds 1000, then give up
         'and throw an exception
         Dim tries As Integer = 0
 
@@ -209,7 +209,7 @@ Public Class TwoCircleVennDiagram
         End If
 
         'When size for one circle is equal to 0 this algorithm fails to work.  Solution
-        'is to just make the size really small.  This causes it to be unnoticeable 
+        'is to just make the size really small.  This causes it to be unnoticeable
         'on the printed control.
         If (Me.CircleASize <= 0 And Me.CircleBSize > 0) Then
             Me.CircleASize = 0.0000000001
@@ -273,7 +273,7 @@ Public Class TwoCircleVennDiagram
 
             tries = tries + 1
             If tries > VennDiagramBaseClass.MAX_COMPUTE_TRIES Then
-                'This should only happen in the case that the user 
+                'This should only happen in the case that the user
                 'specifies an overlap that is bigger than one or both of the base sets.
                 'can also happen when size of component is very small (like 1 * 1 pixels)
                 Me.m_ComputeWorldCoordinatesValid = False
@@ -364,7 +364,7 @@ Public Class TwoCircleVennDiagram
         End If
 
         'second time, so if there sizes are not reasonable, then
-        'return without painting anything.  For example, this occurs when the overlap area 
+        'return without painting anything.  For example, this occurs when the overlap area
         'exceeds the area of one or both circles
         If Not Me.SizesReasonable Then
             Exit Sub

@@ -3,8 +3,8 @@ Option Strict On
 Imports System.Windows.Forms
 Imports System.Drawing
 
-'Prints controls to Graphics objects in a way that vaguely resembles how the control appears onscreen 
-'(but it's actually quite good) 
+'Prints controls to Graphics objects in a way that vaguely resembles how the control appears onscreen
+'(but it's actually quite good)
 'Currently handles
 '   IPrintableControlGroup
 '   IPrintableControl
@@ -43,7 +43,7 @@ Imports System.Drawing
 ' -------------------------------------------------------------------------------
 '
 ' Licensed under the Apache License, Version 2.0; you may not use this file except
-' in compliance with the License.  You may obtain a copy of the License at 
+' in compliance with the License.  You may obtain a copy of the License at
 ' http://www.apache.org/licenses/LICENSE-2.0
 '
 
@@ -201,7 +201,7 @@ Public Class ControlPrinter
     '    Return New PointF(left, top)
     'End Function
 
-    'These functions work with English and other left-to-right languages, they probably don't work 
+    'These functions work with English and other left-to-right languages, they probably don't work
     'for right-to-left languages
     Private Shared Function GetHorizontalStringAlignment(ByVal align As ContentAlignment) As StringAlignment
         Select Case align

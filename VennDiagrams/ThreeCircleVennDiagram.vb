@@ -10,12 +10,12 @@ Imports System.Drawing
 ' -------------------------------------------------------------------------------
 '
 ' Licensed under the Apache License, Version 2.0; you may not use this file except
-' in compliance with the License.  You may obtain a copy of the License at 
+' in compliance with the License.  You may obtain a copy of the License at
 ' http://www.apache.org/licenses/LICENSE-2.0
 '
 
 Public Class ThreeCircleVennDiagram
-     Inherits VennDiagramBaseClass
+    Inherits VennDiagramBaseClass
 
 #Region " Windows Form Designer generated code "
 
@@ -43,7 +43,7 @@ Public Class ThreeCircleVennDiagram
     Private components As System.ComponentModel.IContainer
 
     'NOTE: The following procedure is required by the Windows Form Designer
-    'It can be modified using the Windows Form Designer.  
+    'It can be modified using the Windows Form Designer.
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         '
@@ -367,7 +367,7 @@ Public Class ThreeCircleVennDiagram
 
         With udtCircleRegions
             .CircleA = m_circleA.Size
-            .CircleB = m_circleb.Size
+            .CircleB = m_circleB.Size
             .CircleC = m_circleC.Size
             .OverlapAB = m_overlapAB.Size
             .OverlapBC = m_overlapBC.Size
@@ -390,24 +390,24 @@ Public Class ThreeCircleVennDiagram
         '                  ACx = AC-ABC
         '
         ' The following coefficients correspond to these equations (array is DIM_COUNT rows and DIM_COUNT columns:
-        Dim dblCoefMatrix(,) As Double = {{1, 0, 0, 1, 0, 1}, _
-                                          {0, 1, 0, 1, 1, 0}, _
-                                          {0, 0, 1, 0, 1, 1}, _
-                                          {0, 0, 0, 1, 0, 0}, _
-                                          {0, 0, 0, 0, 1, 0}, _
+        Dim dblCoefMatrix(,) As Double = {{1, 0, 0, 1, 0, 1},
+                                          {0, 1, 0, 1, 1, 0},
+                                          {0, 0, 1, 0, 1, 1},
+                                          {0, 0, 0, 1, 0, 0},
+                                          {0, 0, 0, 0, 1, 0},
                                           {0, 0, 0, 0, 0, 1}}
 
-		' dblXValues is initialized by objMatrixSolver.SolveEquations
-		' Will be of length DIM_COUNT
-		Dim dblXValues() As Double = Nothing
+        ' dblXValues is initialized by objMatrixSolver.SolveEquations
+        ' Will be of length DIM_COUNT
+        Dim dblXValues() As Double = Nothing
         Dim objMatrixSolver As New clsMatrixSolver
 
-        ' dblPotentialXValues() will have DIM_COUNT+1 rows and intPotentialXValsCount columns; 
+        ' dblPotentialXValues() will have DIM_COUNT+1 rows and intPotentialXValsCount columns;
         '  it holds the potential XValues, plus the ABC value used to compute the X Values
         Dim intPotentialXValsCount As Integer
         Dim dblPotentialXValues(,) As Double
 
-		Dim strMessage As String = String.Empty
+        Dim strMessage As String = String.Empty
         Dim blnSuccess As Boolean
         Dim blnUseUserSuppliedABC As Boolean
 
@@ -489,7 +489,7 @@ Public Class ThreeCircleVennDiagram
 
         If Not blnUseUserSuppliedABC Then
             If intPotentialXValsCount > 0 Then
-                ' Find the ABC value that gave the value for Ax, Bx, Cx, ABx, BCx, & ACx 
+                ' Find the ABC value that gave the value for Ax, Bx, Cx, ABx, BCx, & ACx
                 ' with the smallest residual from the average of each of those values
 
                 intBestIndex = ComputeThreeCircleAreasFindSmallestResidual(intPotentialXValsCount, dblPotentialXValues, DIM_COUNT)
@@ -536,7 +536,7 @@ Public Class ThreeCircleVennDiagram
 
         With udtCircleRegions
             .CircleA = m_circleA.Size
-            .CircleB = m_circleb.Size
+            .CircleB = m_circleB.Size
             .CircleC = m_circleC.Size
             .OverlapAB = m_overlapAB.Size
             .OverlapBC = m_overlapBC.Size
@@ -559,26 +559,26 @@ Public Class ThreeCircleVennDiagram
         ' Ax+Bx+Cx+ABx+BCx+ACx+ABC = N
         '
         ' The following coefficients correspond to these equations (array is DIM_COUNT rows and DIM_COUNT columns:
-        Dim dblCoefMatrix(,) As Double = {{1, 0, 0, 1, 0, 1, 1}, _
-                                          {0, 1, 0, 1, 1, 0, 1}, _
-                                          {0, 0, 1, 0, 1, 1, 1}, _
-                                          {0, 0, 0, 1, 0, 0, 1}, _
-                                          {0, 0, 0, 0, 1, 0, 1}, _
-                                          {0, 0, 0, 0, 0, 1, 1}, _
+        Dim dblCoefMatrix(,) As Double = {{1, 0, 0, 1, 0, 1, 1},
+                                          {0, 1, 0, 1, 1, 0, 1},
+                                          {0, 0, 1, 0, 1, 1, 1},
+                                          {0, 0, 0, 1, 0, 0, 1},
+                                          {0, 0, 0, 0, 1, 0, 1},
+                                          {0, 0, 0, 0, 0, 1, 1},
                                           {1, 1, 1, 1, 1, 1, 1}}
 
-		' dblXValues is initialized by objMatrixSolver.SolveEquations
-		' Will be of length DIM_COUNT
-		Dim dblXValues() As Double = Nothing
+        ' dblXValues is initialized by objMatrixSolver.SolveEquations
+        ' Will be of length DIM_COUNT
+        Dim dblXValues() As Double = Nothing
         Dim objMatrixSolver As New clsMatrixSolver
 
 
-        ' dblPotentialXValues() will have DIM_COUNT+1 rows and intPotentialXValsCount columns; 
+        ' dblPotentialXValues() will have DIM_COUNT+1 rows and intPotentialXValsCount columns;
         '  it holds the potential XValues, plus the TotalUniqueCount value used to compute the X Values
         Dim intPotentialXValsCount As Integer
         Dim dblPotentialXValues(,) As Double
 
-		Dim strMessage As String = String.Empty
+        Dim strMessage As String = String.Empty
         Dim blnSuccess As Boolean
         Dim blnUseUserSuppliedTotalUniqueCount As Boolean
 
@@ -1026,7 +1026,7 @@ Public Class ThreeCircleVennDiagram
         End If
 
         'When size for one circle is equal to 0 this algorithm fails to work.  Solution
-        'is to just make the size really small.  This causes it to be unnoticeable 
+        'is to just make the size really small.  This causes it to be unnoticeable
         'on the printed control.
         If (Me.CircleASize <= 0 AndAlso Me.CircleBSize > 0) Then Me.CircleASize = 0.0000000001
         If (Me.CircleASize > 0 AndAlso Me.CircleBSize <= 0) Then Me.CircleBSize = 0.0000000001
@@ -1105,7 +1105,7 @@ Public Class ThreeCircleVennDiagram
 
         ' Determine the location of Circle C
         ' We know the distance between the centers of each of the circles (A, B, and C)
-        ' Thus, we know the length of three sides of the triangle between the circle centers 
+        ' Thus, we know the length of three sides of the triangle between the circle centers
         '  and we need to determine the angles, A, B, and C
         '
         '
@@ -1142,7 +1142,7 @@ Public Class ThreeCircleVennDiagram
         mOverlapACArcAdj.BetaAdd = dblAngle
 
 
-        ' Compute the 
+        ' Compute the
 
         'Console.WriteLine("calculated world coordinates")
         Me.m_ComputeWorldCoordinatesValid = True
@@ -1260,7 +1260,7 @@ Public Class ThreeCircleVennDiagram
         End If
 
         'second time, so if there sizes are not reasonable, then
-        'return without painting anything.  For example, this occurs when the overlap area 
+        'return without painting anything.  For example, this occurs when the overlap area
         'exceeds the area of one or both circles
         If Not Me.SizesReasonable Then
             Exit Sub
