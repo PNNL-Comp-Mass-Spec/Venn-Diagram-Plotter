@@ -1,5 +1,9 @@
 Venn Diagram Plotter Change Log
 
+Version 1.6.7458; June 2, 2020
+	- Update to .NET 4.7.2
+	- Switch to using Inno Setup for the installer
+
 Version 1.5.5624; May 26, 2015
 	- Change times shown in warning messages to be local time, not UTC
 
