@@ -260,7 +260,7 @@ Public Class ThreeCircleVennDiagramPresenter
 
 #End Region
 
-    'Public Sub DrawOnGraphics(ByVal g As Graphics, ByVal drawbackground As Boolean)
+    'Public Sub DrawOnGraphics(ByVal g As Graphics, ByVal drawBackground As Boolean)
     '    Dim control As Control
     '    Dim args As PaintEventArgs = New PaintEventArgs(g, New Rectangle(Integer.MinValue, Integer.MinValue, Integer.MaxValue, Integer.MaxValue))
     '    Me.BackColor = Color.PaleGoldenrod
@@ -269,7 +269,7 @@ Public Class ThreeCircleVennDiagramPresenter
     '    For Each control In Me.Controls
     '        control.Invalidate()
     '    Next
-    '    'If (drawbackground) Then
+    '    'If (drawBackground) Then
     '    '    g.FillRectangle(New SolidBrush(Me.BackColor), New Rectangle(0, 0, Me.Width, Me.Height))
     '    'End If
     '    MyBase.OnPaint(args)

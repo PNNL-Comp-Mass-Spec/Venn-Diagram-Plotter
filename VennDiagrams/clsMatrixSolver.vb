@@ -21,12 +21,12 @@ Public Class clsMatrixSolver
     '     |         ...     | * |... |  =  |... |
     '     | Am  Bm  ...  Nm |   | xm |     | cm |
     '
-    ' To use SolveEquations, provide MatrixA in dblCoefMatrix and MatrixB in dblConstants;
+    ' To use SolveEquations, provide MatrixA in coefficientMatrix and MatrixB in dblConstants;
     ' the solved values for the variables will be returned in dblXValues
 
-    Public Function SolveEquations(ByRef dblCoefMatrix(,) As Double, ByRef dblConstants() As Double, ByRef dblXValues() As Double, ByRef strMessage As String) As Boolean
+    Public Function SolveEquations(ByRef coefficientMatrix(,) As Double, ByRef dblConstants() As Double, ByRef dblXValues() As Double, ByRef strMessage As String) As Boolean
 
-        ' This function uses dblCoefMatrix and dblConstants to structure the data into an augmented matrix
+        ' This function uses coefficientMatrix and dblConstants to structure the data into an augmented matrix
         '  that includes the data matrix, the constants, and one extra column to hold the variables' final values
 
         Dim intRowCount As Integer
@@ -36,16 +36,16 @@ Public Class clsMatrixSolver
         Dim dblAugmentedMatrix(,) As Double
         Dim x As Integer, y As Integer
 
-        If dblCoefMatrix Is Nothing Then
-            strMessage = "dblCoefMatrix cannot be Nothing"
+        If coefficientMatrix Is Nothing Then
+            strMessage = "coefficientMatrix cannot be Nothing"
             Return False
         ElseIf dblConstants Is Nothing Then
             strMessage = "dblConstants cannot be Nothing"
             Return False
         End If
 
-        intRowCount = UBound(dblCoefMatrix, 1) + 1
-        intColCount = UBound(dblCoefMatrix, 2) + 1
+        intRowCount = UBound(coefficientMatrix, 1) + 1
+        intColCount = UBound(coefficientMatrix, 2) + 1
 
         If intRowCount < 2 Then
             strMessage = "Must have at least two rows"
@@ -58,7 +58,7 @@ Public Class clsMatrixSolver
         End If
 
         If UBound(dblConstants) + 1 <> intRowCount Then
-            strMessage = "dblConstants must have the same number of rows as dblCoefMatrix"
+            strMessage = "dblConstants must have the same number of rows as coefficientMatrix"
             Return False
         End If
 
@@ -74,7 +74,7 @@ Public Class clsMatrixSolver
 
         For x = 0 To intRowCount - 1
             For y = 0 To intColCount - 1
-                dblAugmentedMatrix(x, y) = dblCoefMatrix(x, y)
+                dblAugmentedMatrix(x, y) = coefficientMatrix(x, y)
             Next y
             dblAugmentedMatrix(x, intColCount) = dblConstants(x)
         Next x
@@ -118,7 +118,7 @@ Public Class clsMatrixSolver
 
     End Function
 
-    Public Function MultiplyMatrices(ByRef dblMatrix1(,) As Double, ByRef dblMatrix2(,) As Double, ByRef dblResults(,) As Double) As Boolean
+    Public Function MultiplyMatrices2Dx2D(ByRef dblMatrix1(,) As Double, ByRef dblMatrix2(,) As Double, ByRef dblResults(,) As Double) As Boolean
         ' Auto-determines the row and column count of dblMatrix1 using the rule that
         ' the number of columns in the first matrix must equal the number of rows in the second matrix
         ' If dblMatrix1 or dblArray has extra rows or columns, then they're ignored
@@ -226,38 +226,38 @@ Public Class clsMatrixSolver
         If intColCount < 2 Then intColCount = 2
 
         If blnUseFixed Then
-            Dim dblCoefMatrix(,) As Double = {{2, 2, 7, 0, 0, 0},
+            Dim coefficientMatrix(,) As Double = {{2, 2, 7, 0, 0, 0},
                                           {2, 1, 2, 2, 2, 0},
                                           {3, 4, 5, 7, 3, 0},
                                           {6, 7, 1, 8, 9, 6},
                                           {7, 5, 4, 9, 1, 5},
                                           {1, 9, 5, 8, 1, 0}}
 
-            ReDim dblConstants(UBound(dblCoefMatrix, 1))
+            ReDim dblConstants(UBound(coefficientMatrix, 1))
             For x = 0 To UBound(dblConstants)
                 dblConstants(x) = x + 1
             Next x
 
-            Return dblCoefMatrix
+            Return coefficientMatrix
         Else
-            Dim dblCoefMatrix(,) As Double
-            ReDim dblCoefMatrix(intRowCount - 1, intColCount - 1)
+            Dim coefficientMatrix(,) As Double
+            ReDim coefficientMatrix(intRowCount - 1, intColCount - 1)
             ReDim dblConstants(intRowCount - 1)
 
             For x = 0 To intRowCount - 1
                 For y = 0 To intColCount - 1
-                    dblCoefMatrix(x, y) = objRand.Next(0, MAX_INTEGER)
+                    coefficientMatrix(x, y) = objRand.Next(0, MAX_INTEGER)
                 Next y
                 dblConstants(x) = x + 1
             Next x
 
-            Return dblCoefMatrix
+            Return coefficientMatrix
         End If
 
     End Function
 
     Public Sub TestSolver()
-        Dim dblCoefMatrix(,) As Double
+        Dim coefficientMatrix(,) As Double
         Dim dblConstants() As Double = Nothing
         Dim dblXValues() As Double = Nothing
 
@@ -267,9 +267,9 @@ Public Class clsMatrixSolver
         Dim intRowCount As Integer = 6
         Dim intColCount As Integer = 6
 
-        dblCoefMatrix = GetTestMatrix(intRowCount, intColCount, True, dblConstants)
+        coefficientMatrix = GetTestMatrix(intRowCount, intColCount, True, dblConstants)
 
-        blnSuccess = SolveEquations(dblCoefMatrix, dblConstants, dblXValues, strMessage)
+        Dim blnSuccess = SolveEquations(coefficientMatrix, dblConstants, dblXValues, strMessage)
 
     End Sub
 
@@ -420,7 +420,7 @@ Public Class clsMatrixSolver
 
     End Sub
 
-    Public Shared Sub PrintArray(ByRef dblMatrix(,) As Double)
+    Public Shared Sub PrintArray2D(ByRef dblMatrix(,) As Double)
         Dim intRowCount As Integer, intColCount As Integer
         Dim x As Integer, y As Integer
         Dim strRow As String

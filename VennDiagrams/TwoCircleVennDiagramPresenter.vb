@@ -19,7 +19,7 @@ Public Class TwoCircleVennDiagramPresenter
     Implements ControlPrinter.IPrintableControlContainer
 
     Protected m_LegendSeparation As Integer = 8
-    Protected m_LegendTopSeperation As Integer = 24
+    Protected m_LegendTopSeparation As Integer = 24
 
 #Region " Windows Form Designer generated code "
 
@@ -299,7 +299,7 @@ Public Class TwoCircleVennDiagramPresenter
     Private Sub gbxLegend_Resize(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles gbxLegend.Resize
         'redraw labels so they take up 1/3 of space each
         'anchoring already causes them to be aligned correctly horizontally
-        Dim totalHeight As Integer = Me.gbxLegend.Height - 3 * Me.LegendSeparation - Me.m_LegendTopSeperation
+        Dim totalHeight As Integer = gbxLegend.Height - 3 * LegendSeparation - m_LegendTopSeparation
         Dim individualHeight As Integer = CInt(totalHeight / 3)
 
         Me.lblLegendCircleA.Top = Me.m_LegendTopSeperation
