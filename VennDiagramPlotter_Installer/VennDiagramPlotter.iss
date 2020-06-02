@@ -22,7 +22,7 @@ Source: ..\bin\VennDiagrams.dll                   ; DestDir: {app}
 Source: ..\bin\VennDiagramPlotter_Settings.xml    ; DestDir: {app}
 Source: ..\bin\Venn_Diagram_Examples.ppt          ; DestDir: {app}
 
-Source: ..\Readme.txt                             ; DestDir: {app}
+Source: ..\Readme.md                              ; DestDir: {app}
 Source: ..\RevisionHistory.txt                    ; DestDir: {app}
 Source: Images\delete_16x.ico                     ; DestDir: {app}
 
