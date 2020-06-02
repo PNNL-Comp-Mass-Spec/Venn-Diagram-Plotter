@@ -18,7 +18,7 @@ saved to disk.
 
 ## Installation
 
-* Download VennDiagramPlotter.zip from the [GitHub release page](https://github.com/PNNL-Comp-Mass-Spec/Venn-Diagram-Plotter/releases)
+* Download VennDiagramPlotter_Installer.zip from the [GitHub release page](https://github.com/PNNL-Comp-Mass-Spec/Venn-Diagram-Plotter/releases)
   * Extract the files
   * Run VennDiagramPlotter_Installer.exe to install the program
 * Alternatively, download VennDiagramPlotter_Program.zip, which has VennDiagramPlotter.exe
