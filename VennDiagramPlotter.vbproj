@@ -140,11 +140,6 @@
     <Compile Include="AssemblyInfo.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="clsProcessFilesBaseClass.vb" />
-    <Compile Include="clsProcessFilesOrFoldersBase.vb" />
-    <Compile Include="clsXmlSettingsFileAccessor.vb">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="DisplayForm.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -184,6 +179,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="PRISM-Library">
+      <Version>2.6.4</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

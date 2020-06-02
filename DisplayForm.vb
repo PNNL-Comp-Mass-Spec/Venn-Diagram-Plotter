@@ -1,5 +1,6 @@
 Option Strict On
 
+Imports PRISM
 ' -------------------------------------------------------------------------------
 ' Written by Kyle Littlefield for the Department of Energy (PNNL, Richland, WA)
 ' Software maintained by Matthew Monroe (PNNL, Richland, WA)
@@ -1765,8 +1766,8 @@ Public Class DisplayForm
 
         RefreshVennDiagrams(True)
 
-        mIniFilePath = clsProcessFilesBaseClass.GetSettingsFilePathLocal("VennDiagramPlotter", "VennDiagramPlotter_Settings.xml")
-        clsProcessFilesBaseClass.CreateSettingsFileIfMissing(mIniFilePath)
+        mIniFilePath = FileProcessor.ProcessFilesBase.GetSettingsFilePathLocal("VennDiagramPlotter", "VennDiagramPlotter_Settings.xml")
+        FileProcessor.ProcessFilesBase.CreateSettingsFileIfMissing(mIniFilePath)
 
         LoadDefaults()
 
