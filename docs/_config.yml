@@ -1,0 +1,4 @@
+# Jekyll configuration
+name: Venn-Diagram-Plotter
+description: Draws correctly proportioned and positioned two and three circle Venn diagrams (aka Euler diagrams) whose colors can be customized and the diagrams copied to the clipboard or saved to disk.
+url: https://pnnl-comp-mass-spec.github.io/Venn-Diagram-Plotter/
